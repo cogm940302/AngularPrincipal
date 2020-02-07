@@ -1,0 +1,60 @@
+<div class="container">
+    <header class="header mt-4 mb-5">
+        <img alt="daon_image" class="daon-image" src="../../../assets/daon/mitLogo.png" />
+    </header>
+    <div class="panel border-green">
+        <div class="column">
+            <div class="row">
+                <div class="col-4 mt-4 ml-5">
+                    <p>Terminos de uso</p>
+                </div>
+                <div class="col-6 mt-4">
+                    <h6>
+                        <p style="color:blue; cursor: pointer; padding-top: 10 " (click)="open(content,'terminos')" data-toggle="modal">Ver terminos de uso</p>
+                    </h6>
+                </div>
+            </div>
+            <hr />
+            <div class="row align-items-center">
+                <div class="col-4 mt-4 ml-5">
+                    <p>Politica de privacidad</p>
+                </div>
+                <div class="col-6 mt-4">
+                    <h6>
+                        <p style="color:blue; cursor: pointer; " (click)="open(content,'politica')" data-toggle="modal">Ver nuestra politica de privacidad</p>
+                    </h6>
+                </div>
+            </div>
+            <hr />
+            <div class="row row-justify-center">
+                <div class="col-10 ml-5">
+                    <p>Doy mi consentimiento para el procesamiento de mis datos biométricos para la autenticación en esta aplicación</p>
+                </div>
+                <div class="col-1">
+                    <input type="checkbox" (change)="toogleCheckbox()" class="checkbox" value={{state.checked}} />
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
+
+    <ng-template #content let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">{{tituloModal}}</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+        </div>
+        <div class="modal-body">
+            <p>{{textoModal}}</p>
+        </div>
+        <!-- <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
+  </div> -->
+    </ng-template>
+
+    <div class="row row-justify-center">
+        <button [disabled]="!state.checked" class="btn btn-primary" id="aceptarBoton" (click)="siguiente()">Acepto </button>
+    </div>
+
+</div>

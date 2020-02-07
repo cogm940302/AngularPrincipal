@@ -1,1 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
+
+input[type=file] {
+    display: none;
+}
+
+.center {
+    text-align: center;
+}
+
+.column {
+    flex-flow: row wrap;
+    flex: 1 100%;
+    align-items: center;
+    flex-direction: column;
+    flex-basis: 100%;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* min-height: 71px; */
+}
+
+.row-justify-center {
+    justify-content: center;
+}
+
+p {
+    color: rgb(121, 140, 149);
+    font-size: 16px;
+    line-height: 20px;
+}
+
+
+/* header {
+    min-height: 36px;
+} */

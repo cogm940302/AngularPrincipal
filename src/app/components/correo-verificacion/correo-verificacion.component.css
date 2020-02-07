@@ -1,0 +1,46 @@
+.columna {
+    width: 100%;
+}
+
+h3 {
+    font-family: "Times New Roman", Times, serif;
+    font-style: italic;
+    font-size: 35px;
+}
+
+.container-fluid {
+    margin-top: 60px;
+    border-style: solid;
+    border-color: green;
+}
+
+.row {
+    /* background: #e8e8e8; */
+    margin-top: 5px;
+    height: 70px;
+}
+
+.rowNew {
+    margin-top: 20px;
+    height: 70px;
+}
+
+.col {
+    background: #f2f2f2;
+    border: 1px solid #4d5061;
+}
+
+#correoInput {
+    height: 45px;
+    text-align: center;
+    width: 100%;
+}
+
+#tituloDiv {
+    text-align: center;
+}
+
+#validarBoton {
+    margin-bottom: 28px;
+    width: 100%;
+}
