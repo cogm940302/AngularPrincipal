@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { TermsComponent } from './components/terms/terms.component';
 import { CorreoVerificacionComponent } from './components/correo-verificacion/correo-verificacion.component';
 import { InstruccionesComponent } from './components/instrucciones/instrucciones.component';
+import { SesionIniciadaComponent } from './components/sesion-iniciada/sesion-iniciada.component';
 
 const APP_ROUTES: Routes = [
   {
@@ -16,6 +17,7 @@ const APP_ROUTES: Routes = [
       children: [
           {path: 'instrucciones', component: InstruccionesComponent},
           {path: 'terminos', component: TermsComponent},
+          {path: 'sesion', component: SesionIniciadaComponent},
           {path: 'correo', component: CorreoVerificacionComponent},
           {path: '**', component: TermsComponent}
       ]

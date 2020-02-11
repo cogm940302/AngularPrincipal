@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { politicaDePrivacidad, terminosDeUso } from '../../model/documentos/aceptacion';
 import { Router } from '@angular/router';
 import { Rutas } from 'src/app/model/RutasUtil';
+import { SessionService } from '../../services/session/session.service';
 
 @Component({
   selector: 'app-terms',
   templateUrl: './terms.component.html',
   styleUrls: ['./terms.component.css']
 })
-export class TermsComponent implements OnInit {
-
+export class TermsComponent implements OnInit, OnDestroy {
 
   textoModal = '';
   tituloModal = '';
@@ -21,7 +21,7 @@ export class TermsComponent implements OnInit {
     privacyPolicy: false
   };
 
-  constructor(config: NgbModalConfig, private modalService: NgbModal, public router: Router) {
+  constructor(config: NgbModalConfig, private modalService: NgbModal, public router: Router, public session: SessionService) {
     // customize default values of modals used by this component tree
     config.backdrop = 'static';
     config.keyboard = false;
@@ -35,10 +35,17 @@ export class TermsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // expect(element(by.css('button')).getAttribute('disabled')).toBeTruthy();
+    if (this.session.isTermsAndConditionsTrue()) {
+      this.router.navigate([Rutas.correo]);
+    }
+  }
+
+  ngOnDestroy(): void {
+    // this.session.cleanValues();
   }
 
   siguiente() {
+    this.session.setTermsAndConditionsTrue();
     this.router.navigate([Rutas.correo]);
   }
 

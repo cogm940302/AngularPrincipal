@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { SessionService } from '../../services/session/session.service';
+import { Router } from '@angular/router';
+import { Rutas } from 'src/app/model/RutasUtil';
 
 @Component({
   selector: 'app-instrucciones',
@@ -7,9 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InstruccionesComponent implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private sesion: SessionService) { }
 
   ngOnInit() {
+    let valorDelObjeto = this.sesion.getObjectSession();
+    if (valorDelObjeto === null || valorDelObjeto === undefined) {
+      this.router.navigate([Rutas.terminos]);
+    }
   }
 
 }

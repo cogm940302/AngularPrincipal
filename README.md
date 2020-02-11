@@ -7,3 +7,5 @@ https://stackoverflow.com/questions/26145871/redirect-on-all-routes-to-login-if-
 
 angular routechangestart example
 
+# session
+https://codingpotions.com/angular-login-sesion

@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ModalModule} from 'ng2-modal';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { PlantillaComponent } from './components/plantilla.component';
@@ -11,6 +12,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TermsComponent } from './components/terms/terms.component';
 import { CorreoVerificacionComponent } from './components/correo-verificacion/correo-verificacion.component';
 import { InstruccionesComponent } from './components/instrucciones/instrucciones.component';
+import { SesionIniciadaComponent } from './components/sesion-iniciada/sesion-iniciada.component';
 // import {  NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // import {  NgbModal } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
 
@@ -20,14 +22,16 @@ import { InstruccionesComponent } from './components/instrucciones/instrucciones
     PlantillaComponent,
     TermsComponent,
     CorreoVerificacionComponent,
-    InstruccionesComponent
+    InstruccionesComponent,
+    SesionIniciadaComponent
   ],
   imports: [
     BrowserModule,
     RouterModule,
     APP_ROUTING,
     ModalModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule,
   ],
   bootstrap: [AppComponent],
   providers: []
