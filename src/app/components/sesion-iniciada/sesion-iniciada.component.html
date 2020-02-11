@@ -1,4 +1,4 @@
-<div class="container-fluid" style=" max-width:750px">
+<div *ngIf="filtersLoaded | async" class="container-fluid" style=" max-width:750px">
     <div class="row justify-content-center rowNew">
         <div class="col-12 col-md-6 columna" id="tituloDiv">
             <h3> Ya tienes una sesion iniciada, deseas continuar</h3>
