@@ -4,6 +4,8 @@ import { TermsComponent } from './components/terms/terms.component';
 import { CorreoVerificacionComponent } from './components/correo-verificacion/correo-verificacion.component';
 import { InstruccionesComponent } from './components/instrucciones/instrucciones.component';
 import { SesionIniciadaComponent } from './components/sesion-iniciada/sesion-iniciada.component';
+import { FinalComponent } from './components/final/final.component';
+import { PageFaceCaptureComponent } from './components/daon/page-face-capture/page-face-capture.component';
 
 const APP_ROUTES: Routes = [
   {
@@ -16,9 +18,11 @@ const APP_ROUTES: Routes = [
       component: PlantillaComponent,
       children: [
           {path: 'instrucciones', component: InstruccionesComponent},
+          {path: 'selfie', component: PageFaceCaptureComponent},
           {path: 'terminos', component: TermsComponent},
           {path: 'sesion', component: SesionIniciadaComponent},
           {path: 'correo', component: CorreoVerificacionComponent},
+          {path: 'final', component: FinalComponent},
           {path: '**', component: TermsComponent}
       ]
   },

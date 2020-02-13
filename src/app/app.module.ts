@@ -13,6 +13,8 @@ import { TermsComponent } from './components/terms/terms.component';
 import { CorreoVerificacionComponent } from './components/correo-verificacion/correo-verificacion.component';
 import { InstruccionesComponent } from './components/instrucciones/instrucciones.component';
 import { SesionIniciadaComponent } from './components/sesion-iniciada/sesion-iniciada.component';
+import { FinalComponent } from './components/final/final.component';
+import { PageFaceCaptureComponent } from './components/daon/page-face-capture/page-face-capture.component';
 // import {  NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // import {  NgbModal } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
 
@@ -23,7 +25,9 @@ import { SesionIniciadaComponent } from './components/sesion-iniciada/sesion-ini
     TermsComponent,
     CorreoVerificacionComponent,
     InstruccionesComponent,
-    SesionIniciadaComponent
+    SesionIniciadaComponent,
+    FinalComponent,
+    PageFaceCaptureComponent
   ],
   imports: [
     BrowserModule,
