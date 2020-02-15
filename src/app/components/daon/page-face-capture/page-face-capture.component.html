@@ -1,4 +1,22 @@
-<video id="myVideo" width="320" height="176" controls>
-  Your browser does not support HTML5 video.
-</video>
+<div class="container">
+    <div data-testid="wrapper" class="_loading_overlay_wrapper css-79elbk">
+        <div class="page-capture">
+            <div style="visibility: visible;">
+                <div class="native-capture-box box-shadow">Having problems?<span><input type="file" accept="image/*" capture="user"><button class="button-link">Upload selfie</button></span></div>
+            </div>
+            <!-- <div class="ui-canvas-container"><video class="ui-canvas" autoplay="" playsinline="" style="transform: scaleX(-1);"></video> -->
+            <div class="ui-canvas-container">
+                <video class="ui-canvas" autoplay="" playsinline=""></video>
+                <div class="overlay overlay-oval"></div>
+            </div>
+            <footer>
+                <div class="message-box box-shadow " id="cambio">Position your face inside the marked area</div>
+                <button class="btn blue" (click)="imprimirImagen()">CAPTURE SELFIE</button>
+            </footer>
+        </div>
+    </div>
+</div>
+<div>Despues de la foto</div>
+
+
 <button onClick="capturar()">capturar</button>

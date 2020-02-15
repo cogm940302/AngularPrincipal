@@ -15,6 +15,7 @@ import { InstruccionesComponent } from './components/instrucciones/instrucciones
 import { SesionIniciadaComponent } from './components/sesion-iniciada/sesion-iniciada.component';
 import { FinalComponent } from './components/final/final.component';
 import { PageFaceCaptureComponent } from './components/daon/page-face-capture/page-face-capture.component';
+import { FacialVerificationComponent } from './components/facial-verification/facial-verification.component';
 // import {  NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // import {  NgbModal } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
 
@@ -27,7 +28,8 @@ import { PageFaceCaptureComponent } from './components/daon/page-face-capture/pa
     InstruccionesComponent,
     SesionIniciadaComponent,
     FinalComponent,
-    PageFaceCaptureComponent
+    PageFaceCaptureComponent,
+    FacialVerificationComponent
   ],
   imports: [
     BrowserModule,
