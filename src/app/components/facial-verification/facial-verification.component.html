@@ -1,1 +1,1 @@
-<img src="data:image/png;base64, {{foto}}" alt="Red dot" />
+<img *ngIf="filtersLoaded | async" src="{{'data:image/jpg;base64,' + foto}}" alt="Red dot" />

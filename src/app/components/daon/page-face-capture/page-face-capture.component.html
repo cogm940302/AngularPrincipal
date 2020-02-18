@@ -1,8 +1,8 @@
-<div class="container">
+<div [hidden]="!activator" class="container">
     <div data-testid="wrapper" class="_loading_overlay_wrapper css-79elbk">
         <div class="page-capture">
             <div style="visibility: visible;">
-                <div class="native-capture-box box-shadow">Having problems?<span><input type="file" accept="image/*" capture="user"><button class="button-link">Upload selfie</button></span></div>
+                <div class="native-capture-box box-shadow">¿Algún problema?<span><input type="file" accept="image/*" capture="user"><button class="button-link">Subir Selfie</button></span></div>
             </div>
             <!-- <div class="ui-canvas-container"><video class="ui-canvas" autoplay="" playsinline="" style="transform: scaleX(-1);"></video> -->
             <div class="ui-canvas-container">
@@ -10,13 +10,15 @@
                 <div class="overlay overlay-oval"></div>
             </div>
             <footer>
-                <div class="message-box box-shadow " id="cambio">Position your face inside the marked area</div>
+                <!-- <div class="message-box box-shadow " id="cambio">Position your face inside the marked area</div> -->
                 <button class="btn blue" (click)="imprimirImagen()">CAPTURE SELFIE</button>
             </footer>
         </div>
     </div>
 </div>
-<div>Despues de la foto</div>
 
+<button (click)="imprimirImagen()">capturar</button>
 
-<button onClick="capturar()">capturar</button>
+<div *ngIf="!activator" class="container">
+    <app-facial-verification></app-facial-verification>
+</div>

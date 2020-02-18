@@ -6,4 +6,5 @@ export let Rutas = {
   instrucciones: '/services/instrucciones',
   fin: '/services/final',
   selfie: '/services/selfie',
+  selfieVerification: '/services/facial/verification'
 };

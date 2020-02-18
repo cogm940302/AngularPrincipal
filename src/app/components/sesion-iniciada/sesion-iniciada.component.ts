@@ -24,18 +24,17 @@ export class SesionIniciadaComponent implements OnInit {
     /*Validamos que venga del check de terminos */
     if (valorDelObjeto === null || valorDelObjeto === undefined) {
       this.router.navigate([Rutas.terminos]);
-    }
-    else{
-    const value = await this.teniaSesionIniciada();
-    console.log('tenia : ' + value);
-    if (!value) {
-      console.log('5 entre aqui');
-      await this.nuevoRegistro();
     } else {
-      this.filtersLoaded = Promise.resolve(true);
-      console.log('6 es un viejo registro');
+      const value = await this.teniaSesionIniciada();
+      console.log('tenia : ' + value);
+      if (!value) {
+        console.log('5 entre aqui');
+        await this.nuevoRegistro();
+      } else {
+        this.filtersLoaded = Promise.resolve(true);
+        console.log('6 es un viejo registro');
+      }
     }
-  }
   }
   async serviceCorreo() {
     console.log('2 entre al servicio de correos ');
@@ -64,7 +63,7 @@ export class SesionIniciadaComponent implements OnInit {
     this.modelo = new sesionModel();
     this.modelo.correo = this.share.correo;
     console.log(this.modelo);
-    console.log( JSON.stringify(  this.modelo ) );
+    console.log(JSON.stringify(this.modelo));
     return this.http.post(url, this.modelo).toPromise().then(response => {
       console.log(JSON.stringify(response));
       if (response != null) {

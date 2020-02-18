@@ -1,0 +1,48 @@
+ /* .overlay {
+     z-index: 10;
+     position: absolute;
+     top: 0;
+     left: 0;
+     bottom: 0;
+     right: 0;
+     background-color: rgba(92, 110, 119, 0.6);
+ }
+
+ .overlay-oval {
+     mask-image: radial-gradient(70% 65% ellipse at 50% 42%, transparent 50%, white 53%);
+     -webkit-mask-image: radial-gradient(70% 65% ellipse at 50% 42%, transparent 50%, white 53%);
+     mask-size: cover;
+     -webkit-mask-size: cover;
+ }
+
+ .ui-canvas-container {
+     z-index: -1;
+     position: fixed;
+     left: 0;
+     right: 0;
+     top: 0;
+     bottom: 0;
+     display: flex;
+ }
+
+ .ui-canvas {
+     object-fit: cover;
+     width: 50%;
+     height: 50%;
+ }
+
+ .page-capture {
+     position: fixed;
+     height: 100%;
+     width: 100%;
+     background-color: gray;
+ }
+
+ ._loading_overlay_wrapper {
+     height: 100%;
+ }
+
+ .container {
+     height: 300px;
+     width: 300px;
+ } */

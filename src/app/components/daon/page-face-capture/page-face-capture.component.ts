@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import * as Daonjs from '../../../../assets/js/Daon.FaceCapture.min.js';
 import { ShareFaceService } from 'src/app/services/share/share-face.service.js';
+import { Rutas } from 'src/app/model/RutasUtil.js';
+import { Router } from '@angular/router';
+import { PruebaService } from 'src/app/services/share/prueba.service.js';
 
 @Component({
   selector: 'app-page-face-capture',
@@ -9,99 +12,91 @@ import { ShareFaceService } from 'src/app/services/share/share-face.service.js';
 })
 export class PageFaceCaptureComponent implements OnInit {
 
-  constructor(private share: ShareFaceService) { }
+  constructor(private router: Router, private share: PruebaService) { }
 
-  fc: any;
-  videoEl: any;
-  algo: any;
-  ngOnInit() {
-    this.algo = '';
-    this.fc = new Daonjs.Daon.FaceCapture({
+  // fc: any;
+  activator = true;
+  // videoEl: any;
+  imageData: any;
+  async ngOnInit() {
+    this.imageData = '';
+    const fc = new Daonjs.Daon.FaceCapture({
       url: "https://dobsdemo-facequality-first.identityx-cloud.com/rest/v1/quality/assessments"
     });
-
-    this.videoEl = document.querySelector("video");
-    this.fc.startCamera(this.videoEl).then((response) => {
+    const videoEl = document.querySelector("video");
+    console.log(videoEl);
+    fc.startCamera(videoEl).then((response) => {
       console.log(response);
     });
-    console.log(this.fc);
-    this.onIniciar();
-    this.onSeguir();
-  }
 
-
-  async imprimirImagen() {
-    console.log('se supone que si hice algo');
-    console.log(this.algo);
-    // $("body").append(`<BlobPreview blob=${algo} class="clase" />`);
-    this.algo = await this.blobToBase64(this.algo);
-    this.share.setFoto(this.algo);
-    console.log(this.algo);
-  }
-
-  onIniciar() {
-    this.fc.onCameraStarted = (fc, video) => {
+    Daonjs.onCameraStarted = (fc, video) => {
       video.onloadedmetadata = () => {
         fc.startFaceDetector({
           urlFaceDetectorWasm: "https://dobsdemo-facequality-first.identityx-cloud.com/DaonFaceQualityLite.wasm",
-          onFaceDetectorInitialized: () => {
+          onFaceDetectorInitialized: function () {
             fc.findFace();
           },
-          onFaceDetectorError: (err) => {
+          onFaceDetectorError: function (err) {
             console.error("DEMO FaceDetector error", err)
           },
           onFaceDetection: coords => {
             if (coords) {
-              // this.setState({
-              //   faceFound: coords
-              // });
             } else {
               //call again in half a second
-              setTimeout(() => {
-                // this.state.fc.findFace();
-                console.log('timeout');
-              }, 500);
             }
           }
         });
-      }
-    }
-  }
-  onSeguir() {
-    console.log('Si entre a tomar el video');
-    this.videoEl.onloadedmetadata = function () {
+      };
+    };
+
+    videoEl.onloadedmetadata = () => {
       console.log('result');
-      console.log(this.fc);
-      this.fc.startAutoCapture(response => {
+      fc.startAutoCapture(response => {
         console.log(response);
-        if (response.result === "FAIL") {
+        if (response.result === 'FAIL') {
           console.log('no pasa');
-        } else if (response.result === "PASS") {
+        } else if (response.result === 'PASS') {
           console.log('si pasa');
-          this.fc.stopAutoCapture();
-          this.algo = response.sentBlobImage;
-          console.log('algo');
-          console.log(this.algo);
+          fc.stopAutoCapture();
+          this.imageData = response.sentBlobImage;
+          this.activator = false;
+          // console.log('algo');
+          // console.log(algo);
         }
       }, (error) => {
         console.log('error durante la captura');
         console.log(error);
       });
     }
+
+
   }
 
-  blobToBase64(blob) {
+
+  async imprimirImagen() {
+    console.log('se supone que si hice algo');
+    // console.log(this.imageData);
+    // $("body").append(`<BlobPreview blob=${algo} class="clase" />`);
+    console.log(this.imageData);
+    // this.imageData = await this.blobToBase64(this.imageData);
+    // $('body').append(`<img src="data:image/png;base64, ${this.imageData}" alt="Red dot" />`);
+    // this.router.navigate([Rutas.selfieVerification]);
+
+  }
+
+
+  async blobToBase64(blob) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       try {
         reader.readAsDataURL(blob);
         reader.onloadend = () => {
-          resolve(reader.result.toString().replace("data:image/jpeg;base64,", ""));
-        }
+          resolve(reader.result.toString().replace('data:image/jpeg;base64,', ''));
+        };
       } catch (err) {
         reject(err);
       }
-    })
+    });
   }
 
 
