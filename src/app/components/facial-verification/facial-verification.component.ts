@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ShareFaceService } from '../../services/share/share-face.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PruebaService } from 'src/app/services/share/prueba.service';
@@ -11,24 +11,12 @@ import { PruebaService } from 'src/app/services/share/prueba.service';
 })
 export class FacialVerificationComponent implements OnInit {
   filtersLoaded: Promise<boolean>;
-  public foto: any;
-  constructor(private share: PruebaService, public _DomSanitizationService: DomSanitizer) { }
-
-  async getValue() {
-    this.foto = sessionStorage.getItem('selfie');
-  }
+  @Input() public foto: any;
+  constructor() { }
 
   async ngOnInit() {
-    // this.foto = 'data:image/png;base64,' + this.share.foto;
-    await this.getValue();
     console.log(this.foto);
-    // this.foto = JSON.parse(this.share.foto);
-    const fotB64 = this.share.foto;
-    console.log(fotB64);
-    // $('body').append(`<img src="data:image/png;base64, ${fotB64}" alt="Red dot" />`);
-
-    // var body = $document.find('body').eq(0);
-    // body.append(mover)
+    this.foto = await this.blobToBase64(this.foto);
     this.filtersLoaded = Promise.resolve(true);
   }
 

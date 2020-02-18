@@ -20,5 +20,5 @@
 <button (click)="imprimirImagen()">capturar</button>
 
 <div *ngIf="!activator" class="container">
-    <app-facial-verification></app-facial-verification>
+    <app-facial-verification [foto]="imprimirImagen()"></app-facial-verification>
 </div>
