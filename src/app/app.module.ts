@@ -29,7 +29,8 @@ import { FacialVerificationComponent } from './components/facial-verification/fa
     SesionIniciadaComponent,
     FinalComponent,
     PageFaceCaptureComponent,
-    FacialVerificationComponent
+    FacialVerificationComponent,
+
   ],
   imports: [
     BrowserModule,
