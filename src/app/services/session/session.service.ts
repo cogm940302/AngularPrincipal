@@ -10,7 +10,7 @@ export class SessionService {
 
   constructor() {
     this.sesionObject = new sesionModel();
-    this.sesionObject.aceptar = false;
+    this.sesionObject.terminos = false;
   }
 
   cleanValues() {
@@ -23,8 +23,9 @@ export class SessionService {
     sessionStorage.setItem('currentSessionDaon', JSON.stringify(this.sesionObject));
   }
 
-  setTermsAndConditionsTrue() {
-    this.sesionObject.aceptar = true;
+  setTermsAndConditionsTrue(id) {
+    this.sesionObject.terminos = true;
+    this.sesionObject.id = id;
     console.log('voy a guardar: ');
     console.log(JSON.stringify(this.sesionObject));
     sessionStorage.setItem('currentSessionDaon', JSON.stringify(this.sesionObject));
@@ -51,8 +52,8 @@ export class SessionService {
       this.sesionObject = new sesionModel();
       return false;
     }
-    console.log('voy a regresar: ' + this.sesionObject.aceptar);
-    return this.sesionObject.aceptar;
+    console.log('voy a regresar: ' + this.sesionObject.terminos);
+    return this.sesionObject.terminos;
   }
 
   getObjectSession() {

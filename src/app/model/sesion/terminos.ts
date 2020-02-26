@@ -1,6 +1,7 @@
 export class sesionModel{
-  id:string;
-  aceptar: boolean;
+  id: string;
+  daonHref: string;
+  terminos: boolean;
   correo: string;
   score: any = null;
 };

@@ -4,6 +4,8 @@ import { politicaDePrivacidad, terminosDeUso } from '../../model/documentos/acep
 import { Router } from '@angular/router';
 import { Rutas } from 'src/app/model/RutasUtil';
 import { SessionService } from '../../services/session/session.service';
+import { sesionModel } from 'src/app/model/sesion/terminos';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-terms',
@@ -20,11 +22,32 @@ export class TermsComponent implements OnInit, OnDestroy {
     termsOfUse: false,
     privacyPolicy: false
   };
-
-  constructor(config: NgbModalConfig, private modalService: NgbModal, public router: Router, public session: SessionService) {
+  private modelo: sesionModel;
+  private _id: any;
+  constructor(config: NgbModalConfig, private modalService: NgbModal, public router: Router, public session: SessionService,
+    private http: HttpClient) {
     // customize default values of modals used by this component tree
     config.backdrop = 'static';
     config.keyboard = false;
+  }
+
+  async guardaRegistro() {
+    const url = 'https://5ghhi5ko87.execute-api.us-east-2.amazonaws.com/test/usuarios';
+    console.log('this.modelo');
+    this.modelo = new sesionModel();
+    this.modelo.terminos = true;
+    console.log(this.modelo);
+    console.log(JSON.stringify(this.modelo));
+    return this.http.post(url, this.modelo).toPromise().then(response => {
+      console.log(JSON.stringify(response));
+      if (response != null) {
+        this._id = response['id'];
+      }
+    }).catch((error: any) => {
+      console.log('Hubo un error');
+      console.log(error);
+    }
+    );
   }
 
   toogleCheckbox() {
@@ -44,8 +67,9 @@ export class TermsComponent implements OnInit, OnDestroy {
     // this.session.cleanValues();
   }
 
-  siguiente() {
-    this.session.setTermsAndConditionsTrue();
+  async siguiente() {
+    await this.guardaRegistro();
+    this.session.setTermsAndConditionsTrue(this._id);
     this.router.navigate([Rutas.correo]);
   }
 
