@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SessionService } from '../../services/session/session.service';
+import { SessionService } from '../../../services/session/session.service';
 import { Router } from '@angular/router';
 import { Rutas } from 'src/app/model/RutasUtil';
 

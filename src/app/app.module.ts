@@ -11,11 +11,12 @@ import { APP_ROUTING } from './app.routes';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TermsComponent } from './components/terms/terms.component';
 import { CorreoVerificacionComponent } from './components/correo-verificacion/correo-verificacion.component';
-import { InstruccionesComponent } from './components/instrucciones/instrucciones.component';
+import { InstruccionesComponent } from './components/daon/instrucciones/instrucciones.component';
 import { SesionIniciadaComponent } from './components/sesion-iniciada/sesion-iniciada.component';
 import { FinalComponent } from './components/final/final.component';
 import { PageFaceCaptureComponent } from './components/daon/page-face-capture/page-face-capture.component';
-import { FacialVerificationComponent } from './components/facial-verification/facial-verification.component';
+import { FacialVerificationComponent } from './components/daon/facial-verification/facial-verification.component';
+import { ErrorComponent } from './components/error/error.component';
 // import {  NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // import {  NgbModal } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
 
@@ -30,6 +31,7 @@ import { FacialVerificationComponent } from './components/facial-verification/fa
     FinalComponent,
     PageFaceCaptureComponent,
     FacialVerificationComponent,
+    ErrorComponent,
 
   ],
   imports: [

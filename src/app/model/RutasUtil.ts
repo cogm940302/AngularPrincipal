@@ -1,10 +1,11 @@
 
 export let Rutas = {
-  terminos: '/services/terminos',
-  sesionIniciada: '/services/sesion',
-  correo: '/services/correo',
-  instrucciones: '/services/instrucciones',
+  sesionIniciada: '/services/sesion/',
+  correo: '/services/correo/',
+  instrucciones: '/services/daon/instrucciones/',
+  selfie: '/services/daon/selfie/',
+  selfieVerification: '/services/daon/facial/verification/',
+  error: '/services/error',
   fin: '/services/final',
-  selfie: '/services/selfie',
-  selfieVerification: '/services/facial/verification'
+  terminos: '/services/terminos',
 };

@@ -1,76 +1,86 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { politicaDePrivacidad, terminosDeUso } from '../../model/documentos/aceptacion';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Rutas } from 'src/app/model/RutasUtil';
 import { SessionService } from '../../services/session/session.service';
 import { sesionModel } from 'src/app/model/sesion/terminos';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { MiddleMongoService } from '../../services/http/middle-mongo.service';
 
 @Component({
   selector: 'app-terms',
   templateUrl: './terms.component.html',
   styleUrls: ['./terms.component.css']
 })
-export class TermsComponent implements OnInit, OnDestroy {
+export class TermsComponent implements OnInit {
 
-  textoModal = '';
-  tituloModal = '';
   state = {
     checked: false,
     isAccepted: 'unset',
     termsOfUse: false,
     privacyPolicy: false
   };
-  private modelo: sesionModel;
-  private _id: any;
+
+  textoModal = '';
+  tituloModal = '';
+  datosDelCliente: sesionModel;
+  modelo: sesionModel;
+  id: any;
+
   constructor(config: NgbModalConfig, private modalService: NgbModal, public router: Router, public session: SessionService,
-    private http: HttpClient) {
+    private http: HttpClient, private middle: MiddleMongoService, private actRoute: ActivatedRoute) {
     // customize default values of modals used by this component tree
     config.backdrop = 'static';
     config.keyboard = false;
   }
 
-  async guardaRegistro() {
-    const url = 'https://5ghhi5ko87.execute-api.us-east-2.amazonaws.com/test/usuarios';
-    console.log('this.modelo');
-    this.modelo = new sesionModel();
-    this.modelo.terminos = true;
-    console.log(this.modelo);
-    console.log(JSON.stringify(this.modelo));
-    return this.http.post(url, this.modelo).toPromise().then(response => {
-      console.log(JSON.stringify(response));
-      if (response != null) {
-        this._id = response['id'];
-      }
-    }).catch((error: any) => {
-      console.log('Hubo un error');
-      console.log(error);
-    }
-    );
-  }
-
   toogleCheckbox() {
-    console.log('cambiare el valor');
     this.state.checked = !this.state.checked;
-    console.log(this.state.checked);
-    // expect(element(by.css('button')).getAttribute('disabled')).toBeFalsy();
   }
-
-  ngOnInit() {
-    if (this.session.isTermsAndConditionsTrue()) {
-      this.router.navigate([Rutas.correo]);
+  /** function to validate if user recharge page **/
+  async alredySessionExist() {
+    let object = this.session.getObjectSession();
+    console.log(object);
+    if (object === null || object === undefined) {
+      console.log('la sesion no existe');
+      return false;
+    } else {
+      console.log('ya tengo los valores');
+      if (object.terminos) {
+        this.router.navigate([Rutas.correo + `${this.id}`]);
+        return true;
+      }
     }
   }
 
-  ngOnDestroy(): void {
-    // this.session.cleanValues();
+  async ngOnInit() {
+    this.actRoute.params.subscribe(params => {
+      this.id = params['id'];
+    });
+    if (await this.alredySessionExist()) { return; }
+    console.log('voy por los datos');
+    await this.middle.getDataUser(this.id).toPromise().then(data => {
+      console.log(data);
+      this.datosDelCliente = data;
+    });
+    // this._id = this.datosDelCliente['_id'];
+    console.log('el id es: ' + this.id);
+    if (this.datosDelCliente === null || this.datosDelCliente === undefined) {
+      console.log('Error no existe');
+      this.router.navigate([Rutas.error]);
+    }
+    console.log(this.datosDelCliente);
+    this.session.updateModel(this.datosDelCliente);
+    if (this.datosDelCliente.terminos === true) {
+      this.router.navigate([Rutas.correo + `${this.id}`]);
+    }
   }
 
-  async siguiente() {
-    await this.guardaRegistro();
-    this.session.setTermsAndConditionsTrue(this._id);
-    this.router.navigate([Rutas.correo]);
+  siguiente() {
+    this.datosDelCliente.terminos = true;
+    this.session.updateModel(this.datosDelCliente);
+    this.router.navigate([Rutas.correo + `${this.id}`]);
   }
 
   open(content, tipo) {
@@ -78,8 +88,7 @@ export class TermsComponent implements OnInit, OnDestroy {
     if (tipo === 'terminos') {
       this.textoModal = terminosDeUso;
       this.tituloModal = 'Terminos de Uso';
-    }
-    else {
+    } else {
       this.textoModal = politicaDePrivacidad;
       this.tituloModal = 'Politica de Privacidad';
     }
