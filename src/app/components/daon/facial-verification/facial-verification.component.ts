@@ -5,6 +5,8 @@ import { Rutas } from '../../../model/RutasUtil';
 import { catchError } from 'rxjs/operators';
 import { SelfieSend } from 'src/app/model/DaonPojos/Selfie';
 import { sesionModel } from 'src/app/model/sesion/SessionPojo';
+import { SessionService } from 'src/app/services/session/session.service';
+import { MiddleMongoService } from '../../../services/http/middle-mongo.service';
 
 
 
@@ -15,12 +17,15 @@ import { sesionModel } from 'src/app/model/sesion/SessionPojo';
 })
 
 export class FacialVerificationComponent implements OnInit {
-  filtersLoaded: Promise<boolean>;
-  @Input() public foto: any;
-  headers = new HttpHeaders().set('Content-Type', 'application/json');
-  error: any;
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(private router: Router, private http: HttpClient, private session: SessionService,
+              private mongoMid: MiddleMongoService) { }
+
+  private headers = new HttpHeaders().set('Content-Type', 'application/json');
   private data: SelfieSend;
+  filtersLoaded: Promise<boolean>;
+  @Input() public id: string;
+  @Input() public foto: any;
+  error: any;
 
   async ngOnInit() {
     console.log(this.foto);
@@ -46,11 +51,19 @@ export class FacialVerificationComponent implements OnInit {
 
   guardar() {
     console.log('voy a enviar');
-    this.enviar().subscribe( data => {
+    let respuesta;
+    this.enviar().subscribe(data => {
       console.log('ya constesto');
       console.log(data);
+      respuesta = data;
     });
+    // TODO validar el data
+    const object = this.session.getObjectSession();
+    object.daon.selfie = true;
+    this.session.updateModel(object);
+    this.mongoMid.updateDataUser(object);
     console.log('ya termine');
+    this.router.navigate([Rutas.chooseIdentity + `${this.id}`]);
   }
 
   blobToBase64(blob) {

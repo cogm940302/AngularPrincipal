@@ -1,9 +1,11 @@
-<div class="text-center">
-    <div  class="m-5" >
+<div *ngIf="filtersLoaded | async" class="text-center">
+    <div class="m-5">
         <h1>Verify your identity</h1>
     </div>
     <div class="m-2 pb-4">
-        <h4><p class="font-weight-light text-secondary" >Select the type of document you would like to upload.</p></h4>
+        <h4>
+            <p class="font-weight-light text-secondary">Select the type of document you would like to upload.</p>
+        </h4>
     </div>
 
     <div class="m-4 card  bg-light" (click)="agregarOferta('PASSPORT')">
@@ -13,19 +15,23 @@
             </div>
             <div>
                 <h3>Passport</h3>
-                <h4><p class="font-weight-light text-secondary" >Face photo page</p></h4>
+                <h4>
+                    <p class="font-weight-light text-secondary">Face photo page</p>
+                </h4>
             </div>
         </div>
     </div>
 
-    <div class="m-4 card  bg-light" (click)="agregarOferta('ID_CARD')" >
+    <div class="m-4 card  bg-light" (click)="agregarOferta('ID_CARD')">
         <div class="m-1 row">
             <div class="m-4 card">
                 <img src="../../../../assets/icons/world-wide-web.png" alt="">
             </div>
             <div>
                 <h3>Identity card</h3>
-                <h4><p class="font-weight-light text-secondary" >Front and back</p></h4>
+                <h4>
+                    <p class="font-weight-light text-secondary">Front and back</p>
+                </h4>
             </div>
         </div>
     </div>

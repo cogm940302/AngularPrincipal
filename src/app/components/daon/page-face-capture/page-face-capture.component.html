@@ -1,4 +1,4 @@
-<div [hidden]="!activator" class="container">
+<div *ngIf="filtersLoaded | async" [hidden]="!activator" class="container">
     <div data-testid="wrapper" class="_loading_overlay_wrapper css-79elbk">
         <div class="page-capture">
             <div style="visibility: visible;">
@@ -17,8 +17,8 @@
     </div>
 </div>
 
-<button (click)="captura()">capturar</button>
+<button *ngIf="filtersLoaded | async" (click)="captura()">capturar</button>
 
 <div *ngIf="!activator" class="container">
-    <app-facial-verification [foto]="imprimirImagen()"></app-facial-verification>
+    <app-facial-verification [foto]="imprimirImagen()" [id]="id"></app-facial-verification>
 </div>

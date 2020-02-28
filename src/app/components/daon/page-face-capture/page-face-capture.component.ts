@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import * as Daonjs from '../../../../assets/js/Daon.FaceCapture.min.js';
-import { Router } from '@angular/router';
-
+import { Router, ActivatedRoute } from '@angular/router';
+import { SessionService } from 'src/app/services/session/session.service.js';
+import { Rutas } from 'src/app/model/RutasUtil.js';
+// TODO verificar las rutas de los archivos
 @Component({
   selector: 'app-page-face-capture',
   templateUrl: './page-face-capture.component.html',
@@ -9,19 +11,26 @@ import { Router } from '@angular/router';
 })
 export class PageFaceCaptureComponent implements OnInit {
 
-  constructor(private router: Router) {
+
+  constructor(private router: Router, private session: SessionService, private actRoute: ActivatedRoute) {
     this.fc = new Daonjs.Daon.FaceCapture({
       url: 'https://dobsdemo-facequality-first.identityx-cloud.com/rest/v1/quality/assessments'
     });
 
   }
 
+  filtersLoaded: Promise<boolean>;
   activator = true;
   imageData: any;
   videoEl: any;
+  id: string;
   fc: any;
 
   async ngOnInit() {
+    this.actRoute.params.subscribe(params => {
+      this.id = params['id'];
+    });
+    if (!this.alredySessionExist()) { return; }
     this.imageData = '';
     this.videoEl = document.querySelector('video');
     console.log(this.videoEl);
@@ -41,16 +50,35 @@ export class PageFaceCaptureComponent implements OnInit {
           this.activator = false;
         }
       },
-      (error) => {
-        console.log('error durante la captura');
-        console.log(error);
-       });
+        (error) => {
+          console.log('error durante la captura');
+          console.log(error);
+        });
     };
+    this.filtersLoaded = Promise.resolve(true);
+  }
 
+  async alredySessionExist() {
+    const object = this.session.getObjectSession();
+    console.log(object);
+    if (object === null || object === undefined) {
+      this.router.navigate([Rutas.terminos]);
+      return false;
+    } else {
+      if (object._id !== this.id) {
+        this.router.navigate([Rutas.error]);
+        return false;
+      } else if (object.selfie !== null && object.selfie !== undefined && object.selfie !== '') {
+        this.router.navigate([Rutas.chooseIdentity + `${this.id}`]);
+        return false;
+      } else {
+        return true;
+      }
+    }
   }
 
   captura() {
-this.fc.stopAutoCapture();
+    this.fc.stopAutoCapture();
   }
 
   onCameraStarted = (fc, video) => {

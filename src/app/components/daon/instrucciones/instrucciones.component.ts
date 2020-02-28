@@ -34,7 +34,7 @@ export class InstruccionesComponent implements OnInit {
         this.router.navigate([Rutas.error]);
         return false;
       } else if (object.selfie !== null && object.selfie !== undefined && object.selfie !== '') {
-        this.router.navigate([Rutas.fin]);
+        this.router.navigate([Rutas.chooseIdentity + `${this.id}`]);
         return false;
       } else {
         return true;
@@ -42,6 +42,6 @@ export class InstruccionesComponent implements OnInit {
     }
   }
   continuar() {
-    this.router.navigate([Rutas.fin]);
+    this.router.navigate([Rutas.selfie]);
   }
 }

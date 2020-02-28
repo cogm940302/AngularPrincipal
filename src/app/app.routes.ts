@@ -26,21 +26,20 @@ const APP_ROUTES: Routes = [
       path: 'services',
       component: PlantillaComponent,
       children: [
-          {path: 'daon/instrucciones/:id', component: InstruccionesComponent},
+          {path: 'daon/instruction/:id', component: InstruccionesComponent},
           {path: 'daon/selfie/:id', component: PageFaceCaptureComponent},
+          {path: 'daon/selfie/verification/:id', component: FacialVerificationComponent},
+          {path: 'daon/document/identity/:id', component: VerifyIdentityComponent},
+          {path: 'daon/document/instruction/:id', component: CaptureInstructionComponent},
+          {path: 'daon/document/capture/:id', component: CaptureDocumentComponent},
+          {path: 'daon/document/confirm/:id', component: ConfirmDocumentComponent},
+          {path: 'daon/liveness/instruction/:id', component: LivenessInstructionComponent},
           {path: 'sesion/:id', component: SesionIniciadaComponent},
           {path: 'correo/:id', component: CorreoVerificacionComponent},
-          {path: 'daon/facial/verification/:id', component: FacialVerificationComponent},
           {path: 'terminos/:id', component: TermsComponent},
           {path: 'error', component: ErrorComponent},
           {path: 'final', component: FinalComponent},
-          {path: 'facial/verification', component: FacialVerificationComponent},
-          {path: 'document/identity', component: VerifyIdentityComponent},
-          {path: 'document/instruction', component: CaptureInstructionComponent},
-          {path: 'document/capture', component: CaptureDocumentComponent},
-          {path: 'document/confirm', component: ConfirmDocumentComponent},
-          {path: 'liveness/instruction', component: LivenessInstructionComponent},
-          {path: '**', component: TermsComponent}
+          {path: '**', component: ErrorComponent}
       ]
   },
 ];

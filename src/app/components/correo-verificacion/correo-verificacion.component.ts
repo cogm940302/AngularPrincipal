@@ -45,7 +45,7 @@ export class CorreoVerificacionComponent implements OnInit {
         this.router.navigate([Rutas.error]);
         return false;
       } else if (this.object.correo !== null && this.object.correo !== undefined && this.object.correo !== ''
-        && this.object.daonHref !== null && this.object.daonHref !== undefined && this.object.daonHref !== '') {
+        && this.object.daon.daonHref !== null && this.object.daon.daonHref !== undefined && this.object.daon.daonHref !== '') {
         console.log('voy a instrucciones');
         this.router.navigate([Rutas.instrucciones + `${this.id}`]);
         return false;
@@ -65,25 +65,25 @@ export class CorreoVerificacionComponent implements OnInit {
     console.log(objetoDaon);
     this.object.correo = this.correoText;
     if (objetoDaon['statusCode'] === 200) {
-      this.object.daonHref = objetoDaon['body']['href'];
+      this.object.daon.daonHref = objetoDaon['body']['href'];
     } else {
       // si ya existe voy a buscarlo en la bd de mongo
       await this.middleMongo.getDataHrefUser(this.correoText).toPromise().then(data => {
         console.log(data);
-        this.object.daonHref = data['body']['href'];
+        this.object.daon.daonHref = data['body']['href'];
       });
     }
-    console.log(this.object.daonHref);
-    if (!this.object.daonHref) {
+    console.log(this.object.daon.daonHref);
+    if (!this.object.daon.daonHref) {
       this.router.navigate([Rutas.error]);
       return;
     }
     // ligarlo al cliente actual
-    const resultDaon = await this.middleDaon.relationClientUser(this.object.daonClientHref, this.object.daonHref);
+    const resultDaon = await this.middleDaon.relationClientUser(this.object.daon.daonHref, this.object.daon.daonHref);
     console.log('resultDaon');
     console.log(resultDaon);
     if (resultDaon['statusCode'] === 200 || resultDaon['body']['message'].toString().contains('already exists')) {
-      this.object.daonHref = resultDaon['body']['href'];
+      this.object.daon.daonHref = resultDaon['body']['href'];
     } else {
       this.router.navigate([Rutas.error]);
       return;

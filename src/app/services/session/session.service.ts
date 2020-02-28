@@ -25,7 +25,7 @@ export class SessionService {
 
   setId(id: string) {
     this.sesionObject = JSON.parse(sessionStorage.getItem('currentSessionDaon'));
-    this.sesionObject.id = id;
+    this.sesionObject._id = id;
     sessionStorage.clear();
     console.log(JSON.stringify(this.sesionObject));
     sessionStorage.setItem('currentSessionDaon', JSON.stringify(this.sesionObject));
