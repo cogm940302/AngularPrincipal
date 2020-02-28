@@ -4,7 +4,7 @@ import { politicaDePrivacidad, terminosDeUso } from '../../model/documentos/acep
 import { Router, ActivatedRoute } from '@angular/router';
 import { Rutas } from 'src/app/model/RutasUtil';
 import { SessionService } from '../../services/session/session.service';
-import { sesionModel } from 'src/app/model/sesion/terminos';
+import { sesionModel } from 'src/app/model/sesion/SessionPojo';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { MiddleMongoService } from '../../services/http/middle-mongo.service';
 
@@ -27,12 +27,38 @@ export class TermsComponent implements OnInit {
   datosDelCliente: sesionModel;
   modelo: sesionModel;
   id: any;
+  filtersLoaded: Promise<boolean>;
 
   constructor(config: NgbModalConfig, private modalService: NgbModal, public router: Router, public session: SessionService,
     private http: HttpClient, private middle: MiddleMongoService, private actRoute: ActivatedRoute) {
     // customize default values of modals used by this component tree
     config.backdrop = 'static';
     config.keyboard = false;
+  }
+
+  async ngOnInit() {
+    this.actRoute.params.subscribe(params => {
+      this.id = params['id'];
+    });
+    if (await this.alredySessionExist()) { return; }
+    console.log('voy por los datos');
+    await this.middle.getDataUser(this.id).toPromise().then(data => {
+      console.log(data);
+      this.datosDelCliente = data;
+    });
+    // this._id = this.datosDelCliente['_id'];
+    console.log('el id es: ' + this.id);
+    if (this.datosDelCliente === null || this.datosDelCliente === undefined
+        || this.datosDelCliente['errorType'] === 'Error') {
+      console.log('Error no existe');
+      this.router.navigate([Rutas.error]);
+    }
+    console.log(this.datosDelCliente);
+    this.session.updateModel(this.datosDelCliente);
+    if (this.datosDelCliente.terminos === true) {
+      this.router.navigate([Rutas.correo + `${this.id}`]);
+    }
+    this.filtersLoaded = Promise.resolve(true);
   }
 
   toogleCheckbox() {
@@ -50,30 +76,9 @@ export class TermsComponent implements OnInit {
       if (object.terminos) {
         this.router.navigate([Rutas.correo + `${this.id}`]);
         return true;
+      } else {
+        return false;
       }
-    }
-  }
-
-  async ngOnInit() {
-    this.actRoute.params.subscribe(params => {
-      this.id = params['id'];
-    });
-    if (await this.alredySessionExist()) { return; }
-    console.log('voy por los datos');
-    await this.middle.getDataUser(this.id).toPromise().then(data => {
-      console.log(data);
-      this.datosDelCliente = data;
-    });
-    // this._id = this.datosDelCliente['_id'];
-    console.log('el id es: ' + this.id);
-    if (this.datosDelCliente === null || this.datosDelCliente === undefined) {
-      console.log('Error no existe');
-      this.router.navigate([Rutas.error]);
-    }
-    console.log(this.datosDelCliente);
-    this.session.updateModel(this.datosDelCliente);
-    if (this.datosDelCliente.terminos === true) {
-      this.router.navigate([Rutas.correo + `${this.id}`]);
     }
   }
 

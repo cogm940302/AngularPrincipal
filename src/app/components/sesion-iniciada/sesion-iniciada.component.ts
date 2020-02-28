@@ -4,7 +4,7 @@ import { SessionService } from 'src/app/services/session/session.service';
 import { Rutas } from 'src/app/model/RutasUtil';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { ShareMailService } from '../../services/share/share-mail.service';
-import { sesionModel } from '../../model/sesion/terminos';
+import { sesionModel } from '../../model/sesion/SessionPojo';
 
 @Component({
   selector: 'app-sesion-iniciada',

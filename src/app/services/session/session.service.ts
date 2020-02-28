@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { sesionModel } from '../../model/sesion/terminos';
+import { sesionModel } from '../../model/sesion/SessionPojo';
 
 @Injectable({
   providedIn: 'root'

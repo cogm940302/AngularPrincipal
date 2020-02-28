@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { sesionModel } from 'src/app/model/sesion/terminos';
+import { sesionModel } from 'src/app/model/sesion/SessionPojo';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { urlMiddleMongo } from '../../model/LigasUtil';
 
 @Injectable({
   providedIn: 'root'
@@ -11,25 +12,36 @@ export class MiddleMongoService {
 
   constructor(private http: HttpClient) { }
 
-  urlMiddle = 'https://5ghhi5ko87.execute-api.us-east-2.amazonaws.com/test/usuarios';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   getDataUser(id: string): Observable<any> {
     console.log('El id que recibo es: ' + id);
-    return this.http.get(this.urlMiddle + `/${id}`, { headers: this.headers }).pipe(
+    return this.http.get(urlMiddleMongo + `/${id}`, { headers: this.headers }).pipe(
       map((res: Response) => {
         return res || {};
       }),
       catchError(this.errorMgmt)
     );
+  }
 
-    // TODO Consumir servicio que te traera la informacion del id
-    // return '{ "_id":"1234567890", "score" : null }';
+  getDataHrefUser(correo: string) {
+    return this.http.get(urlMiddleMongo + `/correo/${correo}`, { headers: this.headers }).pipe(
+      map((res: Response) => {
+        return res || {};
+      }),
+      catchError(this.errorMgmt)
+    );
   }
 
   updateDataUser(datos: sesionModel) {
-    // TODO servicios para actualizar datos
-    return '{ "_id":"1234567890", "score" : null, terminos : true }';
+    console.log('lo que voy actulizar es: ');
+    console.log(datos);
+    return this.http.put(urlMiddleMongo, datos, { headers: this.headers }).pipe(
+      map((res: Response) => {
+        return res || {};
+      }),
+      catchError(this.errorMgmt)
+    );
   }
 
   // Error handling

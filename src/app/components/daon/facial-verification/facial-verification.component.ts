@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Rutas } from '../../../model/RutasUtil';
 import { catchError } from 'rxjs/operators';
 import { SelfieSend } from 'src/app/model/DaonPojos/Selfie';
-import { sesionModel } from 'src/app/model/sesion/terminos';
+import { sesionModel } from 'src/app/model/sesion/SessionPojo';
 
 
 
