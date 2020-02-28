@@ -1,0 +1,20 @@
+
+<div class="text-center  border" >
+    <div class="ui-canvas-container embed-responsive-item text-center" >
+        <div  class="m-5" >
+            <h1>Image Capture</h1>
+        </div>
+        <div class="m-2 pb-4">
+            <h4><p class="font-weight-light text-secondary" >Are you happy with the image or would you like to retake the photo?</p></h4>
+        </div>
+        <div class="m-4   bg-light text-center" >
+                <div class="m-4  text-center">
+                    <img src="{{img}}" width="60%" height="60%"/>        
+                </div>
+        </div>
+        <div class="m-4 card-body text-center">
+            <button type="button" class="btn btn-light  border m-4" (click)="back()">retake the photo</button>
+            <button type="button" class="btn btn-primary border m-4"(click)="continue()">Continue</button>
+        </div>
+    </div>
+</div>

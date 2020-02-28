@@ -1,0 +1,30 @@
+<div class="text-center">
+    <div class="m-5 text-left">
+        <button class="btn rounded" (click)="back()"><img src="../../../../assets/icons/left-curve-arrow.png" alt=""> back</button>
+    </div>
+    <div  class="m-5" >
+        <h1>{{titulo}}</h1>
+    </div>
+    <div class="m-5 border">
+        <img src="../../../../assets/icons/icoscan.png" alt="">
+    </div>
+    <div>
+        <h4><p class="font-weight-light text-secondary border" >Upload a photo of your ID card photo page.</p></h4>
+    </div>
+
+    <div class="m-5">
+        <div class="m-5 border">
+            <img src="../../../../assets/icons/idcard.png" alt="">
+        </div>
+        <div>
+            <h4><p class="font-weight-light text-secondary border" >This is how your photo should look - taken on a clear background, well lit and without glare</p></h4>
+        </div>
+    </div>
+
+    <div class="m-5 border">
+        <button type="button" class="btn btn-primary btn-lg btn-block">Upload document</button>
+    </div>
+    <div class="m-5 border">
+        <button type="button" (click)="captueWCamera()"  class="btn btn-light btn-lg btn-block">Capture with camera</button>
+    </div>
+</div>

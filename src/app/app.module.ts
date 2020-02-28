@@ -15,6 +15,11 @@ import { InstruccionesComponent } from './components/daon/instrucciones/instrucc
 import { SesionIniciadaComponent } from './components/sesion-iniciada/sesion-iniciada.component';
 import { FinalComponent } from './components/final/final.component';
 import { PageFaceCaptureComponent } from './components/daon/page-face-capture/page-face-capture.component';
+import { VerifyIdentityComponent } from './components/daon/document-verification/verify-identity/verify-identity.component';
+import { CaptureInstructionComponent } from './components/daon/document-verification/capture-instruction/capture-instruction.component';
+import { CaptureDocumentComponent } from './components/daon/document-verification/capture-document/capture-document.component';
+import { LivenessInstructionComponent } from './components/daon/liveness-verification/liveness-instruction/liveness-instruction.component';
+import { ConfirmDocumentComponent } from './components/daon/document-verification/confirm-document/confirm-document.component';
 import { FacialVerificationComponent } from './components/daon/facial-verification/facial-verification.component';
 import { ErrorComponent } from './components/error/error.component';
 // import {  NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -31,6 +36,11 @@ import { ErrorComponent } from './components/error/error.component';
     FinalComponent,
     PageFaceCaptureComponent,
     FacialVerificationComponent,
+    VerifyIdentityComponent,
+    CaptureInstructionComponent,
+    CaptureDocumentComponent,
+    ConfirmDocumentComponent,
+    LivenessInstructionComponent,
     ErrorComponent,
 
   ],
