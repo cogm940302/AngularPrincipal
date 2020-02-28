@@ -25,6 +25,7 @@ export class FacialVerificationComponent implements OnInit {
   async ngOnInit() {
     console.log(this.foto);
     this.foto = await this.blobToBase64(this.foto);
+    console.log(this.foto);
     this.filtersLoaded = Promise.resolve(true);
   }
 

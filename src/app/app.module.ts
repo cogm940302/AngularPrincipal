@@ -16,6 +16,11 @@ import { SesionIniciadaComponent } from './components/sesion-iniciada/sesion-ini
 import { FinalComponent } from './components/final/final.component';
 import { PageFaceCaptureComponent } from './components/daon/page-face-capture/page-face-capture.component';
 import { FacialVerificationComponent } from './components/facial-verification/facial-verification.component';
+import { VerifyIdentityComponent } from './components/daon/document-verification/verify-identity/verify-identity.component';
+import { CaptureInstructionComponent } from './components/daon/document-verification/capture-instruction/capture-instruction.component';
+import { CaptureDocumentComponent } from './components/daon/document-verification/capture-document/capture-document.component';
+import { LivenessInstructionComponent } from './components/daon/liveness-verification/liveness-instruction/liveness-instruction.component';
+import { ConfirmDocumentComponent } from './components/daon/document-verification/confirm-document/confirm-document.component';
 // import {  NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // import {  NgbModal } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
 
@@ -30,6 +35,11 @@ import { FacialVerificationComponent } from './components/facial-verification/fa
     FinalComponent,
     PageFaceCaptureComponent,
     FacialVerificationComponent,
+    VerifyIdentityComponent,
+    CaptureInstructionComponent,
+    CaptureDocumentComponent,
+    ConfirmDocumentComponent,
+    LivenessInstructionComponent,
 
   ],
   imports: [

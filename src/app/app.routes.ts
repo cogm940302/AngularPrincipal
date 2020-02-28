@@ -7,6 +7,11 @@ import { SesionIniciadaComponent } from './components/sesion-iniciada/sesion-ini
 import { FinalComponent } from './components/final/final.component';
 import { PageFaceCaptureComponent } from './components/daon/page-face-capture/page-face-capture.component';
 import { FacialVerificationComponent } from './components/facial-verification/facial-verification.component';
+import { VerifyIdentityComponent } from './components/daon/document-verification/verify-identity/verify-identity.component';
+import { CaptureInstructionComponent } from './components/daon/document-verification/capture-instruction/capture-instruction.component';
+import { CaptureDocumentComponent } from './components/daon/document-verification/capture-document/capture-document.component';
+import { ConfirmDocumentComponent } from './components/daon/document-verification/confirm-document/confirm-document.component';
+import { LivenessInstructionComponent } from './components/daon/liveness-verification/liveness-instruction/liveness-instruction.component';
 
 const APP_ROUTES: Routes = [
   {
@@ -25,6 +30,11 @@ const APP_ROUTES: Routes = [
           {path: 'correo', component: CorreoVerificacionComponent},
           {path: 'final', component: FinalComponent},
           {path: 'facial/verification', component: FacialVerificationComponent},
+          {path: 'document/identity', component: VerifyIdentityComponent},
+          {path: 'document/instruction', component: CaptureInstructionComponent},
+          {path: 'document/capture', component: CaptureDocumentComponent},
+          {path: 'document/confirm', component: ConfirmDocumentComponent},
+          {path: 'liveness/instruction', component: LivenessInstructionComponent},
           {path: '**', component: TermsComponent}
       ]
   },
