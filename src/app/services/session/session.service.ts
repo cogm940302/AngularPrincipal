@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { sesionModel } from '../../model/sesion/terminos';
+import { sesionModel } from '../../model/sesion/SessionPojo';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ export class SessionService {
 
   constructor() {
     this.sesionObject = new sesionModel();
-    this.sesionObject.aceptar = false;
+    this.sesionObject.terminos = false;
   }
 
   cleanValues() {
@@ -20,13 +20,6 @@ export class SessionService {
     this.sesionObject = sessionObject;
     console.log(JSON.stringify(this.sesionObject));
     sessionStorage.clear();
-    sessionStorage.setItem('currentSessionDaon', JSON.stringify(this.sesionObject));
-  }
-
-  setTermsAndConditionsTrue() {
-    this.sesionObject.aceptar = true;
-    console.log('voy a guardar: ');
-    console.log(JSON.stringify(this.sesionObject));
     sessionStorage.setItem('currentSessionDaon', JSON.stringify(this.sesionObject));
   }
 
@@ -42,17 +35,6 @@ export class SessionService {
     this.sesionObject.correo = correo;
     console.log(JSON.stringify(this.sesionObject));
     sessionStorage.setItem('currentSessionDaon', JSON.stringify(this.sesionObject));
-  }
-
-  isTermsAndConditionsTrue() {
-    this.sesionObject = JSON.parse(sessionStorage.getItem('currentSessionDaon'));
-    console.log(this.sesionObject);
-    if (this.sesionObject === null) {
-      this.sesionObject = new sesionModel();
-      return false;
-    }
-    console.log('voy a regresar: ' + this.sesionObject.aceptar);
-    return this.sesionObject.aceptar;
   }
 
   getObjectSession() {
