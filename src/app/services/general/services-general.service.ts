@@ -11,7 +11,26 @@ export class ServicesGeneralService {
   img64:String;
   tI:string;
   frontAndBack:string;
+
+  resultLiveness:string;
+  mensajeLiveness:string;
   constructor(private http: HttpClient) { }
+
+  setResultLiveness(result){
+    this.resultLiveness=result;
+  }
+
+  getResultLiveness(){
+    return this.resultLiveness;
+  }
+
+  setMensaje(mensaje){
+    this.mensajeLiveness=mensaje;
+  }
+
+  getMensajeLiveness(){
+    return this.mensajeLiveness;
+  }
 
   settI(ti){
     this.tI = ti;

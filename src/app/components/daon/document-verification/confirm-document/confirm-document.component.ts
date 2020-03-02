@@ -25,7 +25,7 @@ export class ConfirmDocumentComponent implements OnInit {
     this.clientCapture= new ClientCapture();
     this.processedImage=new ProcessedImage();
     this.sensitiveData=new SensitiveData();
-    this.checkIdsGetSend = new CheckID();
+    this.checkIdsGetSend = new CheckID(); 
     console.log(">>>>>>>>>>>>>>>>> "+this.serviciogeneralService.getImg64());
 
     

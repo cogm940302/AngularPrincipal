@@ -12,6 +12,8 @@ import { CaptureInstructionComponent } from './components/daon/document-verifica
 import { CaptureDocumentComponent } from './components/daon/document-verification/capture-document/capture-document.component';
 import { ConfirmDocumentComponent } from './components/daon/document-verification/confirm-document/confirm-document.component';
 import { LivenessInstructionComponent } from './components/daon/liveness-verification/liveness-instruction/liveness-instruction.component';
+import { LivenessCaptureComponent } from './components/daon/liveness-verification/liveness-capture/liveness-capture.component';
+import { LivenessResultComponent } from './components/daon/liveness-verification/liveness-result/liveness-result.component';
 import { FacialVerificationComponent } from './components/daon/facial-verification/facial-verification.component';
 import { ErrorComponent } from './components/error/error.component';
 
@@ -34,6 +36,10 @@ const APP_ROUTES: Routes = [
           {path: 'daon/document/capture/:id', component: CaptureDocumentComponent},
           {path: 'daon/document/confirm/:id', component: ConfirmDocumentComponent},
           {path: 'daon/liveness/instruction/:id', component: LivenessInstructionComponent},
+
+          {path: 'daon/liveness/capture/:id', component: LivenessCaptureComponent},
+          {path: 'daon/liveness/result/:id', component: LivenessResultComponent},
+
           {path: 'sesion/:id', component: SesionIniciadaComponent},
           {path: 'correo/:id', component: CorreoVerificacionComponent},
           {path: 'terminos/:id', component: TermsComponent},

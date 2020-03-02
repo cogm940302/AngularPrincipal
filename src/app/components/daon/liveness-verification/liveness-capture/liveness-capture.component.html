@@ -1,0 +1,8 @@
+<div class ="clientcontainer text-center">
+    <h1>3D Face Liveness web-client</h1>
+    <p id="instructions">{{instTxt}}</p> 
+    <div class ="videocontainer text-center">
+        <video width="60%" height="60%" class ="text-center" muted playsinline autoplay> Placeholder for video</video>
+    </div>
+    <button class="btn btn-primary" [disabled]="blnStart" (click)="startButton()">Start Session</button>
+</div>    

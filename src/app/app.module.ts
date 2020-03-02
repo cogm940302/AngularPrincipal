@@ -22,6 +22,8 @@ import { LivenessInstructionComponent } from './components/daon/liveness-verific
 import { ConfirmDocumentComponent } from './components/daon/document-verification/confirm-document/confirm-document.component';
 import { FacialVerificationComponent } from './components/daon/facial-verification/facial-verification.component';
 import { ErrorComponent } from './components/error/error.component';
+import { LivenessCaptureComponent } from './components/daon/liveness-verification/liveness-capture/liveness-capture.component';
+import { LivenessResultComponent } from './components/daon/liveness-verification/liveness-result/liveness-result.component';
 // import {  NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // import {  NgbModal } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
 
@@ -42,6 +44,8 @@ import { ErrorComponent } from './components/error/error.component';
     ConfirmDocumentComponent,
     LivenessInstructionComponent,
     ErrorComponent,
+    LivenessCaptureComponent,
+    LivenessResultComponent,
 
   ],
   imports: [
