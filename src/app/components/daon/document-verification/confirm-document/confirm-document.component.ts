@@ -32,13 +32,11 @@ export class ConfirmDocumentComponent implements OnInit {
     });
     if (!this.alredySessionExist()) { return; }
     this.documentoSend = new DocumentoSend();
-    this.clientCapture = new ClientCapture();
-    this.processedImage = new ProcessedImage();
-    this.sensitiveData = new SensitiveData();
+    this.clientCapture= new ClientCapture();
+    this.processedImage=new ProcessedImage();
+    this.sensitiveData=new SensitiveData();
     this.checkIdsGetSend = new CheckID();
-    console.log('>>>>>>>>>>>>>>>>> ' + this.serviciogeneralService.getImg64());
-    this.checkIdsGetSend.url = 'https://dobsdemo-idx-first.identityx-cloud.com/mitsoluciones3/DigitalOnBoardingServices/rest/v1/users/QTAzsec8ROKMltj4m8cTU5EJpQ/idchecks';
-    this.checkIdsGetSend.metodo = 'GET';
+    console.log(">>>>>>>>>>>>>>>>> "+this.serviciogeneralService.getImg64());
 
     this.img = this.serviciogeneralService.getImg64();
     this.filtersLoaded = Promise.resolve(true);

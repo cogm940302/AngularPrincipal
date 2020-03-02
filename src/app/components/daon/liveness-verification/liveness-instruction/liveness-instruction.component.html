@@ -1,31 +1,53 @@
 <div class="text-center">
     
     <div  class="m-5" >
-        <h1>Prueba de vida</h1>
+        <h1>Extra checks</h1>
     </div>
     <div >
-        <h5>Prueba de vida</h5>
+        <h5>We are about to perform some extra checks for your security. We simply want to check that it's really you applying. This won't take long!</h5>
+        
     </div>
-    <div class="m-5 border">
-        <img src="../../../../assets/icons/icoscan.png" alt="">
+    <br><br>
+    <div >
+        <h5>On the next screen you will see a sequence of color flashes. Hold your phone in front of your face so that your face fits the oval.</h5>
     </div>
-    <div>
-        <h4><p class="font-weight-light text-secondary border" >Upload a photo of your ID card photo page.</p></h4>
+    <br>
+    <div class="m-4 card" (click)="agregarOferta('PASSPORT')">
+        <div class="m-1 row">
+            <div class="m-4">
+                <img src="../../../../assets/icons/inst1.png" alt="">
+            </div>
+            <div>
+                <h4>Make sure you are in an area without strong lighting,</h4>
+                <h4>indoors works best</h4>
+            </div>
+        </div>
     </div>
 
-    <div class="m-5">
-        <div class="m-5 border">
-            <img src="../../../../assets/icons/idcard.png" alt="">
+    <div class="m-4 card" (click)="agregarOferta('PASSPORT')">
+        <div class="m-1 row">
+            <div class="m-4">
+                <img src="../../../../assets/icons/inst2.png" alt="">
+            </div>
+            <div>
+                <h4>Hold the camera so your face remains in the oval</h4>
+            </div>
         </div>
-        <div>
-            <h4><p class="font-weight-light text-secondary border" >This is how your photo should look - taken on a clear background, well lit and without glare</p></h4>
+    </div>
+
+    <div class="m-4 card" (click)="agregarOferta('PASSPORT')">
+        <div class="m-1 row">
+            <div class="m-4">
+                <img src="../../../../assets/icons/inst3.png" alt="">
+            </div>
+            <div>
+                <h4>Tap on start when ready</h4>
+            </div>
         </div>
     </div>
 
     <div class="m-5 border">
-        <button type="button" class="btn btn-primary btn-lg btn-block">Upload document</button>
+        <button type="button" class="btn btn-primary btn-lg btn-block" (click)="enter()">Start</button>
     </div>
-    <div class="m-5 border">
-        <button type="button" (click)="captueWCamera()"  class="btn btn-light btn-lg btn-block">Capture with camera</button>
-    </div>
+    
 </div>

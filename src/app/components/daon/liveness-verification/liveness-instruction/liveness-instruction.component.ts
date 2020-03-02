@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Rutas } from 'src/app/model/RutasUtil.js';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-liveness-instruction',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LivenessInstructionComponent implements OnInit {
 
-  constructor() { }
+  constructor(public router: Router) { }
 
   ngOnInit() {
+  }
+
+  enter(){
+    this.router.navigate([Rutas.livenessCapture]);
   }
 
 }
