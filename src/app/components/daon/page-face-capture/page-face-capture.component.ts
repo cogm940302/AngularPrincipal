@@ -13,13 +13,12 @@ export class PageFaceCaptureComponent implements OnInit {
 
 
   constructor(private router: Router, private session: SessionService, private actRoute: ActivatedRoute) {
+
     this.fc = new Daonjs.Daon.FaceCapture({
       url: 'https://dobsdemo-facequality-first.identityx-cloud.com/rest/v1/quality/assessments'
     });
-
   }
 
-  filtersLoaded: Promise<boolean>;
   activator = true;
   imageData: any;
   videoEl: any;
@@ -27,10 +26,11 @@ export class PageFaceCaptureComponent implements OnInit {
   fc: any;
 
   async ngOnInit() {
-    this.actRoute.params.subscribe(params => {
-      this.id = params['id'];
-    });
-    if (!this.alredySessionExist()) { return; }
+    // this.actRoute.params.subscribe(params => {
+    //   this.id = params['id'];
+    // });
+    // if (!this.alredySessionExist()) { return; }
+
     this.imageData = '';
     this.videoEl = document.querySelector('video');
     console.log(this.videoEl);
@@ -55,7 +55,7 @@ export class PageFaceCaptureComponent implements OnInit {
           console.log(error);
         });
     };
-    this.filtersLoaded = Promise.resolve(true);
+
   }
 
   async alredySessionExist() {
