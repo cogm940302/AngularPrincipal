@@ -42,6 +42,6 @@ export class InstruccionesComponent implements OnInit {
     }
   }
   continuar() {
-    this.router.navigate([Rutas.selfie]);
+    this.router.navigate([Rutas.selfie + `${this.id}`]);
   }
 }
