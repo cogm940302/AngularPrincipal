@@ -70,7 +70,7 @@ export class CorreoVerificacionComponent implements OnInit {
       // si ya existe voy a buscarlo en la bd de mongo
       await this.middleMongo.getDataHrefUser(this.correoText).toPromise().then(data => {
         console.log(data);
-        this.object.daon.daonHref = data['body']['href'];
+        this.object.daon.daonHref = data['body']['daon']['daonHref'];
       });
     }
     console.log(this.object.daon.daonHref);
@@ -82,8 +82,10 @@ export class CorreoVerificacionComponent implements OnInit {
     const resultDaon = await this.middleDaon.relationClientUser(this.object.daon.daonHref, this.object.daon.daonHref);
     console.log('resultDaon');
     console.log(resultDaon);
-    if (resultDaon['statusCode'] === 200 || resultDaon['body']['message'].toString().contains('already exists')) {
+    if (resultDaon['statusCode'] === 200) {
       this.object.daon.daonHref = resultDaon['body']['href'];
+    } else if (resultDaon['body']['message'].contains('already exists')) {
+      console.log('ya existe el usuario');
     } else {
       this.router.navigate([Rutas.error]);
       return;

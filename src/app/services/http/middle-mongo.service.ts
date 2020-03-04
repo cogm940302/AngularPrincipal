@@ -25,6 +25,7 @@ export class MiddleMongoService {
   }
 
   getDataHrefUser(correo: string) {
+    console.log(urlMiddleMongo + `/correo/${correo}`);
     return this.http.get(urlMiddleMongo + `/correo/${correo}`, { headers: this.headers }).pipe(
       map((res: Response) => {
         return res || {};
