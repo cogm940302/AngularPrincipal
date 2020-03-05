@@ -28,16 +28,17 @@ export class PageFaceCaptureComponent implements OnInit {
   fc: any;
   videoEl: any;
   ctx: CanvasRenderingContext2D;
-  imageGreen:any;
-  img:any;
+  imageGreen: any;
+  img: any;
   mensaje: string;
-  btnB:boolean;
-  f=(videoEl1,img) => {
-    let c2=this.canvas;
+  btnB: boolean;
+
+  f = (videoEl1, img) => {
+    let c2 = this.canvas;
     function step() {
       let ctx = c2.nativeElement.getContext('2d');
       ctx.drawImage(videoEl1, 0, 0, c2.nativeElement.width, c2.nativeElement.height);
-      ctx.drawImage(img, -150, -330, c2.nativeElement.width*1.5, c2.nativeElement.height*2.4);
+      ctx.drawImage(img, -150, -330, c2.nativeElement.width * 1.5, c2.nativeElement.height * 2.4);
       requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
@@ -47,16 +48,15 @@ export class PageFaceCaptureComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    // if (!this.alredySessionExist()) { return; }
+    if (!this.alredySessionExist()) { return; }
 
-    this.btnB=true;
-    this.mensaje="Posiciona tu cara dentro del area marcada";
+    this.btnB = true;
+    this.mensaje = 'Posiciona tu cara dentro del area marcada';
     this.imageData = '';
-    let img = document.getElementById("scream");
+    let img = document.getElementById('scream');
     this.videoEl = document.querySelector('video');
-    this.videoEl.addEventListener('play', this.f(this.videoEl,img));
+    this.videoEl.addEventListener('play', this.f(this.videoEl, img));
     this.fc.startCamera(this.videoEl).then((response) => {
-
     });
 
     this.videoEl.onloadedmetadata = () => {
@@ -77,7 +77,7 @@ export class PageFaceCaptureComponent implements OnInit {
       if (object._id !== this.id) {
         this.router.navigate([Rutas.error]);
         return false;
-      } else if (object.selfie !== null && object.selfie !== undefined && object.selfie !== '') {
+      } else if (object.daon.selfie) {
         this.router.navigate([Rutas.chooseIdentity + `${this.id}`]);
         return false;
       } else {
@@ -111,11 +111,12 @@ export class PageFaceCaptureComponent implements OnInit {
       });
     };
   }
+
   tomarSelfie() {
-    this.btnB=false;
+    this.btnB = false;
     this.fc.startAutoCapture(response => {
 
-      console.log("R = " + JSON.stringify(response, null, 2));
+      console.log('R = ' + JSON.stringify(response, null, 2));
 
       if (response.result === 'FAIL') {
         this.mensaje = response.feedback;
@@ -131,7 +132,7 @@ export class PageFaceCaptureComponent implements OnInit {
       (error) => {
         console.log('error durante la captura');
         console.log(error);
-        this.btnB=true;
+        this.btnB = true;
       });
   }
 

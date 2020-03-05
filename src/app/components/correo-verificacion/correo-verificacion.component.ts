@@ -59,7 +59,6 @@ export class CorreoVerificacionComponent implements OnInit {
     this.object.correo = this.correoText;
     this.session.updateModel(this.object);
     await this.middleMongo.updateDataUser(this.object);
-    // this.sharedata.setCorreo(this.correoText);
     this.router.navigate([Rutas.instrucciones + `${this.id}`]);
   }
 }

@@ -30,15 +30,15 @@ export class ConfirmDocumentComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    // if (!this.alredySessionExist()) { return; }
+    if (!this.alredySessionExist()) { return; }
     this.documentoSend = new DocumentoSend();
-    this.clientCapture= new ClientCapture();
-    this.processedImage=new ProcessedImage();
-    this.sensitiveData=new SensitiveData();
+    this.clientCapture = new ClientCapture();
+    this.processedImage = new ProcessedImage();
+    this.sensitiveData = new SensitiveData();
     this.checkIdsGetSend = new CheckID();
-    this.checkIdsGetSend.url="https://dobsdemo-idx-first.identityx-cloud.com/mitsoluciones3/DigitalOnBoardingServices/rest/v1/users/QTAz60XuGXnwddZAHUcgGbFJgA/idchecks";
-    this.checkIdsGetSend.metodo="GET";
-    console.log(">>>>>>>>>>>>>>>>> "+this.serviciogeneralService.getImg64());
+    this.checkIdsGetSend.url = "https://dobsdemo-idx-first.identityx-cloud.com/mitsoluciones3/DigitalOnBoardingServices/rest/v1/users/QTAz60XuGXnwddZAHUcgGbFJgA/idchecks";
+    this.checkIdsGetSend.metodo = "GET";
+    console.log(">>>>>>>>>>>>>>>>> " + this.serviciogeneralService.getImg64());
 
     this.img = this.serviciogeneralService.getImg64();
     this.filtersLoaded = Promise.resolve(true);
@@ -54,7 +54,7 @@ export class ConfirmDocumentComponent implements OnInit {
       if (object._id !== this.id) {
         this.router.navigate([Rutas.error]);
         return false;
-      } else if (object.identity !== null && object.identity !== undefined && object.identity !== '') {
+      } else if (object.daon.identity) {
         this.router.navigate([Rutas.livenessInstruction + `${this.id}`]);
         return false;
       } else {
@@ -68,7 +68,7 @@ export class ConfirmDocumentComponent implements OnInit {
   }
 
   sendDocumentDaon(url) {
-console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     this.documentoSend.captured = new Date().toISOString();
     this.documentoSend.url = url;
     this.documentoSend.metodo = 'POST';
@@ -77,7 +77,7 @@ console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     this.sensitiveData.imageFormat = 'jpg';
     this.sensitiveData.value = this.serviciogeneralService.getImg64().replace('data:image/jpeg;base64,', '');
     this.documentoSend.clientCapture.processedImage.sensitiveData = this.sensitiveData;
-    console.log("documentoSend= " + JSON.stringify(  this.documentoSend, null, 2));
+    console.log("documentoSend= " + JSON.stringify(this.documentoSend, null, 2));
     this.serviciogeneralService.sendDaon(this.documentoSend).subscribe(data => {
       console.log(JSON.stringify(data, null, 2));
       if (data.errorType) {
@@ -87,9 +87,9 @@ console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         // this.serviciogeneralService.settI("this.typeIdentity");
         if (this.serviciogeneralService.getFrontAndBack() === 'front') {
           this.serviciogeneralService.setFrontAndBack('back');
-          this.router.navigate([Rutas.documentInstruction+ `${this.id}`]);
+          this.router.navigate([Rutas.documentInstruction + `${this.id}`]);
         } else if (this.serviciogeneralService.getFrontAndBack() === 'back') {
-          this.router.navigate([Rutas.livenessInstruction+ `${this.id}`]);
+          this.router.navigate([Rutas.livenessInstruction + `${this.id}`]);
         }
       }
     });
