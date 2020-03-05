@@ -40,24 +40,26 @@ export class TermsComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (await this.alredySessionExist()) { return; }
+    // if (await this.alredySessionExist()) { return; }
     console.log('voy por los datos');
-    await this.middle.getDataUser(this.id).toPromise().then(data => {
-      console.log(data);
-      this.datosDelCliente = data;
-    });
-    // this._id = this.datosDelCliente['_id'];
-    console.log('el id es: ' + this.id);
-    if (this.datosDelCliente === null || this.datosDelCliente === undefined
-        || this.datosDelCliente['errorType'] === 'Error') {
-      console.log('Error no existe');
-      this.router.navigate([Rutas.error]);
-    }
-    console.log(this.datosDelCliente);
-    this.session.updateModel(this.datosDelCliente);
-    if (this.datosDelCliente.terminos === true) {
-      this.router.navigate([Rutas.correo + `${this.id}`]);
-    }
+    // await this.middle.getDataUser(this.id).toPromise().then(data => {
+    //   console.log(data);
+    //   this.datosDelCliente = data;
+    // });
+    // // this._id = this.datosDelCliente['_id'];
+    // console.log('el id es: ' + this.id);
+    // if (this.datosDelCliente === null || this.datosDelCliente === undefined
+    //     || this.datosDelCliente['errorType'] === 'Error') {
+    //   console.log('Error no existe');
+    //   this.router.navigate([Rutas.error]);
+    // }
+    // console.log(this.datosDelCliente);
+    // this.session.updateModel(this.datosDelCliente);
+    // if (this.datosDelCliente.terminos === true) {
+    //   this.router.navigate([Rutas.correo + `${this.id}`]);
+    // }
+
+
     this.filtersLoaded = Promise.resolve(true);
   }
 
@@ -66,23 +68,24 @@ export class TermsComponent implements OnInit {
   }
   /** function to validate if user recharge page **/
   async alredySessionExist() {
-    let object = this.session.getObjectSession();
-    console.log(object);
-    if (object === null || object === undefined) {
-      console.log('la sesion no existe');
-      return false;
-    } else {
-      console.log('ya tengo los valores');
-      if (object.terminos) {
-        this.router.navigate([Rutas.correo + `${this.id}`]);
-        return true;
-      } else {
-        return false;
-      }
-    }
+    // let object = this.session.getObjectSession();
+    // console.log(object);
+    // if (object === null || object === undefined) {
+    //   console.log('la sesion no existe');
+    //   return false;
+    // } else {
+    //   console.log('ya tengo los valores');
+    //   if (object.terminos) {
+    //     this.router.navigate([Rutas.correo + `${this.id}`]);
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // }
   }
 
   siguiente() {
+    this.datosDelCliente = new sesionModel();
     this.datosDelCliente.terminos = true;
     this.session.updateModel(this.datosDelCliente);
     this.router.navigate([Rutas.correo + `${this.id}`]);

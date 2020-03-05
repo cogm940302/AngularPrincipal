@@ -26,9 +26,9 @@ export class PageFaceCaptureComponent implements OnInit {
   fc: any;
 
   async ngOnInit() {
-    // this.actRoute.params.subscribe(params => {
-    //   this.id = params['id'];
-    // });
+    this.actRoute.params.subscribe(params => {
+      this.id = params['id'];
+    });
     // if (!this.alredySessionExist()) { return; }
 
     this.imageData = '';

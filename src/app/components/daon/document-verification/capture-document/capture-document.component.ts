@@ -34,7 +34,7 @@ export class CaptureDocumentComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!this.alredySessionExist()) { return; }
+    // if (!this.alredySessionExist()) { return; }
     this.capturar();
     this.filtersLoaded = Promise.resolve(true);
   }
@@ -43,7 +43,7 @@ export class CaptureDocumentComponent implements OnInit {
     const object = this.session.getObjectSession();
     console.log(object);
     if (object === null || object === undefined) {
-      this.router.navigate([Rutas.terminos]); 
+      this.router.navigate([Rutas.terminos]);
       return false;
     } else {
       if (object._id !== this.id) {
