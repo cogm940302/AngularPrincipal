@@ -21,7 +21,7 @@ export class PageFaceCaptureComponent implements OnInit {
       url: 'https://dobsdemo-facequality-first.identityx-cloud.com/rest/v1/quality/assessments'
     });
   }
-
+  
   activator = true;
   imageData: any;
   id: string;

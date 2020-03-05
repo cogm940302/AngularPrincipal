@@ -36,7 +36,7 @@ export class ConfirmDocumentComponent implements OnInit {
     this.processedImage=new ProcessedImage();
     this.sensitiveData=new SensitiveData();
     this.checkIdsGetSend = new CheckID();
-    this.checkIdsGetSend.url="https://dobsdemo-idx-first.identityx-cloud.com/mitsoluciones3/DigitalOnBoardingServices/rest/v1/users/QTAzC4QvQCaDUjz1d2MG74wj0A/idchecks";
+    this.checkIdsGetSend.url="https://dobsdemo-idx-first.identityx-cloud.com/mitsoluciones3/DigitalOnBoardingServices/rest/v1/users/QTAz60XuGXnwddZAHUcgGbFJgA/idchecks";
     this.checkIdsGetSend.metodo="GET";
     console.log(">>>>>>>>>>>>>>>>> "+this.serviciogeneralService.getImg64());
 

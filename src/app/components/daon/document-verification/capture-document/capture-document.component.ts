@@ -43,10 +43,10 @@ export class CaptureDocumentComponent implements OnInit {
       //ctx.drawImage(img, (xx*150), (xx*330), c2.nativeElement.width*ww, c2.nativeElement.height*hh);
       
       ctx.beginPath();
-      ctx.lineWidth = 100;
+      ctx.lineWidth = 30;
       ctx.strokeStyle = "gray";
       ctx.globalAlpha = 0.5;
-      ctx.rect( c2.nativeElement.width/10, c2.nativeElement.height/5,  c2.nativeElement.width/1.25, c2.nativeElement.height/1.6);
+      ctx.rect( c2.nativeElement.width/23, c2.nativeElement.height/9,  c2.nativeElement.width/1.09, c2.nativeElement.height/1.25);
       ctx.stroke();
       //ctx.drawImage(img, -50, -300, (c2.nativeElement.width+(100)) , (c2.nativeElement.height+(600)));
       
@@ -125,15 +125,15 @@ export class CaptureDocumentComponent implements OnInit {
     console.log('captura');
     this.videoEl = document.querySelector('video');
     this.videoEl.addEventListener('play', this.f(document.querySelector("video"),document.getElementById("scream_green")) );
-    navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: 'user' } }).then(stream => { this.videoEl.srcObject = stream; }).catch(error => { console.error('Cannot get camera feed', error); alert('Unable to get hold of your camera.\nPlease ensure no other page/app is using it and reload.'); });
+    //navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: 'user' } }).then(stream => { this.videoEl.srcObject = stream; }).catch(error => { console.error('Cannot get camera feed', error); alert('Unable to get hold of your camera.\nPlease ensure no other page/app is using it and reload.'); });
 
     this.fc.startCamera(this.videoEl).then((response) => {
       console.log(response);
     });
     this.videoEl.onloadedmetadata = () => {
-      c.nativeElement.width = this.videoEl.videoWidth;
-      c.nativeElement.height = this.videoEl.videoHeight; 
-      console.log('result');
+      c.nativeElement.width = this.videoEl.videoWidth/2.5;
+      c.nativeElement.height = this.videoEl.videoHeight/2.5; 
+      console.log('result ' + this.videoEl.videoWidth + " - " + this.videoEl.videoHeight);
     };
 
   }

@@ -1,7 +1,8 @@
 import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
 import * as FaceLineness3D from "../../../../../assets/js/Daon.FaceLiveness3D.min.js";
+import * as Daonjs from '../../../../../assets/js/Daon.FaceCapture.min.js';
 import { CheckID } from "../../../../model/DaonPojos/CheckID";
-import { ServicesGeneralService } from  "../../../../services/general/services-general.service";
+import { ServicesGeneralService, isMobile } from  "../../../../services/general/services-general.service";
 import { Rutas } from 'src/app/model/RutasUtil.js';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -16,13 +17,21 @@ export class LivenessCaptureComponent implements OnInit {
   instTxt:any;
   blnStart:boolean;
   checkIdsGetSend:any;
-  constructor(public serviciogeneralService:ServicesGeneralService,public router: Router) { }
- 
+  fc: any;
+  constructor(public serviciogeneralService:ServicesGeneralService,public router: Router) {
+    this.fc = new Daonjs.Daon.FaceCapture({
+      url: 'https://dobsdemo-facequality-first.identityx-cloud.com/rest/v1/quality/assessments'
+    });
+
+   }
+ navegador;
   ngOnInit() {
+    console.log("Navegador= " + navigator.userAgent);
+    this.navegador=navigator.userAgent;
     this.blnStart=false;
     this.capturar();
     this.checkIdsGetSend = new CheckID(); 
-    this.checkIdsGetSend.url="https://dobsdemo-idx-first.identityx-cloud.com/mitsoluciones3/DigitalOnBoardingServices/rest/v1/users/QTAzC4QvQCaDUjz1d2MG74wj0A/idchecks";
+    this.checkIdsGetSend.url="https://dobsdemo-idx-first.identityx-cloud.com/mitsoluciones3/DigitalOnBoardingServices/rest/v1/users/QTAzh6_OChWzVmPL_Oc2BKgSsw/idchecks";
     this.checkIdsGetSend.metodo="GET";
   }
 
@@ -74,7 +83,7 @@ export class LivenessCaptureComponent implements OnInit {
       "videoFormat": "SVR3DFL",   
       "challenges": [     {
       "challenge": {
-        "id": "oDCgUnQRoGef6cfHGzcHLA",
+        "id": "ht1Vz_BTInMOFYlb42QaYg",
         "type": "SVR3DFL"       
       },
       "start": 0,
@@ -200,6 +209,8 @@ export class LivenessCaptureComponent implements OnInit {
       c.nativeElement.width = this.videoEl.videoWidth;
       c.nativeElement.height = this.videoEl.videoHeight; 
       
+      if (!isMobile(navigator.userAgent) ) {
+        console.log("No es mobile");
       this.videoEl.play();
       const config = {
         video: this.videoEl,
@@ -211,6 +222,38 @@ export class LivenessCaptureComponent implements OnInit {
       f3d.startProcessing();
     
       setTimeout(() => f3d.startSession(), 500);
+    }else{
+      console.log("Si es mobile");
+      f3d.videoTracks[0].applyConstraints({ width:this.videoEl.videoWidth, height:this.videoEl.videoHeight }).then(() => {
+        this.videoEl.play();
+        const config = {
+          video: this.videoEl,
+          onUpdate: onUpdate,
+          onTemplateCreated: FonTemplateCreated,
+          movementDelay: 1250
+        };
+        f3d.initialize(config);
+        f3d.startProcessing();
+    });
+    }
+    
+
+
+
+      /**
+      f3d.videoTracks[0].applyConstraints({ width:this.videoEl.videoWidth, height:this.videoEl.videoHeight }).then(() => {
+        this.videoEl.play();
+        const config = {
+          video: this.videoEl,
+          onUpdate: onUpdate,
+          onTemplateCreated: FonTemplateCreated,
+          movementDelay: 1250
+        };
+        f3d.initialize(config);
+      f3d.startProcessing();
+    });
+    console.log("ferrrrrrrrrrrrrr"); */
+     
     }
     
   }
