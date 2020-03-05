@@ -15,7 +15,7 @@ export class LivenessInstructionComponent implements OnInit {
   }
 
   enter(){
-    this.router.navigate([Rutas.livenessCapture]);
+    this.router.navigate([Rutas.livenessCapture+ `xxxxxx`]);
   }
 
 }

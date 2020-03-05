@@ -97,3 +97,7 @@ export class ServicesGeneralService {
     return throwError(errorMessage);
   }
 }
+
+export function isMobile(userAgent) {
+  return !!userAgent.match(/(Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone)/i);
+}

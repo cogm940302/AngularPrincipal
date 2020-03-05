@@ -7,6 +7,7 @@ import { SelfieSend } from 'src/app/model/DaonPojos/Selfie';
 import { sesionModel } from 'src/app/model/sesion/SessionPojo';
 import { SessionService } from 'src/app/services/session/session.service';
 import { MiddleMongoService } from '../../../services/http/middle-mongo.service';
+import { ServicesGeneralService } from  "../../../services/general/services-general.service";
 
 
 
@@ -17,7 +18,7 @@ import { MiddleMongoService } from '../../../services/http/middle-mongo.service'
 })
 
 export class FacialVerificationComponent implements OnInit {
-  constructor(private router: Router, private http: HttpClient, private session: SessionService,
+  constructor(public serviciogeneralService:ServicesGeneralService, private router: Router, private http: HttpClient, private session: SessionService,
               private mongoMid: MiddleMongoService) { }
 
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
@@ -28,42 +29,47 @@ export class FacialVerificationComponent implements OnInit {
   error: any;
 
   async ngOnInit() {
-    console.log(this.foto);
+    //console.log(this.foto);
     this.foto = await this.blobToBase64(this.foto);
-    console.log(this.foto);
+    console.log("Foto= " + this.foto);
     this.filtersLoaded = Promise.resolve(true);
   }
-
+ 
   regresar() {
     this.router.navigate([Rutas.selfie]);
   }
 
   enviar() {
-    const url = `https://dobsdemo-idx-first.identityx-cloud.com/mitsoluciones3/IdentityXServices/rest/v1/users/QTAznsU-sPmUj0XyvprQAjjE4Q/face/samples`;
-    this.headers.set('Authorization', 'Basic ' + btoa('luis.maciel@mitec.com.mx' + ':' + 'wUSgYlzyEgNc7fiTrv'));
-    this.headers.set('Access-Control-Allow-Origin', '*');
-    this.data = new SelfieSend();
-    this.data.data = this.foto;
-    return this.http.post(url, this.data, { headers: this.headers }).pipe(
-      catchError(this.error)
-    );
+    let jsonSendFaceDaon = {
+      "url":"https://dobsdemo-idx-first.identityx-cloud.com/mitsoluciones3/IdentityXServices/rest/v1/users/QTAzC4QvQCaDUjz1d2MG74wj0A/face/samples",
+      "metodo":"POST",
+      "data": this.foto,
+      "format": "jpg" 
+    };
+
+    this.serviciogeneralService.sendDaon(jsonSendFaceDaon).subscribe(data => {
+      console.log(JSON.stringify(data, null, 2));
+       if (data.errorType) {
+         console.log("errorType= " + JSON.stringify(data, null, 2));
+       } else {
+        console.log("respuesta de la face= " + JSON.stringify(data, null, 2));
+        if (data.statusCode === 200){
+          this.router.navigate([Rutas.chooseIdentity+"/5e559f279279300008700482"]);
+        }
+       }
+     });
   }
 
   guardar() {
     console.log('voy a enviar');
-    let respuesta;
-    this.enviar().subscribe(data => {
-      console.log('ya constesto');
-      console.log(data);
-      respuesta = data;
-    });
+    this.enviar();
     // TODO validar el data
-    const object = this.session.getObjectSession();
-    object.daon.selfie = true;
-    this.session.updateModel(object);
-    this.mongoMid.updateDataUser(object);
-    console.log('ya termine');
-    this.router.navigate([Rutas.chooseIdentity + `${this.id}`]);
+    // const object = this.session.getObjectSession();
+    // object.daon.selfie = true;
+    // this.session.updateModel(object);
+    // this.mongoMid.updateDataUser(object);
+    // console.log('ya termine' + JSON.stringify(object, null, 2));
+    //this.router.navigate([Rutas.chooseIdentity + `${this.id}`]);
   }
 
   blobToBase64(blob) {
@@ -78,6 +84,11 @@ export class FacialVerificationComponent implements OnInit {
         reject(err);
       }
     });
+  }
+
+  back() {
+    window.location.reload();
+    //this.router.navigate([Rutas.selfie + `${this.id}`]);
   }
 
 
