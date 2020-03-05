@@ -9,11 +9,10 @@ export let Rutas = {
   documentCapture: '/services/daon/document/capture/',
   documentConfirm: '/services/daon/document/confirm/',
   livenessInstruction: '/services/daon/liveness/instruction/',
- 
+
   livenessCapture: '/services/daon/liveness/capture/',
   livenessResult: '/services/daon/liveness/result/',
 
-  sesionIniciada: '/services/sesion/',
   correo: '/services/correo/',
   error: '/services/error',
   fin: '/services/final',
