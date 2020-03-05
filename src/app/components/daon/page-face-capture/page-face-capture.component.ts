@@ -21,7 +21,7 @@ export class PageFaceCaptureComponent implements OnInit {
       url: 'https://dobsdemo-facequality-first.identityx-cloud.com/rest/v1/quality/assessments'
     });
   }
-  
+
   activator = true;
   imageData: any;
   id: string;
@@ -82,6 +82,7 @@ export class PageFaceCaptureComponent implements OnInit {
   }
 
   captura() {
+   
     this.fc.stopAutoCapture();
   }
 
@@ -107,7 +108,7 @@ export class PageFaceCaptureComponent implements OnInit {
     };
   }
   tomarSelfie() {
-    this.btnB=false;
+    console.log("qqqqqqqq");
     this.fc.startAutoCapture(response => {
         
       console.log("R = " + JSON.stringify(response, null, 2));

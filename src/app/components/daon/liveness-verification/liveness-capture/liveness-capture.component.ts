@@ -23,6 +23,10 @@ export class LivenessCaptureComponent implements OnInit {
       url: 'https://dobsdemo-facequality-first.identityx-cloud.com/rest/v1/quality/assessments'
     });
 
+    this.fc.startCamera(this.videoEl).then((response) => {
+      
+    });
+
    }
  navegador;
   ngOnInit() {
@@ -201,7 +205,7 @@ export class LivenessCaptureComponent implements OnInit {
     });
 
     const DaonFaceQualityLiteWasm = window.location.origin + '/assets/js/DaonFaceQualityLite.wasm';
-    let f3d = new FaceLineness3D.Daon.FaceLiveness3D(DaonFaceQualityLiteWasm);
+    
     let c = this.canvas;
     this.videoEl.onloadedmetadata =  function () {
      
@@ -209,8 +213,8 @@ export class LivenessCaptureComponent implements OnInit {
       c.nativeElement.width = this.videoEl.videoWidth;
       c.nativeElement.height = this.videoEl.videoHeight; 
       
-      if (!isMobile(navigator.userAgent) ) {
-        console.log("No es mobile");
+      let f3d = new FaceLineness3D.Daon.FaceLiveness3D(DaonFaceQualityLiteWasm);
+      
       this.videoEl.play();
       const config = {
         video: this.videoEl,
@@ -220,39 +224,9 @@ export class LivenessCaptureComponent implements OnInit {
       };
       f3d.initialize(config);
       f3d.startProcessing();
-    
+      
       setTimeout(() => f3d.startSession(), 500);
-    }else{
-      console.log("Si es mobile");
-      f3d.videoTracks[0].applyConstraints({ width:this.videoEl.videoWidth, height:this.videoEl.videoHeight }).then(() => {
-        this.videoEl.play();
-        const config = {
-          video: this.videoEl,
-          onUpdate: onUpdate,
-          onTemplateCreated: FonTemplateCreated,
-          movementDelay: 1250
-        };
-        f3d.initialize(config);
-        f3d.startProcessing();
-    });
-    }
     
-
-
-
-      /**
-      f3d.videoTracks[0].applyConstraints({ width:this.videoEl.videoWidth, height:this.videoEl.videoHeight }).then(() => {
-        this.videoEl.play();
-        const config = {
-          video: this.videoEl,
-          onUpdate: onUpdate,
-          onTemplateCreated: FonTemplateCreated,
-          movementDelay: 1250
-        };
-        f3d.initialize(config);
-      f3d.startProcessing();
-    });
-    console.log("ferrrrrrrrrrrrrr"); */
      
     }
     
