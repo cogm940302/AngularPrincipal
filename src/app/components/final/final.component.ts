@@ -14,9 +14,6 @@ export class FinalComponent implements OnInit {
 
   ngOnInit() {
     let valorDelObjeto = this.sesion.getObjectSession();
-    // if (valorDelObjeto === null || valorDelObjeto === undefined) {
-    //   this.router.navigate([Rutas.terminos]);
-    // }
   }
 
 }

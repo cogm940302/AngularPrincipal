@@ -29,7 +29,7 @@ export class VerifyIdentityComponent implements OnInit {
     const object = this.session.getObjectSession();
     console.log(object);
     if (object === null || object === undefined) {
-      this.router.navigate([Rutas.terminos]);
+      this.router.navigate([Rutas.terminos + `${this.id}`]);
       return false;
     } else {
       if (object._id !== this.id) {
