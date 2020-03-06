@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { urlMiddleMongo } from '../../model/LigasUtil';
+import { reject } from 'q';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +15,24 @@ export class MiddleMongoService {
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  getDataUser(id: string): Observable<any> {
+  async getDataUser(id: string) {
     console.log('El id que recibo es: ' + id);
-    return this.http.get(urlMiddleMongo + `/${id}`, { headers: this.headers }).pipe(
-      map((res: Response) => {
-        return res || {};
-      }),
+    let result;
+    let exist = false;
+    const servicio = this.http.get(urlMiddleMongo + `/${id}`, { headers: this.headers }).pipe(map((res: Response) => {
+      return res || {};
+    }),
       catchError(this.errorMgmt)
     );
+    result = await servicio.toPromise().then(data => {
+      console.log('los datos que vienen son: ');
+      console.log(data);
+      result = data;
+    });
+    if (result !== undefined && result._id) {
+      exist = true;
+    }
+    return exist;
   }
 
   getDataHrefUser(correo: string) {
@@ -34,15 +45,20 @@ export class MiddleMongoService {
     );
   }
 
-  updateDataUser(datos: sesionModel) {
+  async updateDataUser(datos: sesionModel) {
     console.log('lo que voy actulizar es: ');
     console.log(datos);
-    return this.http.put(urlMiddleMongo, datos, { headers: this.headers }).pipe(
+    let mongoUpdate;
+    mongoUpdate = this.http.put(urlMiddleMongo, datos, { headers: this.headers }).pipe(
       map((res: Response) => {
         return res || {};
       }),
       catchError(this.errorMgmt)
     );
+    await mongoUpdate.toPromise().then(data => {
+      console.log(data);
+      mongoUpdate = data;
+    });
   }
 
   // Error handling

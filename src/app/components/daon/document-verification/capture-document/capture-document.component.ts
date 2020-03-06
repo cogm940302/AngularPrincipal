@@ -11,7 +11,7 @@ import { SessionService } from 'src/app/services/session/session.service.js';
 })
 export class CaptureDocumentComponent implements OnInit {
   @ViewChild('canvas', { static: true })
-  canvas: ElementRef<HTMLCanvasElement>;  
+  canvas: ElementRef<HTMLCanvasElement>;
   constructor(public router: Router, public serviciogeneralService: ServicesGeneralService,
               private session: SessionService, private actRoute: ActivatedRoute) {
     if (serviciogeneralService.gettI() !== undefined) {
@@ -24,7 +24,7 @@ export class CaptureDocumentComponent implements OnInit {
       documentType: sessionStorage.getItem('ti'),
     });
   }
- 
+
   filtersLoaded: Promise<boolean>;
   mensaje: string;
   id: string;
@@ -33,15 +33,15 @@ export class CaptureDocumentComponent implements OnInit {
 
 
   f=(videoEl1,img) => {
-    
+
     let c2=this.canvas;
-  
+
     function step() {
       let ctx = c2.nativeElement.getContext('2d');
-      
+
       ctx.drawImage(videoEl1, 0, 0, c2.nativeElement.width, c2.nativeElement.height);
       //ctx.drawImage(img, (xx*150), (xx*330), c2.nativeElement.width*ww, c2.nativeElement.height*hh);
-      
+
       ctx.beginPath();
       ctx.lineWidth = 30;
       ctx.strokeStyle = "gray";
@@ -49,7 +49,7 @@ export class CaptureDocumentComponent implements OnInit {
       ctx.rect( c2.nativeElement.width/23, c2.nativeElement.height/9,  c2.nativeElement.width/1.09, c2.nativeElement.height/1.25);
       ctx.stroke();
       //ctx.drawImage(img, -50, -300, (c2.nativeElement.width+(100)) , (c2.nativeElement.height+(600)));
-      
+
       requestAnimationFrame(step);
     }
     requestAnimationFrame(step);
@@ -57,12 +57,12 @@ export class CaptureDocumentComponent implements OnInit {
 
 
   ngOnInit() {
-    /*this.actRoute.params.subscribe(params => {
+    this.actRoute.params.subscribe(params => {
       this.id = params['id'];
-    });*/
-    //if (!this.alredySessionExist()) { return; }
+    });
+    if (!this.alredySessionExist()) { return; }
     this.filtersLoaded =  Promise.resolve(true);
-    
+
     this.capturar();
   }
 
@@ -70,13 +70,13 @@ export class CaptureDocumentComponent implements OnInit {
     const object = this.session.getObjectSession();
     console.log(object);
     if (object === null || object === undefined) {
-      this.router.navigate([Rutas.terminos]); 
+      this.router.navigate([Rutas.terminos + `${this.id}`]);
       return false;
     } else {
       if (object._id !== this.id) {
         this.router.navigate([Rutas.error]);
         return false;
-      } else if (object.identity !== null && object.identity !== undefined && object.identity !== '') {
+      } else if (object.daon.identity) {
         this.router.navigate([Rutas.livenessInstruction + `${this.id}`]);
         return false;
       } else {
@@ -132,7 +132,7 @@ export class CaptureDocumentComponent implements OnInit {
     });
     this.videoEl.onloadedmetadata = () => {
       c.nativeElement.width = this.videoEl.videoWidth/2.5;
-      c.nativeElement.height = this.videoEl.videoHeight/2.5; 
+      c.nativeElement.height = this.videoEl.videoHeight/2.5;
       console.log('result ' + this.videoEl.videoWidth + " - " + this.videoEl.videoHeight);
     };
 

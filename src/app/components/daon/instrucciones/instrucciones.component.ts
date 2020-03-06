@@ -27,13 +27,13 @@ export class InstruccionesComponent implements OnInit {
     const object = this.session.getObjectSession();
     console.log(object);
     if (object === null || object === undefined) {
-      this.router.navigate([Rutas.terminos]);
+      this.router.navigate([Rutas.terminos + `${this.id}`]);
       return false;
     } else {
       if (object._id !== this.id) {
         this.router.navigate([Rutas.error]);
         return false;
-      } else if (object.selfie !== null && object.selfie !== undefined && object.selfie !== '') {
+      } else if (object.daon.selfie) {
         this.router.navigate([Rutas.chooseIdentity + `${this.id}`]);
         return false;
       } else {

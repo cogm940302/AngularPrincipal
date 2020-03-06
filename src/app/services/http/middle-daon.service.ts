@@ -27,32 +27,4 @@ export class MiddleDaonService {
     return result;
   }
 
-  async relationClientUser(clientHref: string, userHref: string) {
-    console.log('servicio para relacionar en DAON');
-    let result;
-    const jsonToSend = {
-      "application": {
-        "href": `${urlDaonMain + clientHref}`
-      },
-      "registrationId": `${new Date().getTime()}`,
-      "user": {
-        "href": `${userHref}`
-      },
-      "url": `${urlDaonRelationUserClient}`, "metodo": "POST"
-
-    };
-    console.log(jsonToSend);
-    console.log(JSON.stringify(jsonToSend));
-    try {
-      await  this.http.post(urlMiddDaon, jsonToSend).toPromise().then(data => {
-        console.log(data);
-        result = data;
-      });
-    } catch (e) {
-      console.error('Error guardar en daon');
-      console.error(e);
-    }
-    return result;
-  }
-
 }

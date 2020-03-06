@@ -43,7 +43,7 @@ export class ServicesGeneralService {
   setImg64(img){
     this.img64=img;
   }
-  
+
   getImg64(): String {
     return this.img64;
   }
@@ -57,11 +57,11 @@ export class ServicesGeneralService {
   }
 
   headers = new HttpHeaders().set('Content-Type', 'application/json',).set('Accept','application/json');//.set('Authorization','Basic bHVpcy5tYWNpZWxAbWl0ZWMuY29tLm14OndVU2dZbHp5RWdOYzdmaVRydg==');
-  
-  
+
+
   sendImgDaon(data): Observable<any> {
     const url = `api/mitsoluciones3/IdentityXServices/rest/v1/users/QTAznsU-sPmUj0XyvprQAjjE4Q/face/samples`;
-    
+
     return this.http.post(url, data, { headers: this.headers,  }).pipe(
       catchError(this.errorMgmt)
     );
@@ -69,7 +69,7 @@ export class ServicesGeneralService {
 
   sendDocDaon(data): Observable<any> {
     const url = `https://dobsdemo-idx-first.identityx-cloud.com/mitsoluciones3/DigitalOnBoardingServices/rest/v1/users/QTAzJc8L4vVRCaztQuscK0B7uQ/idchecks/Yf7ALTADELDB_q13FHKHfw/documents`;
-    
+
     return this.http.post(url, data, { headers: this.headers,  }).pipe(
       catchError(this.errorMgmt)
     );

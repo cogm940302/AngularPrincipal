@@ -5,6 +5,7 @@ export class sesionModel {
     daonHref: string;  // este me lo regresa daon
     selfie: boolean;
     identity: boolean;
+    pruebaVida: boolean;
   };
   oferta: string;
   correo: string;

@@ -13,10 +13,6 @@ export class FinalComponent implements OnInit {
   constructor(private router: Router, private sesion: SessionService) { }
 
   ngOnInit() {
-    let valorDelObjeto = this.sesion.getObjectSession();
-    if (valorDelObjeto === null || valorDelObjeto === undefined) {
-      this.router.navigate([Rutas.terminos]);
-    }
   }
 
 }

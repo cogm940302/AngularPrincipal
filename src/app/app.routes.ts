@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { TermsComponent } from './components/terms/terms.component';
 import { CorreoVerificacionComponent } from './components/correo-verificacion/correo-verificacion.component';
 import { InstruccionesComponent } from './components/daon/instrucciones/instrucciones.component';
-import { SesionIniciadaComponent } from './components/sesion-iniciada/sesion-iniciada.component';
 import { FinalComponent } from './components/final/final.component';
 import { PageFaceCaptureComponent } from './components/daon/page-face-capture/page-face-capture.component';
 
@@ -40,7 +39,6 @@ const APP_ROUTES: Routes = [
           {path: 'daon/liveness/capture/:id', component: LivenessCaptureComponent},
           {path: 'daon/liveness/result/:id', component: LivenessResultComponent},
 
-          {path: 'sesion/:id', component: SesionIniciadaComponent},
           {path: 'correo/:id', component: CorreoVerificacionComponent},
           {path: 'terminos/:id', component: TermsComponent},
           {path: 'error', component: ErrorComponent},

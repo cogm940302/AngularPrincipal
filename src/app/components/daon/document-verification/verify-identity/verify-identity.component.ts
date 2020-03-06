@@ -21,7 +21,7 @@ export class VerifyIdentityComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    // if (!this.alredySessionExist()) { return; }
+    if (!this.alredySessionExist()) { return; }
     this.filtersLoaded = Promise.resolve(true);
   }
 
@@ -29,13 +29,13 @@ export class VerifyIdentityComponent implements OnInit {
     const object = this.session.getObjectSession();
     console.log(object);
     if (object === null || object === undefined) {
-      this.router.navigate([Rutas.terminos]);
+      this.router.navigate([Rutas.terminos + `${this.id}`]);
       return false;
     } else {
       if (object._id !== this.id) {
         this.router.navigate([Rutas.error]);
         return false;
-      } else if (object.identity !== null && object.identity !== undefined && object.identity !== '') {
+      } else if (object.daon.identity) {
         this.router.navigate([Rutas.livenessInstruction + `${this.id}`]);
         return false;
       } else {
