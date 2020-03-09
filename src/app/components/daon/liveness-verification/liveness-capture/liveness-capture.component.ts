@@ -36,7 +36,8 @@ export class LivenessCaptureComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!this.alredySessionExist()) { return; }
+    //if (!this.alredySessionExist()) { return; }
+    
     console.log('Navegador= ' + navigator.userAgent);
     this.navegador = navigator.userAgent;
     this.blnStart = false;
