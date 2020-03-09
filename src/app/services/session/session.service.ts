@@ -17,7 +17,7 @@ export class SessionService {
     sessionStorage.clear();
   }
 
-  updateModel(sessionObject: sesionModel) {
+  async updateModel(sessionObject: sesionModel) {
     this.sesionObject = sessionObject;
     console.log(JSON.stringify(this.sesionObject));
     sessionStorage.clear();

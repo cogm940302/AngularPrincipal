@@ -27,7 +27,7 @@ export class LivenessCaptureComponent implements OnInit {
     });
 
     this.fc.startCamera(this.videoEl).then((response) => {
-      
+
     });
 
    }
@@ -50,7 +50,7 @@ export class LivenessCaptureComponent implements OnInit {
     const object = this.session.getObjectSession();
     console.log(object);
     if (object === null || object === undefined) {
-      this.router.navigate([Rutas.terminos + `${this.id}`]);
+      this.router.navigate([Rutas.terminos + `/${this.id}`]);
       return false;
     } else {
       if (object._id !== this.id) {
@@ -229,16 +229,16 @@ export class LivenessCaptureComponent implements OnInit {
     });
 
     const DaonFaceQualityLiteWasm = window.location.origin + '/assets/js/DaonFaceQualityLite.wasm';
-    
+
     let c = this.canvas;
     this.videoEl.onloadedmetadata = function () {
 
       this.videoEl = document.querySelector("video");
       c.nativeElement.width = this.videoEl.videoWidth;
-      c.nativeElement.height = this.videoEl.videoHeight; 
-      
+      c.nativeElement.height = this.videoEl.videoHeight;
+
       let f3d = new FaceLineness3D.Daon.FaceLiveness3D(DaonFaceQualityLiteWasm);
-      
+
       this.videoEl.play();
       const config = {
         video: this.videoEl,
@@ -248,10 +248,10 @@ export class LivenessCaptureComponent implements OnInit {
       };
       f3d.initialize(config);
       f3d.startProcessing();
-      
+
       setTimeout(() => f3d.startSession(), 500);
-    
-     
+
+
     }
 
   }

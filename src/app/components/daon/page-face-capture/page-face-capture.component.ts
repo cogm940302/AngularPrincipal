@@ -78,7 +78,7 @@ export class PageFaceCaptureComponent implements OnInit {
         this.router.navigate([Rutas.error]);
         return false;
       } else if (object.daon.selfie) {
-        this.router.navigate([Rutas.chooseIdentity + `${this.id}`]);
+        this.router.navigate([Rutas.chooseIdentity + `/${this.id}`]);
         return false;
       } else {
         return true;
@@ -87,7 +87,7 @@ export class PageFaceCaptureComponent implements OnInit {
   }
 
   captura() {
-   
+
     this.fc.stopAutoCapture();
   }
 

@@ -24,15 +24,34 @@ export class MiddleMongoService {
     }),
       catchError(this.errorMgmt)
     );
-    result = await servicio.toPromise().then(data => {
+    await servicio.toPromise().then(data => {
       console.log('los datos que vienen son: ');
       console.log(data);
       result = data;
+      result.daon = data['sesion']['daon'];
     });
     if (result !== undefined && result._id) {
       exist = true;
     }
-    return exist;
+    console.log('ya voy a regresar los datos');
+    console.log(result);
+    return result;
+  }
+
+  async updateTermsDataUser(datos, id: string) {
+    console.log('lo que voy actulizar es: ');
+    console.log(datos);
+    let mongoUpdate;
+    mongoUpdate = this.http.put(urlMiddleMongo + `/${id}`, datos, { headers: this.headers }).pipe(
+      map((res: Response) => {
+        return res || {};
+      }),
+      catchError(this.errorMgmt)
+    );
+    await mongoUpdate.toPromise().then(data => {
+      console.log(data);
+      mongoUpdate = data;
+    });
   }
 
   getDataHrefUser(correo: string) {
@@ -43,22 +62,6 @@ export class MiddleMongoService {
       }),
       catchError(this.errorMgmt)
     );
-  }
-
-  async updateDataUser(datos: sesionModel) {
-    console.log('lo que voy actulizar es: ');
-    console.log(datos);
-    let mongoUpdate;
-    mongoUpdate = this.http.put(urlMiddleMongo, datos, { headers: this.headers }).pipe(
-      map((res: Response) => {
-        return res || {};
-      }),
-      catchError(this.errorMgmt)
-    );
-    await mongoUpdate.toPromise().then(data => {
-      console.log(data);
-      mongoUpdate = data;
-    });
   }
 
   // Error handling
