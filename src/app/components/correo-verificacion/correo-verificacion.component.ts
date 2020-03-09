@@ -40,7 +40,7 @@ export class CorreoVerificacionComponent implements OnInit {
       if (this.object._id !== this.id) {
         this.router.navigate([Rutas.error]);
         return false;
-      } else if (this.object.correo !== null && this.object.correo !== undefined && this.object.correo !== '') {
+      } else if (this.object.correo !== null && this.object.correo !== undefined && this.object.correo) {
         console.log('voy a instrucciones');
         this.router.navigate([Rutas.instrucciones + `${this.id}`]);
         return false;
@@ -55,10 +55,14 @@ export class CorreoVerificacionComponent implements OnInit {
   }
 
   async validaCorreo() {
-    const objetoDaon = await this.middleDaon.createDaonRegister(this.correoText);
-    this.object.correo = this.correoText;
-    this.session.updateModel(this.object);
-    await this.middleMongo.updateDataUser(this.object);
-    this.router.navigate([Rutas.instrucciones + `${this.id}`]);
+    const objetoDaon = await this.middleDaon.createDaonRegister(this.correoText, this.id);
+    if (objetoDaon === true) {
+      this.object.correo = true;
+      this.session.updateModel(this.object);
+      await this.middleDaon.updateDaonDataUser(this.object, this.id);
+      this.router.navigate([Rutas.instrucciones + `${this.id}`]);
+    } else {
+      this.router.navigate([Rutas.error]);
+    }
   }
 }

@@ -1,5 +1,6 @@
 export class sesionModel {
   _id: string; // este es el de mongo
+
   daon: {
     daonClientHref: string;
     daonHref: string;  // este me lo regresa daon
@@ -7,8 +8,10 @@ export class sesionModel {
     identity: boolean;
     pruebaVida: boolean;
   };
+
+  estatus: string;
   oferta: string;
-  correo: string;
+  correo: boolean;
   terminos: boolean;
   score: any = null;
 }

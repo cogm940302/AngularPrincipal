@@ -19,7 +19,7 @@ export class InstruccionesComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    //if (!this.alredySessionExist()) { return; }
+    if (!this.alredySessionExist()) { return; }
     this.filtersLoaded = Promise.resolve(true);
   }
 
@@ -27,14 +27,14 @@ export class InstruccionesComponent implements OnInit {
     const object = this.session.getObjectSession();
     console.log(object);
     if (object === null || object === undefined) {
-      this.router.navigate([Rutas.terminos + `${this.id}`]);
+      this.router.navigate([Rutas.terminos + `/${this.id}`]);
       return false;
     } else {
       if (object._id !== this.id) {
         this.router.navigate([Rutas.error]);
         return false;
       } else if (object.daon.selfie) {
-        this.router.navigate([Rutas.chooseIdentity + `${this.id}`]);
+        this.router.navigate([Rutas.chooseIdentity + `/${this.id}`]);
         return false;
       } else {
         return true;

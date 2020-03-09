@@ -7,6 +7,7 @@ import { SessionService } from '../../services/session/session.service';
 import { sesionModel } from 'src/app/model/sesion/SessionPojo';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { MiddleMongoService } from '../../services/http/middle-mongo.service';
+import { MiddleDaonService } from '../../services/http/middle-daon.service';
 
 @Component({
   selector: 'app-terms',
@@ -30,7 +31,8 @@ export class TermsComponent implements OnInit {
   filtersLoaded: Promise<boolean>;
 
   constructor(config: NgbModalConfig, private modalService: NgbModal, public router: Router, public session: SessionService,
-              private http: HttpClient, private middle: MiddleMongoService, private actRoute: ActivatedRoute) {
+              private http: HttpClient, private middle: MiddleMongoService, private actRoute: ActivatedRoute,
+              private middleDaon: MiddleDaonService) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
@@ -40,13 +42,9 @@ export class TermsComponent implements OnInit {
       this.id = params['id'];
     });
     if (await this.alredySessionExist()) { return; }
-    console.log('voy por los datos');
-    if (!await this.middle.getDataUser(this.id)) {
-      this.router.navigate([Rutas.error]);
-    }
     console.log(this.datosDelCliente);
-    this.datosDelCliente = new sesionModel();
-    this.datosDelCliente._id = this.id;
+    // this.datosDelCliente = new sesionModel()
+    // this.datosDelCliente._id = this.id;
     this.session.updateModel(this.datosDelCliente);
     this.filtersLoaded = Promise.resolve(true);
   }
@@ -61,20 +59,28 @@ export class TermsComponent implements OnInit {
     console.log(this.datosDelCliente);
     if (this.datosDelCliente === null || this.datosDelCliente === undefined) {
       console.log('la sesion no existe');
-      return false;
-    } else {
-      console.log('ya tengo los valores');
-      if ( this.datosDelCliente._id === this.id && this.datosDelCliente.terminos) {
-        this.router.navigate([Rutas.correo + `${this.id}`]);
-        return true;
-      }
-      return false;
+      this.datosDelCliente = new sesionModel();
+      this.datosDelCliente = await this.middle.getDataUser(this.id);
+      console.log(this.datosDelCliente);
+      this.datosDelCliente._id = this.id;
     }
+    if (!this.datosDelCliente || this.datosDelCliente._id !== this.id) {
+      this.router.navigate([Rutas.error]);
+      return true;
+    }
+    if (this.datosDelCliente.terminos) {
+      this.session.updateModel(this.datosDelCliente);
+      this.router.navigate([Rutas.correo + `${this.id}`]);
+      return true;
+    }
+    return false;
   }
 
-  siguiente() {
+  async siguiente() {
     this.datosDelCliente.terminos = true;
-    this.session.updateModel(this.datosDelCliente);
+    console.log(this.datosDelCliente);
+    await this.middle.updateTermsDataUser({terminos: true}, this.id);
+    await this.session.updateModel(this.datosDelCliente);
     this.router.navigate([Rutas.correo + `${this.id}`]);
   }
 
