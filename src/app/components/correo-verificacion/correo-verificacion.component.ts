@@ -5,6 +5,7 @@ import { SessionService } from '../../services/session/session.service';
 import { MiddleDaonService } from 'src/app/services/http/middle-daon.service';
 import { sesionModel } from '../../model/sesion/SessionPojo';
 import { MiddleMongoService } from '../../services/http/middle-mongo.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-correo-verificacion',
@@ -15,7 +16,7 @@ export class CorreoVerificacionComponent implements OnInit {
 
   constructor(private router: Router, private session: SessionService,
               private actRoute: ActivatedRoute, private middleDaon: MiddleDaonService,
-              private middleMongo: MiddleMongoService) { }
+              private middleMongo: MiddleMongoService, private spinner: NgxSpinnerService) { }
 
   filtersLoaded: Promise<boolean>;
   correoText = '';
@@ -55,6 +56,7 @@ export class CorreoVerificacionComponent implements OnInit {
   }
 
   async validaCorreo() {
+    await this.spinner.show();
     const objetoDaon = await this.middleDaon.createDaonRegister(this.correoText, this.id);
     if (objetoDaon === true) {
       this.object.correo = true;
@@ -64,5 +66,6 @@ export class CorreoVerificacionComponent implements OnInit {
     } else {
       this.router.navigate([Rutas.error]);
     }
+    await this.spinner.hide();
   }
 }

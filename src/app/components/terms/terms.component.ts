@@ -8,6 +8,8 @@ import { sesionModel } from 'src/app/model/sesion/SessionPojo';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { MiddleMongoService } from '../../services/http/middle-mongo.service';
 import { MiddleDaonService } from '../../services/http/middle-daon.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 
 @Component({
   selector: 'app-terms',
@@ -32,21 +34,25 @@ export class TermsComponent implements OnInit {
 
   constructor(config: NgbModalConfig, private modalService: NgbModal, public router: Router, public session: SessionService,
               private http: HttpClient, private middle: MiddleMongoService, private actRoute: ActivatedRoute,
-              private middleDaon: MiddleDaonService) {
+              private middleDaon: MiddleDaonService, private spinner: NgxSpinnerService) {
     config.backdrop = 'static';
     config.keyboard = false;
   }
 
   async ngOnInit() {
+    await this.spinner.show();
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (await this.alredySessionExist()) { return; }
+    if (await this.alredySessionExist()) {
+      return;
+    }
     console.log(this.datosDelCliente);
     // this.datosDelCliente = new sesionModel()
     // this.datosDelCliente._id = this.id;
     this.session.updateModel(this.datosDelCliente);
     this.filtersLoaded = Promise.resolve(true);
+    await this.spinner.hide();
   }
 
   toogleCheckbox() {
@@ -62,6 +68,9 @@ export class TermsComponent implements OnInit {
       this.datosDelCliente = new sesionModel();
       this.datosDelCliente = await this.middle.getDataUser(this.id);
       console.log(this.datosDelCliente);
+      if (this.datosDelCliente === undefined || this.datosDelCliente._id === 'Error') {
+        this.router.navigate([Rutas.error]);
+      }
       this.datosDelCliente._id = this.id;
     }
     if (!this.datosDelCliente || this.datosDelCliente._id !== this.id) {
@@ -77,10 +86,12 @@ export class TermsComponent implements OnInit {
   }
 
   async siguiente() {
+    await this.spinner.show();
     this.datosDelCliente.terminos = true;
     console.log(this.datosDelCliente);
     await this.middle.updateTermsDataUser({terminos: true}, this.id);
     await this.session.updateModel(this.datosDelCliente);
+    await this.spinner.hide();
     this.router.navigate([Rutas.correo + `${this.id}`]);
   }
 

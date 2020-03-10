@@ -23,6 +23,8 @@ import { FacialVerificationComponent } from './components/daon/facial-verificati
 import { ErrorComponent } from './components/error/error.component';
 import { LivenessCaptureComponent } from './components/daon/liveness-verification/liveness-capture/liveness-capture.component';
 import { LivenessResultComponent } from './components/daon/liveness-verification/liveness-result/liveness-result.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import {  NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // import {  NgbModal } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
 
@@ -53,6 +55,8 @@ import { LivenessResultComponent } from './components/daon/liveness-verification
     ModalModule,
     NgbModule,
     HttpClientModule,
+    NgxSpinnerModule,
+    BrowserAnimationsModule
   ],
   bootstrap: [AppComponent],
   providers: []

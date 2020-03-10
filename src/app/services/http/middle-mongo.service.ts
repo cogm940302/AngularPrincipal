@@ -27,12 +27,20 @@ export class MiddleMongoService {
     await servicio.toPromise().then(data => {
       console.log('los datos que vienen son: ');
       console.log(data);
-      result = data;
-      result.daon = data['sesion']['daon'];
+      if (data['estatus'] === 'nuevo' || data['estatus'] === 'en progreso') {
+        result = data;
+        if (data['sesion']) {
+          result.daon = data['sesion']['daon'];
+        } else {
+          result.daon = {};
+        }
+      } else {
+        result._id = 'Error';
+      }
     });
-    if (result !== undefined && result._id) {
-      exist = true;
-    }
+    // if (result !== undefined && result._id) {
+    //   exist = true;
+    // }
     console.log('ya voy a regresar los datos');
     console.log(result);
     return result;
