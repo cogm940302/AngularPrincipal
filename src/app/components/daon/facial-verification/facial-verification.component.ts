@@ -9,8 +9,6 @@ import { SessionService } from 'src/app/services/session/session.service';
 import { MiddleMongoService } from '../../../services/http/middle-mongo.service';
 import { ServicesGeneralService } from '../../../services/general/services-general.service';
 
-
-
 @Component({
   selector: 'app-facial-verification',
   templateUrl: './facial-verification.component.html',

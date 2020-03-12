@@ -30,7 +30,7 @@ export class ConfirmDocumentComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!this.alredySessionExist()) { return; }
+    //if (!this.alredySessionExist()) { return; }
     this.documentoSend = new DocumentoSend();
     this.clientCapture = new ClientCapture();
     this.processedImage = new ProcessedImage();

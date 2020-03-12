@@ -1,19 +1,22 @@
 import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
 import * as DocumentCapture from '../../../../../assets/js/Daon.DocumentCapture.min.js';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ServicesGeneralService } from '../../../../services/general/services-general.service';
+import { ServicesGeneralService, isMobile } from '../../../../services/general/services-general.service';
 import { Rutas } from 'src/app/model/RutasUtil.js';
 import { SessionService } from 'src/app/services/session/session.service.js';
 
 @Component({
   selector: 'app-capture-document',
   templateUrl: './capture-document.component.html',
+  styleUrls: ['./capture-document.component.css']
 })
 export class CaptureDocumentComponent implements OnInit {
   @ViewChild('canvas', { static: true })
   canvas: ElementRef<HTMLCanvasElement>;
+
   constructor(public router: Router, public serviciogeneralService: ServicesGeneralService,
               private session: SessionService, private actRoute: ActivatedRoute) {
+    this.htmlCanvasToBlob();
     if (serviciogeneralService.gettI() !== undefined) {
       sessionStorage.setItem('ti', serviciogeneralService.gettI());
     } else if (sessionStorage.getItem('ti') === undefined) {
@@ -21,7 +24,7 @@ export class CaptureDocumentComponent implements OnInit {
     }
     this.fc = new DocumentCapture.Daon.DocumentCapture({
       url: 'https://dobsdemo-docquality-first.identityx-cloud.com/rest/v1/quality/assessments',
-      documentType: sessionStorage.getItem('ti'),
+      documentType: 'ID_CARD'//sessionStorage.getItem('ti'),
     });
   }
 
@@ -30,38 +33,18 @@ export class CaptureDocumentComponent implements OnInit {
   id: string;
   fc: any;
   img: any;
-
-
-  f=(videoEl1,img) => {
-
-    let c2=this.canvas;
-
-    function step() {
-      let ctx = c2.nativeElement.getContext('2d');
-
-      ctx.drawImage(videoEl1, 0, 0, c2.nativeElement.width, c2.nativeElement.height);
-      //ctx.drawImage(img, (xx*150), (xx*330), c2.nativeElement.width*ww, c2.nativeElement.height*hh);
-
-      ctx.beginPath();
-      ctx.lineWidth = 30;
-      ctx.strokeStyle = "gray";
-      ctx.globalAlpha = 0.5;
-      ctx.rect( c2.nativeElement.width/23, c2.nativeElement.height/9,  c2.nativeElement.width/1.09, c2.nativeElement.height/1.25);
-      ctx.stroke();
-      //ctx.drawImage(img, -50, -300, (c2.nativeElement.width+(100)) , (c2.nativeElement.height+(600)));
-
-      requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-
+  isMobileBool:boolean;
+  isEdge:boolean;
 
   ngOnInit() {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!this.alredySessionExist()) { return; }
+    //if (!this.alredySessionExist()) { return; }
     this.filtersLoaded =  Promise.resolve(true);
+
+    this.isMobileBool= isMobile(navigator.userAgent);
+    this.isEdge = window.navigator.userAgent.indexOf("Edge") > -1;
 
     this.capturar();
   }
@@ -92,6 +75,7 @@ export class CaptureDocumentComponent implements OnInit {
         this.mensaje = response.feedback;
         console.log('no pasa');
       } else if (response.result === 'PASS') {
+        this.fc.stopCamera();
         this.fc.stopAutoCapture();
         this.img = 'data:image/jpeg;base64,' + response.responseBase64Image;
         this.serviciogeneralService.setImg64(this.img);
@@ -124,18 +108,41 @@ export class CaptureDocumentComponent implements OnInit {
     this.mensaje = 'Position your document inside the area';
     console.log('captura');
     this.videoEl = document.querySelector('video');
-    this.videoEl.addEventListener('play', this.f(document.querySelector("video"),document.getElementById("scream_green")) );
+    //this.videoEl.addEventListener('play', this.f(document.querySelector("video"),document.getElementById("scream_green")) );
     //navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: 'user' } }).then(stream => { this.videoEl.srcObject = stream; }).catch(error => { console.error('Cannot get camera feed', error); alert('Unable to get hold of your camera.\nPlease ensure no other page/app is using it and reload.'); });
 
     this.fc.startCamera(this.videoEl).then((response) => {
+     
       console.log(response);
     });
-    this.videoEl.onloadedmetadata = () => {
-      c.nativeElement.width = this.videoEl.videoWidth/2.5;
-      c.nativeElement.height = this.videoEl.videoHeight/2.5;
-      console.log('result ' + this.videoEl.videoWidth + " - " + this.videoEl.videoHeight);
-    };
+    // this.videoEl.onloadedmetadata = () => {
+    //   c.nativeElement.width = this.videoEl.videoWidth/2.5;
+    //   c.nativeElement.height = this.videoEl.videoHeight/2.5;
+    //   console.log('result ' + this.videoEl.videoWidth + " - " + this.videoEl.videoHeight);
+    // };
 
+  }
+
+  htmlCanvasToBlob(){
+    if (!HTMLCanvasElement.prototype.toBlob) {
+      console.log("HTMLCanvasElement.prototype.toBlob 1 " + HTMLCanvasElement.prototype.toBlob);
+      Object.defineProperty(HTMLCanvasElement.prototype, 'toBlob', {
+        value: function (callback, type, quality) {
+          var canvas = this;
+          setTimeout(function() {
+            var binStr = atob( canvas.toDataURL(type, quality).split(',')[1] ),
+            len = binStr.length,
+            arr = new Uint8Array(len);
+    
+            for (var i = 0; i < len; i++ ) {
+               arr[i] = binStr.charCodeAt(i);
+            }
+    
+            callback( new Blob( [arr], {type: type || 'image/png'} ) );
+          });
+        }
+     });
+    }
   }
 
 }

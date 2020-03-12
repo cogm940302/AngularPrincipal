@@ -1,21 +1,15 @@
-<div  class="text-center  border">
-    <div class="ui-canvas-container embed-responsive-item text-center">
-        <div class="m-5">
-            <h1>Selfie Capture</h1>
+<div data-testid="wrapper" class="_loading_overlay_wrapper css-79elbk" >
+<div  class="page-content">
+    <div  class="m-20">
+        <h1 class="center">Selfie</h1>    
+        <p class="center">Are you happy with the selfie or would you like to retake the photo?</p>
+        <div class="panel border-gray bg-row" style="height: 30vh;">        
+            <img *ngIf="filtersLoaded | async" src="{{'data:image/jpg;base64,' + foto}}" class="img-preview flip-x"  />          
         </div>
-        <div class="m-2 pb-4">
-            <h4>
-                <p class="font-weight-light text-secondary">Are you happy with the selfie or would you like to retake the photo?</p>
-            </h4>
-        </div>
-        <div class="m-4   bg-light text-center">
-            <div class="m-4  text-center">
-                <img *ngIf="filtersLoaded | async" src="{{'data:image/jpg;base64,' + foto}}" width="60%" height="60%" />
-            </div>
-        </div>
-        <div class="m-4 card-body text-center">
-            <button type="button" class="btn btn-light  border m-4" (click)="back()">retake the selfies</button>
-            <button type="button" class="btn btn-primary border m-4" (click)="guardar()">Continue</button>
+        <div class="row row-justify-space">
+            <button class="btn white" (click)="back()">retake the selfies</button>
+            <button class="btn blue" (click)="guardar()">Continue</button>
         </div>
     </div>
+</div>
 </div>

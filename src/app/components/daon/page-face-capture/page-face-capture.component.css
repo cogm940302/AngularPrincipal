@@ -1,4 +1,8 @@
-
+body {
+  margin: 0;
+  padding: 0;
+  background-color:black;
+} 
 
 header {
   min-height: 36px;
@@ -93,12 +97,12 @@ input[type=file] {
 }
 
 
-
+/*contenedor del video*/
 .ui-canvas-container {
   z-index: -1;
   position: fixed;
-  left: 0;
-  right: 0;
+  left: 0%;
+  right: 0%;
   top: 0;
   bottom: 0;
   display: flex;
@@ -128,6 +132,7 @@ input[type=file] {
   display: flex;
 }
 
+/*es el espacio del video*/
 .ui-canvas {
   object-fit: cover;
   width: 100%;
@@ -230,7 +235,9 @@ input[type=file] {
   position: fixed;
   height: 100%;
   width: 100%;
-  background-color: gray;
+  left: 0;
+  right: 0;
+  background-color:gray;
 }
 
 ._loading_overlay_wrapper {

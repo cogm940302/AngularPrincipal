@@ -10,38 +10,43 @@ import { SessionService } from 'src/app/services/session/session.service.js';
 @Component({
   selector: 'app-liveness-capture',
   templateUrl: './liveness-capture.component.html',
+  styleUrls: ['./liveness-capture.component.css']
 
 })
 export class LivenessCaptureComponent implements OnInit {
   @ViewChild('canvas', { static: true })
   canvas: ElementRef<HTMLCanvasElement>;
+
   instTxt: any;
   blnStart: boolean;
   checkIdsGetSend: any;
   id: string;
   fc: any;
+  f3d:any;
+  ctx: CanvasRenderingContext2D;
+  isMobileBool:boolean;
+  isEdge:boolean;
+  navegador:any;
+
   constructor(public serviciogeneralService: ServicesGeneralService, public router: Router,
               private session: SessionService, private actRoute: ActivatedRoute) {
     this.fc = new Daonjs.Daon.FaceCapture({
       url: 'https://dobsdemo-facequality-first.identityx-cloud.com/rest/v1/quality/assessments'
     });
+  }
 
-    this.fc.startCamera(this.videoEl).then((response) => {
-
-    });
-
-   }
- navegador;
-  ngOnInit() {
+  instructions = document.querySelector('#instructions');
+  ngOnInit() {  
+    this.ctx = this.canvas.nativeElement.getContext('2d');
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
     //if (!this.alredySessionExist()) { return; }
-    
-    console.log('Navegador= ' + navigator.userAgent);
-    this.navegador = navigator.userAgent;
-    this.blnStart = false;
+    this.isMobileBool= isMobile(navigator.userAgent);
+    this.isEdge = window.navigator.userAgent.indexOf("Edge") > -1;
+    this.blnStart = true;
     this.capturar();
+    this.navegador = navigator.userAgent;
     this.checkIdsGetSend = new CheckID();
     this.checkIdsGetSend.url = 'https://dobsdemo-idx-first.identityx-cloud.com/mitsoluciones3/DigitalOnBoardingServices/rest/v1/users/QTAzh6_OChWzVmPL_Oc2BKgSsw/idchecks';
     this.checkIdsGetSend.metodo = 'GET';
@@ -64,31 +69,6 @@ export class LivenessCaptureComponent implements OnInit {
         return true;
       }
     }
-  }
-
-  f = (videoEl1, img, b, ww, hh, xx, text) => {
-
-    let c2 = this.canvas;
-
-    function step() {
-      let ctx = c2.nativeElement.getContext('2d');
-
-      ctx.drawImage(videoEl1, 0, 0, c2.nativeElement.width, c2.nativeElement.height);
-      //ctx.drawImage(img, (xx*150), (xx*330), c2.nativeElement.width*ww, c2.nativeElement.height*hh);
-
-      if (b) {
-        ctx.drawImage(img, -50 * xx, -300 * xx, (c2.nativeElement.width + (100 * xx)), (c2.nativeElement.height + (600 * xx)));
-      } else {
-        ctx.font = 'italic 30px Arial';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillStyle = 'green';  // a color name or by using rgb/rgba/hex values
-
-        ctx.fillText(text, (c2.nativeElement.width / 2), c2.nativeElement.height / 2); // text and position
-      }
-      requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
   }
 
   getChecksID(value) {
@@ -155,107 +135,169 @@ export class LivenessCaptureComponent implements OnInit {
     return window.btoa(binary);
   }
 
-  startButton() {
-
-  }
-  videoEl;
-  instructions = document.querySelector('#instructions');
-  x = 1;
-  w = 1.5;
-  h = 2.4;
-  capturar() {
-    this.videoEl = document.querySelector("video");
-    this.videoEl.addEventListener('play', this.f(document.querySelector("video"), document.getElementById("scream_green"), true, this.w, this.h, 1, ""));
-    navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: 'user' } }).then(stream => { this.videoEl.srcObject = stream; }).catch(error => { console.error('Cannot get camera feed', error); alert('Unable to get hold of your camera.\nPlease ensure no other page/app is using it and reload.'); });
-
-
-    let FonTemplateCreated = (tpl) => {
-      //console.log( tpl);
-
-      const base64template = this.arrayBufferToBase64(tpl);
-      //this.props.challengeTemplateUpload(base64template).catch(err => new Error(err));
-      console.log("<<<<<<<<<<<<<>>>>>>>>>>>>>>><<<<<<<<<<<<<<" + base64template);
-      this.getChecksID(base64template);
-    };
-
-    let onUpdate = ((updateType, additional_data) => {
-      const TYPES = FaceLineness3D.Daon.FaceLiveness3D.UPDATE_TYPES;
-      switch (updateType) {
-        case TYPES.ERROR:
-          if (additional_data) {
-            alert('3DFL returned an error: ' + additional_data);
-          } else {
-            alert('3DFL returned an error.');
-          }
-          break;
-        case TYPES.READY: this.instTxt = 'Please center your face so it fills the guide.'; break;
-        case TYPES.AWAIT_RESULTS: this.instTxt = 'Please wait for the result. On slow devices it can take a few seconds.';
-          this.f(document.querySelector("video"), document.getElementById("scream_red"), false, 0, 0, this.x, "Analizando...");
-          break;
-        case TYPES.END_CAPTURE: this.instTxt = ''; break;
-        case TYPES.NOT_CENTERED: this.instTxt = 'Center Face';
-          this.f(document.querySelector("video"), document.getElementById("scream_red"), true, 0, 0, this.x, "");
-          break;
-        case TYPES.TOO_FAR: this.instTxt = 'Too Far';
-
-
-          if (this.x >= 0.5) {
-            // this.w=this.w-this.x;
-            // this.h=this.h-this.x;
-            this.x = this.x - 0.02;
-
-            this.f(document.querySelector("video"), document.getElementById("scream_green"), true, 0, 0, this.x, "");
-          }
-          break;
-        case TYPES.TOO_CLOSE: this.instTxt = 'Too Close';
-          if (this.x < 1) {
-            // this.w=this.w-this.x;
-            // this.h=this.h-this.x;
-            this.x = this.x + 0.02;
-            this.f(document.querySelector("video"), document.getElementById("scream_green"), true, 0, 0, this.x, "");
-          }
-
-          //console.log("W= " + this.w);
-          break;
-        //case TYPES.HOLD: outlineImage = outlineImageGreen;
-
-        //Rerenders the face placeholder oval in green, since face is placed
-
-        //Starts face placeholder oval animation.        //Source code ommited due to brewity
-        //startAnimation();
-        //      break;
-        case TYPES.FACE_BOX:       //Face detection occured, `additional_data` contains face coordinates
-          break;
-      }
-    });
-
+  startButton() {  
+    this.blnStart = false;
     const DaonFaceQualityLiteWasm = window.location.origin + '/assets/js/DaonFaceQualityLite.wasm';
+    this.f3d = new FaceLineness3D.Daon.FaceLiveness3D(DaonFaceQualityLiteWasm);
+    const config = {
+      video: document.querySelector("video"),
+      onUpdate: this.onUpdate,
+      onTemplateCreated: this.FonTemplateCreated,
+      movementDelay: 1250
+    };
+    setTimeout(() => {
+      this.f3d.initialize(config);
+      this.f3d.startProcessing();
+      this.f3d.startSession();  
+    }, 800)
+  }
+  
+  capturar() {  
+    this.fc.startCamera(document.querySelector("video")).then((response) => {
+      this.onCameraStarted(this.fc);
+    });
+  }
 
-    let c = this.canvas;
-    this.videoEl.onloadedmetadata = function () {
-
-      this.videoEl = document.querySelector("video");
-      c.nativeElement.width = this.videoEl.videoWidth;
-      c.nativeElement.height = this.videoEl.videoHeight;
-
-      let f3d = new FaceLineness3D.Daon.FaceLiveness3D(DaonFaceQualityLiteWasm);
-
-      this.videoEl.play();
-      const config = {
-        video: this.videoEl,
-        onUpdate: onUpdate,
-        onTemplateCreated: FonTemplateCreated,
-        movementDelay: 1250
-      };
-      f3d.initialize(config);
-      f3d.startProcessing();
-
-      setTimeout(() => f3d.startSession(), 500);
-
-
+  onCameraStarted = fc => {
+    const video = document.querySelector("video");
+    video.onloadedmetadata = () => {
+        const { width, height } = fc.camera.settings;
+        if (isMobile(navigator.userAgent) && width > height) {
+            fc.camera.videoTracks[0].applyConstraints({ width, height }).then(() => {
+            })
+        }
     }
+}
 
+FonTemplateCreated = (tpl) => {
+  const base64template = this.arrayBufferToBase64(tpl);
+  this.getChecksID(base64template);
+  //this.f3d.terminate();
+};
+
+onUpdate = ((updateType, additional_data) => {
+  const TYPES = FaceLineness3D.Daon.FaceLiveness3D.UPDATE_TYPES;
+  switch (updateType) {
+    case TYPES.ERROR:
+      if (additional_data) {
+        alert('3DFL returned an error: ' + additional_data);
+      } else {
+        alert('3DFL returned an error.');
+      }
+      break;
+    case TYPES.MOVE_CLOSER:
+      this.instTxt = TYPES.MOVE_CLOSER;
+      this.startAnimation(2300);
+      break;
+    case TYPES.READY: 
+      this.instTxt = 'Please center your face so it fills the guide.';
+      break;
+    case TYPES.AWAIT_RESULTS:
+      this.instTxt = 'analyzing...';
+      this.drawOutline(document.getElementById("scream_sn"));
+      break;
+    case TYPES.END_CAPTURE: 
+      this.instTxt = TYPES.END_CAPTURE;
+      this.instTxt = '';
+      break;
+    case TYPES.NOT_CENTERED: 
+      this.instTxt = 'Center Face';
+      this.drawOutline(document.getElementById("scream_r"));
+      break;
+    case TYPES.TOO_FAR: 
+      this.instTxt = 'Too Far';
+      this.drawOutline(document.getElementById("scream_r"));
+      break;
+    case TYPES.TOO_CLOSE: 
+      this.instTxt = 'Too Close';
+      this.drawOutline(document.getElementById("scream_r"));
+      break;
+    case TYPES.HOLD: 
+      this.instTxt = TYPES.HOLD;
+      this.drawOutline(document.getElementById("scream_g"));
+      break;
+    case TYPES.FACE_BOX: 
+      //this.instTxt = "sin reconocimiento facial";
+      //this.drawOutline(document.getElementById("scream_sn"));
+      break;
+  }
+});
+
+
+  drawOutline(img) {
+    this.ctx.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
+
+    let scale = 0.55;
+    if (this.canvas.nativeElement.width < this.canvas.nativeElement.height) {
+      scale = isMobile(navigator.userAgent) ? 0.75 : 0.75;
+    }
+    let dx = (this.canvas.nativeElement.width - img.width * scale) / 2;
+    let dy = (this.canvas.nativeElement.height - img.height * scale * 1.4) / 2;
+    this.ctx.globalAlpha = 0.7;
+    this.ctx.drawImage(img, dx, dy,
+      img.width * scale,
+      img.height * scale * 1.4);
+  }
+
+  startAnimation(duration) {
+    const animationStartTS = performance.now();
+    const animationStopTS = animationStartTS + duration;
+    const animationScalePerSec = (1.6 - 1) / duration * 1000;
+    this.stepAnimation(animationStartTS, animationStopTS, animationScalePerSec);
+  }
+
+  
+  stepAnimation = (animationStartTS, animationStopTS, animationScalePerSec) => {
+    const animationStepDuration = 40; // 25fps
+    const currentTS = performance.now();
+    if (currentTS < animationStopTS) {
+      let newScale = 1 + animationScalePerSec * (currentTS - animationStartTS) / 1000;
+
+      this.ctx.setTransform(newScale, 0, 0, newScale, -this.canvas.nativeElement.width * (newScale - 1) / 2, -this.canvas.nativeElement.height * (newScale - 1) / 2);
+      this.drawOutline(document.getElementById("scream_g"));
+      setTimeout(() => this.stepAnimation(animationStartTS, animationStopTS, animationScalePerSec), animationStepDuration);
+    }
+    else {
+      console.log('skip stepAnimation');
+    }
   }
 
 
+}
+
+
+export function getLabelForMessage(message, UPDATE_TYPES) {
+  // const START = 'Please center your face so it fills the guide.'
+  // const AWAIT_RESULTS = 'Please wait for the result. On slow devices it can take a few seconds.'
+  const TOO_CLOSE = 'Too Close'
+  // const TOO_CLOSE_ML = 'Too\nClose'
+  const TOO_FAR = 'Too Far'
+  // const TOO_FAR_ML = 'Too\nFar'
+  // const NOT_CENTERED = 'Center Face'
+  const NOT_CENTERED_ML = 'Center\nFace'
+  const HOLD = 'Hold...'
+  // const MOVE = 'Move Device Closer Now'
+  const MOVE_ML = 'Move\nCloser\nNow'
+  const ANALYSING = 'Analysing...'
+  const NONE = '';
+
+  switch (message) {
+    case UPDATE_TYPES.READY:
+    case UPDATE_TYPES.END_CAPTURE:
+      return NONE;
+    case UPDATE_TYPES.AWAIT_RESULTS:
+      return ANALYSING;
+    case UPDATE_TYPES.NOT_CENTERED:
+      return NOT_CENTERED_ML;
+    case UPDATE_TYPES.TOO_FAR:
+      return TOO_FAR;
+    case UPDATE_TYPES.TOO_CLOSE:
+      return TOO_CLOSE;
+    case UPDATE_TYPES.HOLD:
+      return HOLD;
+    case UPDATE_TYPES.MOVE_CLOSER:
+      return MOVE_ML;
+    default:
+      return undefined;
+  }
 }

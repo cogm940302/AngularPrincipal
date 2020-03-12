@@ -2,7 +2,7 @@
 
 <div [hidden]="!activator" >    
     
-        <div class="page-capture">
+        <div class="page-capture main-div">
             <div style="visibility: visible;">
                 <!--<div class="native-capture-box box-shadow">¿Algún problema?<span><input type="file" accept="image/*" capture="user"><button (click)="initImg()"  class="button-link">Subir Selfie</button></span></div>-->
             </div>
@@ -15,7 +15,7 @@
                 <div class="{{isEdge ? '':'overlay overlay-oval'}}"></div>
             </div>
             <canvas #canvas width="480" height="640" class="ui-canvas-container ui-canvas">
-                <img id="scream"  src="../../../../assets/icons/frame_overlay_far_green.png" class="img-preview" alt="The Scream">
+                <img #scream id="scream"  src="../../../../assets/icons/frame_overlay_far_green.png" alt="The Scream">
             </canvas>
             <footer>
                 <br>
