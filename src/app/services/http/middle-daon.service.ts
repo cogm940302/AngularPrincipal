@@ -14,6 +14,20 @@ export class MiddleDaonService {
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
 
+  async consumLalo() {
+    let mongoUpdate;
+    mongoUpdate = this.http.get('https://j0d8m0b5xe.execute-api.us-east-1.amazonaws.com/test' + `/prueba`, { headers: this.headers }).pipe(
+      map((res: Response) => {
+        return res || {};
+      }),
+      catchError(this.errorMgmt)
+    );
+    await mongoUpdate.toPromise().then(data => {
+      console.log(data);
+      mongoUpdate = data;
+    });
+  }
+
   async updateDaonDataUser(datos: sesionModel, id: string) {
     console.log('lo que voy actulizar es: ');
     console.log(datos.daon);
@@ -33,7 +47,7 @@ export class MiddleDaonService {
   async createDaonRegister(correo: string, id: string) {
     console.log('servicio para crear registro en DAON');
     let result;
-    const jsonToSend = { userId: `${correo}`, trackId: `${id}`};
+    const jsonToSend = { userId: `${correo}`, trackId: `${id}` };
     console.log(jsonToSend);
     // console.log(JSON.stringify(jsonToSend));
     try {

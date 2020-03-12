@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { urlMiddleMongo } from '../../model/LigasUtil';
+import swal from 'sweetalert';
 import { reject } from 'q';
 
 @Injectable({
@@ -18,7 +19,6 @@ export class MiddleMongoService {
   async getDataUser(id: string) {
     console.log('El id que recibo es: ' + id);
     let result;
-    let exist = false;
     const servicio = this.http.get(urlMiddleMongo + `/${id}`, { headers: this.headers }).pipe(map((res: Response) => {
       return res || {};
     }),
@@ -27,12 +27,20 @@ export class MiddleMongoService {
     await servicio.toPromise().then(data => {
       console.log('los datos que vienen son: ');
       console.log(data);
-      result = data;
-      result.daon = data['sesion']['daon'];
+      if (data['estatus'] === 'nuevo' || data['estatus'] === 'en progreso') {
+        result = data;
+        if (data['sesion']) {
+          result.daon = data['sesion']['daon'];
+        } else {
+          result.daon = {};
+        }
+      } else {
+        result._id = 'Error';
+      }
     });
-    if (result !== undefined && result._id) {
-      exist = true;
-    }
+    // if (result !== undefined && result._id) {
+    //   exist = true;
+    // }
     console.log('ya voy a regresar los datos');
     console.log(result);
     return result;
