@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { urlMiddleMongo } from '../../model/LigasUtil';
+import swal from 'sweetalert';
 import { reject } from 'q';
 
 @Injectable({
@@ -18,7 +19,6 @@ export class MiddleMongoService {
   async getDataUser(id: string) {
     console.log('El id que recibo es: ' + id);
     let result;
-    let exist = false;
     const servicio = this.http.get(urlMiddleMongo + `/${id}`, { headers: this.headers }).pipe(map((res: Response) => {
       return res || {};
     }),
