@@ -28,11 +28,14 @@ export class MiddleMongoService {
       console.log(data);
       if (data['estatus'] === 'nuevo' || data['estatus'] === 'en progreso') {
         result = data;
-        if (data['sesion'] && data['sesion']['daon']) {
-          result.daon = data['sesion']['daon'];
+        if (data['sesion']) {
+          result.daon = data['sesion'];
         } else {
           result.daon = {};
         }
+        delete result.sesion;
+        console.log('el final');
+        console.log(result);
       } else {
         result._id = 'Error';
       }
