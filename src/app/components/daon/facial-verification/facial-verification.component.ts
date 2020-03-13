@@ -7,7 +7,7 @@ import { SelfieSend } from 'src/app/model/DaonPojos/Selfie';
 import { sesionModel } from 'src/app/model/sesion/SessionPojo';
 import { SessionService } from 'src/app/services/session/session.service';
 import { MiddleMongoService } from '../../../services/http/middle-mongo.service';
-import { ServicesGeneralService } from '../../../services/general/services-general.service';
+import { ServicesGeneralService,isMobile } from '../../../services/general/services-general.service';
 import { MiddleDaonService } from '../../../services/http/middle-daon.service';
 import { ErrorSelfieService } from 'src/app/services/errores/error-selfie.service';
 
@@ -29,12 +29,16 @@ export class FacialVerificationComponent implements OnInit {
   @Input() public id: string;
   @Input() public foto: any;
   error: any;
+  isMobileBool:boolean;
+  isEdge:boolean;
 
   async ngOnInit() {
     // console.log(this.foto);
     this.foto = await this.blobToBase64(this.foto);
     console.log('Foto= ' + this.foto);
     this.filtersLoaded = Promise.resolve(true);
+    this.isMobileBool= isMobile(navigator.userAgent);
+    this.isEdge = window.navigator.userAgent.indexOf("Edge") > -1;
   }
 
   async enviar() {
