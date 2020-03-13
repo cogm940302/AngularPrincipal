@@ -92,10 +92,7 @@ export class PageFaceCaptureComponent implements OnInit {
         },
         onFaceDetection: coords => {
           if (coords) {
-            console.log('las coordenadas son: ');
-            console.log(coords);
           } else {
-            console.log('volviendo a llamar');
           }
         }
       });
@@ -111,7 +108,7 @@ export class PageFaceCaptureComponent implements OnInit {
         this.mensaje = response.feedback;
         console.log('no pasa');
       } else if (response.result === 'PASS') {
-        console.log('si pasa');
+        console.log('si pasa' + JSON.stringify(response, null, 2));
         this.mensaje = response.feedback;
         this.fc.stopAutoCapture();
         this.imageData = response.sentBlobImage;
@@ -163,4 +160,35 @@ export class PageFaceCaptureComponent implements OnInit {
      });
     }
   }
+
+  processFile(imageInput: any) {
+    this.mensaje="";
+    const file: File = imageInput.files[0];
+    console.log(file.type);
+    if(file.type.toUpperCase().includes("JPG".toUpperCase()) || file.type.toUpperCase().includes("JPEG".toUpperCase())){
+      this.fc.assessQuality(file)
+      .then( response => {
+        if (response.result === 'FAIL') {
+          this.mensaje = response.feedback;
+          console.log('no pasa');
+        } else if (response.result === 'PASS') {
+          console.log('si pasa' + JSON.stringify(response, null, 2));
+          this.mensaje = response.feedback;
+          this.fc.stopAutoCapture();
+          this.imageData = response.sentBlobImage;
+          this.activator = false;
+        }
+      })
+      .catch( err => {
+        this.mensaje = "No es una fotografia valida";
+        console.log(err);
+        this.btnB=true;
+      });
+    }else{
+      this.mensaje = "La extencion " + file.type.substr(6) + " es incorrecta";
+    }
+
+  }
+
+
 }

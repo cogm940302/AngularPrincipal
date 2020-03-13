@@ -52,7 +52,7 @@ export class ServicesGeneralService {
     this.img64 = img;
   }
 
-  getImg64(): string {
+  getImg64(): String {
     return this.img64;
   }
 

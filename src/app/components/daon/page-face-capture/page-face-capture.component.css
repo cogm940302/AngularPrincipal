@@ -244,4 +244,27 @@ input[type=file] {
   height: 100%;
 }
 
+.native-capture-box {
+  background-color: lightgoldenrodyellow;
+  border-radius: 3px;
+  text-align: center;
+  margin: auto;
+  margin-top: 10px;
+  width: 350px;
+}
+
+.native-capture-box button {
+  color: rgb(0, 151, 221);
+}
+
+.button-link {
+  /* color: white; */
+  margin-left: 10px;
+  background: none;
+  border:none;
+  font:inherit;
+  font-size: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
 

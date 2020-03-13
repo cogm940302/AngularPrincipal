@@ -15,7 +15,7 @@ export class CaptureInstructionComponent implements OnInit {
 
   constructor(public router: Router, public serviciogeneralService: ServicesGeneralService, private actRoute: ActivatedRoute,
               private session: SessionService) {
-
+console.log("Ferrrrrrrr");
     if (serviciogeneralService.gettI() !== undefined && serviciogeneralService.getFrontAndBack() !== undefined) {
       sessionStorage.setItem('ti', serviciogeneralService.gettI());
       sessionStorage.setItem('fb', serviciogeneralService.getFrontAndBack());

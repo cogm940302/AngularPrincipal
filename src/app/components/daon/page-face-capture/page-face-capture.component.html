@@ -1,9 +1,18 @@
 <div [hidden]="!activator">
 
-    <div class="page-capture main-div">
-        <div style="visibility: visible;">
+    <div class="page-capture">
+        
             <!--<div class="native-capture-box box-shadow">¿Algún problema?<span><input type="file" accept="image/*" capture="user"><button (click)="initImg()"  class="button-link">Subir Selfie</button></span></div>-->
-        </div>
+            <div style="visibility: visible;">
+                <div class="native-capture-box box-shadow">
+                    Having problems?
+                    <span>
+                        <input #imgInput type="file" accept="image/*" capture="user" (change)="processFile(imgInput)" >
+                        <button (click)="imgInput.click()" class="button-link">{{this.isMobileBool ? 'Try native camera' :  'Upload selfie'}}</button>
+                    </span>
+                </div>
+            </div>
+  
         <!-- <canvas #canvas borde="1" class="border border-primary">
                     <img id="scream"  src="../../../../assets/icons/frame_overlay_far_green.png" class="img-preview" alt="The Scream">
 
