@@ -8,6 +8,8 @@ import { sesionModel } from 'src/app/model/sesion/SessionPojo';
 import { SessionService } from 'src/app/services/session/session.service';
 import { MiddleMongoService } from '../../../services/http/middle-mongo.service';
 import { ServicesGeneralService } from '../../../services/general/services-general.service';
+import { MiddleDaonService } from '../../../services/http/middle-daon.service';
+import { ErrorSelfieService } from 'src/app/services/errores/error-selfie.service';
 
 @Component({
   selector: 'app-facial-verification',
@@ -18,7 +20,8 @@ import { ServicesGeneralService } from '../../../services/general/services-gener
 export class FacialVerificationComponent implements OnInit {
   constructor(public serviciogeneralService: ServicesGeneralService, private router: Router,
               private http: HttpClient, private session: SessionService,
-              private mongoMid: MiddleMongoService) { }
+              private mongoMid: MiddleMongoService, private middleDaon: MiddleDaonService,
+              private errorSelfieService: ErrorSelfieService) { }
 
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
   private data: SelfieSend;
@@ -34,41 +37,32 @@ export class FacialVerificationComponent implements OnInit {
     this.filtersLoaded = Promise.resolve(true);
   }
 
-  regresar() {
-    this.router.navigate([Rutas.selfie]);
-  }
-
-  enviar() {
+  async enviar() {
     const jsonSendFaceDaon = {
-      url:'https://dobsdemo-idx-first.identityx-cloud.com/mitsoluciones3/IdentityXServices/rest/v1/users/QTAzC4QvQCaDUjz1d2MG74wj0A/face/samples',
-      metodo: 'POST',
       data: this.foto,
-      format: 'jpg'
     };
 
-    // this.serviciogeneralService.sendDaon(jsonSendFaceDaon).subscribe(data => {
-    //   console.log(JSON.stringify(data, null, 2));
-    //    if (data.errorType) {
-    //      console.log("errorType= " + JSON.stringify(data, null, 2));
-    //    } else {
-    //     console.log("respuesta de la face= " + JSON.stringify(data, null, 2));
-    //     if (data.statusCode === 200){
-    //       this.router.navigate([Rutas.chooseIdentity+"/5e559f279279300008700482"]);
-    //     }
-    //    }
-    //  });
+    const resultCode = await this.middleDaon.sendSelfieDaon(jsonSendFaceDaon, this.id);
+    if (resultCode !== 200) {
+      console.log('ocurrio un error, favor de reintentar');
+      console.log('voy a redirigir a : ' + Rutas.selfie + `${this.id}` );
+      this.errorSelfieService.mensaje = 'Error, favor de volver a intentar';
+      this.router.navigate([Rutas.instrucciones + `${this.id}`]);
+      return false;
+    }
+    return true;
   }
 
-  guardar() {
+  async guardar() {
     console.log('voy a enviar');
-    this.enviar();
-    // TODO validar el data
-    // const object = this.session.getObjectSession();
-    // object.daon.selfie = true;
-    // this.session.updateModel(object);
-    // this.mongoMid.updateDataUser(object);
-    // console.log('ya termine' + JSON.stringify(object, null, 2));
-    // this.router.navigate([Rutas.chooseIdentity + `${this.id}`]);
+    if (await this.enviar()) {
+      const object = this.session.getObjectSession();
+      object.daon.selfie = true;
+      this.session.updateModel(object);
+      await this.middleDaon.updateDaonDataUser(object, this.id);
+      console.log('ya termine' + JSON.stringify(object, null, 2));
+      this.router.navigate([Rutas.chooseIdentity + `${this.id}`]);
+    }
   }
 
   blobToBase64(blob) {
@@ -87,7 +81,6 @@ export class FacialVerificationComponent implements OnInit {
 
   back() {
     window.location.reload();
-    // this.router.navigate([Rutas.selfie + `${this.id}`]);
   }
 
 

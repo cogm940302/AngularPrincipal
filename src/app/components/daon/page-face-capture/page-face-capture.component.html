@@ -1,34 +1,31 @@
+<div [hidden]="!activator">
 
-
-<div [hidden]="!activator" >    
-    
-        <div class="page-capture main-div">
-            <div style="visibility: visible;">
-                <!--<div class="native-capture-box box-shadow">¿Algún problema?<span><input type="file" accept="image/*" capture="user"><button (click)="initImg()"  class="button-link">Subir Selfie</button></span></div>-->
-            </div>
-                <!-- <canvas #canvas borde="1" class="border border-primary">
+    <div class="page-capture main-div">
+        <div style="visibility: visible;">
+            <!--<div class="native-capture-box box-shadow">¿Algún problema?<span><input type="file" accept="image/*" capture="user"><button (click)="initImg()"  class="button-link">Subir Selfie</button></span></div>-->
+        </div>
+        <!-- <canvas #canvas borde="1" class="border border-primary">
                     <img id="scream"  src="../../../../assets/icons/frame_overlay_far_green.png" class="img-preview" alt="The Scream">
-                    
+
                 </canvas> -->
-            <div class= " {{isEdge ? 'ui-canvas-container hiddenEdge':'ui-canvas-container'}}">
-                <video class= "{{this.isMobileBool ? 'ui-canvas' : isEdge ? 'ui-canvas scale-edge' : 'ui-canvas'}}"  autoplay="" playsinline="" style="transform: scaleX(-1);"> </video>
-                <div class="{{isEdge ? '':'overlay overlay-oval'}}"></div>
-            </div>
-            <canvas #canvas width="480" height="640" class="ui-canvas-container ui-canvas">
+        <div class=" {{isEdge ? 'ui-canvas-container hiddenEdge':'ui-canvas-container'}}">
+            <video class="{{this.isMobileBool ? 'ui-canvas' : isEdge ? 'ui-canvas scale-edge' : 'ui-canvas'}}" autoplay="" playsinline="" style="transform: scaleX(-1);"> </video>
+            <div class="{{isEdge ? '':'overlay overlay-oval'}}"></div>
+        </div>
+        <canvas #canvas width="480" height="640" class="ui-canvas-container ui-canvas">
                 <img #scream id="scream"  src="../../../../assets/icons/frame_overlay_far_green.png" alt="The Scream">
             </canvas>
-            <footer>
-                <br>
-                <button class="btn blue" (click)="tomarSelfie()"  [disabled]="!btnB" >CAPTURE SELFIE</button>
-                <p class="message-box box-shadow text-center">{{mensaje}}</p>
-            </footer>
-        </div>
-    
+        <footer>
+            <br>
+            <button class="btn blue" (click)="tomarSelfie()" [disabled]="!btnB">CAPTURE SELFIE</button>
+            <p class="message-box box-shadow text-center">{{mensaje}}</p>
+        </footer>
+    </div>
+
 </div>
 
-<button *ngIf="filtersLoaded | async" (click)="captura()">capturar</button>
+<!-- <button (click)="captura()">capturar</button> -->
 
 <div *ngIf="!activator" class="container">
     <app-facial-verification [foto]="imprimirImagen()" [id]="id"></app-facial-verification>
 </div>
-

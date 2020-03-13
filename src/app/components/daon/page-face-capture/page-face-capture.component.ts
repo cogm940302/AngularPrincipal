@@ -15,7 +15,7 @@ import { Rutas } from 'src/app/model/RutasUtil.js';
 })
 export class PageFaceCaptureComponent implements OnInit {
   @ViewChild('canvas', { static: true })
-  canvas: ElementRef<HTMLCanvasElement>;  
+  canvas: ElementRef<HTMLCanvasElement>;
 
   activator = true;
   imageData: any;
@@ -35,10 +35,13 @@ export class PageFaceCaptureComponent implements OnInit {
     this.fc = new Daonjs.Daon.FaceCapture({
       url: 'https://dobsdemo-facequality-first.identityx-cloud.com/rest/v1/quality/assessments'
     });
-    
+
   }
 
   async ngOnInit() {
+    this.actRoute.params.subscribe(params => {
+      this.id = params['id'];
+    });
     this.isMobileBool= isMobile(navigator.userAgent);
     this.isEdge = window.navigator.userAgent.indexOf("Edge") > -1;
     if (this.isEdge) {
@@ -75,7 +78,7 @@ export class PageFaceCaptureComponent implements OnInit {
   captura() {
    console.log();
     this.fc.stopAutoCapture();
-  } 
+  }
 
   onCameraStarted = (fc, video) => {
     video.onloadedmetadata = () => {
@@ -98,13 +101,15 @@ export class PageFaceCaptureComponent implements OnInit {
       });
     };
   }
-  
+  returnId() {
+    return this.id;
+  }
   tomarSelfie() {
     this.btnB=false;
     this.fc.startAutoCapture(response => {
       if (response.result === 'FAIL') {
         this.mensaje = response.feedback;
-        console.log('no pasa'); 
+        console.log('no pasa');
       } else if (response.result === 'PASS') {
         console.log('si pasa');
         this.mensaje = response.feedback;
@@ -147,11 +152,11 @@ export class PageFaceCaptureComponent implements OnInit {
             var binStr = atob( canvas.toDataURL(type, quality).split(',')[1] ),
             len = binStr.length,
             arr = new Uint8Array(len);
-    
+
             for (var i = 0; i < len; i++ ) {
                arr[i] = binStr.charCodeAt(i);
             }
-    
+
             callback( new Blob( [arr], {type: type || 'image/png'} ) );
           });
         }

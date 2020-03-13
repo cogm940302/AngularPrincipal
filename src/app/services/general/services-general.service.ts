@@ -28,43 +28,43 @@ export class ServicesGeneralService {
     this.resultLiveness=result;
   }
 
-  getResultLiveness(){
+  getResultLiveness() {
     return this.resultLiveness;
   }
 
-  setMensaje(mensaje){
-    this.mensajeLiveness=mensaje;
+  setMensaje(mensaje) {
+    this.mensajeLiveness = mensaje;
   }
 
-  getMensajeLiveness(){
+  getMensajeLiveness() {
     return this.mensajeLiveness;
   }
 
-  settI(ti){
+  settI(ti) {
     this.tI = ti;
   }
 
-  gettI():string{
+  gettI(): string{
     return this.tI;
   }
 
-  setImg64(img){
-    this.img64=img;
+  setImg64(img) {
+    this.img64 = img;
   }
 
-  getImg64(): String {
+  getImg64(): string {
     return this.img64;
   }
 
-  setFrontAndBack(fb){
-    this.frontAndBack=fb;
+  setFrontAndBack(fb) {
+    this.frontAndBack = fb;
   }
 
-  getFrontAndBack(){
+  getFrontAndBack() {
     return this.frontAndBack;
   }
 
-  headers = new HttpHeaders().set('Content-Type', 'application/json',).set('Accept','application/json');//.set('Authorization','Basic bHVpcy5tYWNpZWxAbWl0ZWMuY29tLm14OndVU2dZbHp5RWdOYzdmaVRydg==');
+  headers = new HttpHeaders().set('Content-Type', 'application/json',).set('Accept','application/json');
 
 
   sendImgDaon(data): Observable<any> {
@@ -78,13 +78,6 @@ export class ServicesGeneralService {
   sendDocDaon(data): Observable<any> {
     const url = `https://dobsdemo-idx-first.identityx-cloud.com/mitsoluciones3/DigitalOnBoardingServices/rest/v1/users/QTAzJc8L4vVRCaztQuscK0B7uQ/idchecks/Yf7ALTADELDB_q13FHKHfw/documents`;
 
-    return this.http.post(url, data, { headers: this.headers,  }).pipe(
-      catchError(this.errorMgmt)
-    );
-  }
-
-  sendDaon(data): Observable<any> {
-    const url = `https://5ghhi5ko87.execute-api.us-east-2.amazonaws.com/test/middservdaon`;
     return this.http.post(url, data, { headers: this.headers,  }).pipe(
       catchError(this.errorMgmt)
     );
