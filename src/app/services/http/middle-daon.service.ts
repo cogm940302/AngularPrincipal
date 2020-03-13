@@ -4,6 +4,7 @@ import { urlMiddleMongo } from 'src/app/model/LigasUtil';
 import { sesionModel } from 'src/app/model/sesion/SessionPojo';
 import { catchError, map } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { urlMiddleDaon } from '../../model/LigasUtil';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class MiddleDaonService {
 
   constructor(private http: HttpClient) { }
 
-  headers = new HttpHeaders().set('Content-Type', 'application/json');
+  headers = new HttpHeaders({ 'Content-Type': 'application/json', Accept: 'q=0.8;application/json;q=0.9' });
+
 
   async consumLalo() {
     let mongoUpdate;
@@ -43,6 +45,22 @@ export class MiddleDaonService {
       mongoUpdate = data;
     });
   }
+
+  async sendSelfieDaon(data, id: string) {
+
+    let statusCode = 0;
+    const result = this.http.post(urlMiddleDaon + `/selfie/${id}`, JSON.stringify(data), { headers: this.headers, });
+    await result.toPromise().then(datos => {
+      statusCode = 200;
+      console.log(datos);
+    }).catch(err => {
+      console.log(err);
+      statusCode = 400;
+    });
+    return statusCode;
+
+  }
+
 
   async createDaonRegister(correo: string, id: string) {
     console.log('servicio para crear registro en DAON');

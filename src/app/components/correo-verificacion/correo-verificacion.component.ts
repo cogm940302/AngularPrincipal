@@ -24,11 +24,13 @@ export class CorreoVerificacionComponent implements OnInit {
   object: sesionModel;
 
   async ngOnInit() {
+    await this.spinner.show();
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
     if (!await this.alredySessionExist()) { return; }
     this.filtersLoaded = Promise.resolve(true);
+    await this.spinner.hide();
   }
 
   async alredySessionExist() {

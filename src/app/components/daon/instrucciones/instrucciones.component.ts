@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../../../services/session/session.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Rutas } from 'src/app/model/RutasUtil';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ErrorSelfieService } from '../../../services/errores/error-selfie.service';
 
 @Component({
   selector: 'app-instrucciones',
@@ -10,17 +12,22 @@ import { Rutas } from 'src/app/model/RutasUtil';
 })
 export class InstruccionesComponent implements OnInit {
 
-  constructor(private router: Router, private session: SessionService, private actRoute: ActivatedRoute) { }
+  constructor(private router: Router, private session: SessionService, private actRoute: ActivatedRoute,
+              private spinner: NgxSpinnerService, private errorSelfieService: ErrorSelfieService) { }
 
   filtersLoaded: Promise<boolean>;
   id: string;
+  errorMensaje: string;
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.errorMensaje = this.errorSelfieService.returnMensaje();
+    await this.spinner.show();
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
     if (!this.alredySessionExist()) { return; }
     this.filtersLoaded = Promise.resolve(true);
+    await this.spinner.hide();
   }
 
   async alredySessionExist() {
@@ -33,7 +40,7 @@ export class InstruccionesComponent implements OnInit {
       if (object._id !== this.id) {
         this.router.navigate([Rutas.error]);
         return false;
-      } else if (object.daon.selfie) {
+      } else if (object.daon && object.daon.selfie) {
         this.router.navigate([Rutas.chooseIdentity + `/${this.id}`]);
         return false;
       } else {
@@ -42,6 +49,7 @@ export class InstruccionesComponent implements OnInit {
     }
   }
   continuar() {
+    this.errorSelfieService.mensaje = '';
     this.router.navigate([Rutas.selfie + `${this.id}`]);
   }
 }

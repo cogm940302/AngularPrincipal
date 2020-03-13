@@ -6,6 +6,7 @@ import { ServicesGeneralService, isMobile } from "../../../../services/general/s
 import { Rutas } from 'src/app/model/RutasUtil.js';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from 'src/app/services/session/session.service.js';
+import { MiddleDaonService } from '../../../../services/http/middle-daon.service';
 
 @Component({
   selector: 'app-liveness-capture',
@@ -29,14 +30,14 @@ export class LivenessCaptureComponent implements OnInit {
   navegador:any;
 
   constructor(public serviciogeneralService: ServicesGeneralService, public router: Router,
-              private session: SessionService, private actRoute: ActivatedRoute) {
+              private session: SessionService, private actRoute: ActivatedRoute, private middleDaon: MiddleDaonService) {
     this.fc = new Daonjs.Daon.FaceCapture({
       url: 'https://dobsdemo-facequality-first.identityx-cloud.com/rest/v1/quality/assessments'
     });
   }
 
   instructions = document.querySelector('#instructions');
-  ngOnInit() {  
+  ngOnInit() {
     this.ctx = this.canvas.nativeElement.getContext('2d');
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
@@ -72,15 +73,15 @@ export class LivenessCaptureComponent implements OnInit {
   }
 
   getChecksID(value) {
-    this.serviciogeneralService.sendDaon(this.checkIdsGetSend).subscribe(data => {
-      console.log(JSON.stringify(data, null, 2));
-      if (data.errorType) {
-        console.log("errorType= " + JSON.stringify(data, null, 2));
-      } else {
-        console.log("link pa el video= " + JSON.stringify(data.body.items[0].videos.href, null, 2));
-        this.sendLivenessDaon(data.body.items[0].videos.href, value);
-      }
-    });
+    // this.serviciogeneralService.middleDaon(this.checkIdsGetSend).subscribe(data => {
+    //   console.log(JSON.stringify(data, null, 2));
+    //   if (data.errorType) {
+    //     console.log("errorType= " + JSON.stringify(data, null, 2));
+    //   } else {
+    //     console.log("link pa el video= " + JSON.stringify(data.body.items[0].videos.href, null, 2));
+    //     this.sendLivenessDaon(data.body.items[0].videos.href, value);
+    //   }
+    // });
   }
 
   sendLivenessDaon(href, value) {
@@ -104,25 +105,25 @@ export class LivenessCaptureComponent implements OnInit {
       }
     };
     console.log("jsonvideo= " + JSON.stringify(jsonvideo, null, 2));
-    this.serviciogeneralService.sendDaon(jsonvideo).subscribe(data => {
-      if (data.errorType) {
-        console.log("errorType= " + JSON.stringify(data, null, 2));
-      } else {
-        console.log("link data= " + JSON.stringify(data, null, 2));
+    // this.serviciogeneralService.middleDaon(jsonvideo).subscribe(data => {
+    //   if (data.errorType) {
+    //     console.log("errorType= " + JSON.stringify(data, null, 2));
+    //   } else {
+    //     console.log("link data= " + JSON.stringify(data, null, 2));
 
-        if (data.statusCode == "200") {
-          //if(data.body.processingStatus != "FAILED"){
-          this.serviciogeneralService.setResultLiveness(data.body.processingStatus);
-          this.serviciogeneralService.setMensaje(data.body.items[0].processingErrors.items[0].message);
-          this.router.navigate([Rutas.livenessResult + "/5e559f279279300008700482"]);
-          //}
-        } else if (data.statusCode == "400") {
-          this.serviciogeneralService.setResultLiveness(data.body.name);
-          this.serviciogeneralService.setMensaje(data.body.message);
-          this.router.navigate([Rutas.livenessResult + "/5e559f279279300008700482"]);
-        }
-      }
-    });
+    //     if (data.statusCode == "200") {
+    //       //if(data.body.processingStatus != "FAILED"){
+    //       this.serviciogeneralService.setResultLiveness(data.body.processingStatus);
+    //       this.serviciogeneralService.setMensaje(data.body.items[0].processingErrors.items[0].message);
+    //       this.router.navigate([Rutas.livenessResult + "/5e559f279279300008700482"]);
+    //       //}
+    //     } else if (data.statusCode == "400") {
+    //       this.serviciogeneralService.setResultLiveness(data.body.name);
+    //       this.serviciogeneralService.setMensaje(data.body.message);
+    //       this.router.navigate([Rutas.livenessResult + "/5e559f279279300008700482"]);
+    //     }
+    //   }
+    // });
   }
 
   arrayBufferToBase64(buffer) {
@@ -135,7 +136,7 @@ export class LivenessCaptureComponent implements OnInit {
     return window.btoa(binary);
   }
 
-  startButton() {  
+  startButton() {
     this.blnStart = false;
     const DaonFaceQualityLiteWasm = window.location.origin + '/assets/js/DaonFaceQualityLite.wasm';
     this.f3d = new FaceLineness3D.Daon.FaceLiveness3D(DaonFaceQualityLiteWasm);
@@ -148,11 +149,11 @@ export class LivenessCaptureComponent implements OnInit {
     setTimeout(() => {
       this.f3d.initialize(config);
       this.f3d.startProcessing();
-      this.f3d.startSession();  
+      this.f3d.startSession();
     }, 800)
   }
-  
-  capturar() {  
+
+  capturar() {
     this.fc.startCamera(document.querySelector("video")).then((response) => {
       this.onCameraStarted(this.fc);
     });
@@ -189,34 +190,34 @@ onUpdate = ((updateType, additional_data) => {
       this.instTxt = TYPES.MOVE_CLOSER;
       this.startAnimation(2300);
       break;
-    case TYPES.READY: 
+    case TYPES.READY:
       this.instTxt = 'Please center your face so it fills the guide.';
       break;
     case TYPES.AWAIT_RESULTS:
       this.instTxt = 'analyzing...';
       this.drawOutline(document.getElementById("scream_sn"));
       break;
-    case TYPES.END_CAPTURE: 
+    case TYPES.END_CAPTURE:
       this.instTxt = TYPES.END_CAPTURE;
       this.instTxt = '';
       break;
-    case TYPES.NOT_CENTERED: 
+    case TYPES.NOT_CENTERED:
       this.instTxt = 'Center Face';
       this.drawOutline(document.getElementById("scream_r"));
       break;
-    case TYPES.TOO_FAR: 
+    case TYPES.TOO_FAR:
       this.instTxt = 'Too Far';
       this.drawOutline(document.getElementById("scream_r"));
       break;
-    case TYPES.TOO_CLOSE: 
+    case TYPES.TOO_CLOSE:
       this.instTxt = 'Too Close';
       this.drawOutline(document.getElementById("scream_r"));
       break;
-    case TYPES.HOLD: 
+    case TYPES.HOLD:
       this.instTxt = TYPES.HOLD;
       this.drawOutline(document.getElementById("scream_g"));
       break;
-    case TYPES.FACE_BOX: 
+    case TYPES.FACE_BOX:
       //this.instTxt = "sin reconocimiento facial";
       //this.drawOutline(document.getElementById("scream_sn"));
       break;
@@ -246,7 +247,7 @@ onUpdate = ((updateType, additional_data) => {
     this.stepAnimation(animationStartTS, animationStopTS, animationScalePerSec);
   }
 
-  
+
   stepAnimation = (animationStartTS, animationStopTS, animationScalePerSec) => {
     const animationStepDuration = 40; // 25fps
     const currentTS = performance.now();

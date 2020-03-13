@@ -4,7 +4,6 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { urlMiddleMongo } from '../../model/LigasUtil';
-import swal from 'sweetalert';
 import { reject } from 'q';
 
 @Injectable({
@@ -29,7 +28,7 @@ export class MiddleMongoService {
       console.log(data);
       if (data['estatus'] === 'nuevo' || data['estatus'] === 'en progreso') {
         result = data;
-        if (data['sesion']) {
+        if (data['sesion'] && data['sesion']['daon']) {
           result.daon = data['sesion']['daon'];
         } else {
           result.daon = {};
