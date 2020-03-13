@@ -10,6 +10,7 @@ import { MiddleMongoService } from '../../../services/http/middle-mongo.service'
 import { ServicesGeneralService } from '../../../services/general/services-general.service';
 import { MiddleDaonService } from '../../../services/http/middle-daon.service';
 import { ErrorSelfieService } from 'src/app/services/errores/error-selfie.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-facial-verification',
@@ -21,7 +22,7 @@ export class FacialVerificationComponent implements OnInit {
   constructor(public serviciogeneralService: ServicesGeneralService, private router: Router,
               private http: HttpClient, private session: SessionService,
               private mongoMid: MiddleMongoService, private middleDaon: MiddleDaonService,
-              private errorSelfieService: ErrorSelfieService) { }
+              private errorSelfieService: ErrorSelfieService, private spinner: NgxSpinnerService) { }
 
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
   private data: SelfieSend;
@@ -54,6 +55,7 @@ export class FacialVerificationComponent implements OnInit {
   }
 
   async guardar() {
+    await this.spinner.show();
     console.log('voy a enviar');
     if (await this.enviar()) {
       const object = this.session.getObjectSession();
@@ -63,6 +65,7 @@ export class FacialVerificationComponent implements OnInit {
       console.log('ya termine' + JSON.stringify(object, null, 2));
       this.router.navigate([Rutas.chooseIdentity + `${this.id}`]);
     }
+    await this.spinner.hide();
   }
 
   blobToBase64(blob) {

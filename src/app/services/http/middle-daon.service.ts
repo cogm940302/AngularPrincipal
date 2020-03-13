@@ -50,6 +50,7 @@ export class MiddleDaonService {
 
     let statusCode = 0;
     const result = this.http.post(urlMiddleDaon + `/selfie/${id}`, JSON.stringify(data), { headers: this.headers, });
+    // const result = this.http.get(`https://2u597e7kmf.execute-api.us-east-1.amazonaws.com/testcors`, { headers: this.headers, });
     await result.toPromise().then(datos => {
       statusCode = 200;
       console.log(datos);
