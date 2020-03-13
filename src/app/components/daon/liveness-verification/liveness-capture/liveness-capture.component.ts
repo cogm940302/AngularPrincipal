@@ -252,7 +252,6 @@ onUpdate = ((updateType, additional_data) => {
     const currentTS = performance.now();
     if (currentTS < animationStopTS) {
       let newScale = 1 + animationScalePerSec * (currentTS - animationStartTS) / 1000;
-
       this.ctx.setTransform(newScale, 0, 0, newScale, -this.canvas.nativeElement.width * (newScale - 1) / 2, -this.canvas.nativeElement.height * (newScale - 1) / 2);
       this.drawOutline(document.getElementById("scream_g"));
       setTimeout(() => this.stepAnimation(animationStartTS, animationStopTS, animationScalePerSec), animationStepDuration);
@@ -260,44 +259,5 @@ onUpdate = ((updateType, additional_data) => {
     else {
       console.log('skip stepAnimation');
     }
-  }
-
-
-}
-
-
-export function getLabelForMessage(message, UPDATE_TYPES) {
-  // const START = 'Please center your face so it fills the guide.'
-  // const AWAIT_RESULTS = 'Please wait for the result. On slow devices it can take a few seconds.'
-  const TOO_CLOSE = 'Too Close'
-  // const TOO_CLOSE_ML = 'Too\nClose'
-  const TOO_FAR = 'Too Far'
-  // const TOO_FAR_ML = 'Too\nFar'
-  // const NOT_CENTERED = 'Center Face'
-  const NOT_CENTERED_ML = 'Center\nFace'
-  const HOLD = 'Hold...'
-  // const MOVE = 'Move Device Closer Now'
-  const MOVE_ML = 'Move\nCloser\nNow'
-  const ANALYSING = 'Analysing...'
-  const NONE = '';
-
-  switch (message) {
-    case UPDATE_TYPES.READY:
-    case UPDATE_TYPES.END_CAPTURE:
-      return NONE;
-    case UPDATE_TYPES.AWAIT_RESULTS:
-      return ANALYSING;
-    case UPDATE_TYPES.NOT_CENTERED:
-      return NOT_CENTERED_ML;
-    case UPDATE_TYPES.TOO_FAR:
-      return TOO_FAR;
-    case UPDATE_TYPES.TOO_CLOSE:
-      return TOO_CLOSE;
-    case UPDATE_TYPES.HOLD:
-      return HOLD;
-    case UPDATE_TYPES.MOVE_CLOSER:
-      return MOVE_ML;
-    default:
-      return undefined;
   }
 }

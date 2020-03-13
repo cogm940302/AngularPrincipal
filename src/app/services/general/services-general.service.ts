@@ -11,11 +11,19 @@ export class ServicesGeneralService {
   img64:String;
   tI:string;
   frontAndBack:string;
-
+  isUpload:boolean;
   resultLiveness:string;
   mensajeLiveness:string;
+  
   constructor(private http: HttpClient) { }
 
+  setIsUpload(b){
+    this.isUpload=b;
+  }
+
+  getIsUpload(){
+    return this.isUpload;
+  }
   setResultLiveness(result){
     this.resultLiveness=result;
   }

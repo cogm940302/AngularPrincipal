@@ -4,7 +4,6 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { urlMiddleMongo } from '../../model/LigasUtil';
-import swal from 'sweetalert';
 import { reject } from 'q';
 
 @Injectable({

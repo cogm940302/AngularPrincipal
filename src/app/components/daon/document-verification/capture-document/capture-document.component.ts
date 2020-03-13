@@ -16,22 +16,25 @@ export class CaptureDocumentComponent implements OnInit {
 
   constructor(public router: Router, public serviciogeneralService: ServicesGeneralService,
               private session: SessionService, private actRoute: ActivatedRoute) {
+
     this.htmlCanvasToBlob();
     if (serviciogeneralService.gettI() !== undefined) {
       sessionStorage.setItem('ti', serviciogeneralService.gettI());
     } else if (sessionStorage.getItem('ti') === undefined) {
       this.router.navigate([Rutas.chooseIdentity]);
     }
-    this.fc = new DocumentCapture.Daon.DocumentCapture({
+
+    this.dc = new DocumentCapture.Daon.DocumentCapture({
       url: 'https://dobsdemo-docquality-first.identityx-cloud.com/rest/v1/quality/assessments',
       documentType: 'ID_CARD'//sessionStorage.getItem('ti'),
     });
+
   }
 
   filtersLoaded: Promise<boolean>;
   mensaje: string;
   id: string;
-  fc: any;
+  dc: any;
   img: any;
   isMobileBool:boolean;
   isEdge:boolean;
@@ -69,20 +72,23 @@ export class CaptureDocumentComponent implements OnInit {
   }
 
   enter() {
-    this.fc.capture().then(response => {
+    
+    this.dc.capture().then(response => {
       console.log(response);
       if (response.result === 'FAIL') {
         this.mensaje = response.feedback;
         console.log('no pasa');
       } else if (response.result === 'PASS') {
-        this.fc.stopCamera();
-        this.fc.stopAutoCapture();
+        this.dc.stopCamera();
+        this.dc.stopAutoCapture();
         this.img = 'data:image/jpeg;base64,' + response.responseBase64Image;
         this.serviciogeneralService.setImg64(this.img);
+        this.serviciogeneralService.setIsUpload(false);
         this.router.navigate([Rutas.documentConfirm+ `${this.id}`]);
       }
     })
       .catch(err => {
+        this.mensaje=err;
         console.log('err= ' + err);
       });
   }
@@ -111,7 +117,7 @@ export class CaptureDocumentComponent implements OnInit {
     //this.videoEl.addEventListener('play', this.f(document.querySelector("video"),document.getElementById("scream_green")) );
     //navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: 'user' } }).then(stream => { this.videoEl.srcObject = stream; }).catch(error => { console.error('Cannot get camera feed', error); alert('Unable to get hold of your camera.\nPlease ensure no other page/app is using it and reload.'); });
 
-    this.fc.startCamera(this.videoEl).then((response) => {
+    this.dc.startCamera(this.videoEl).then((response) => {
      
       console.log(response);
     });

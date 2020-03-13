@@ -64,11 +64,16 @@ export class ConfirmDocumentComponent implements OnInit {
   }
 
   back() {
-    this.router.navigate([Rutas.documentCapture + `${this.id}`]);
+    if(this.serviciogeneralService.getIsUpload())
+    {
+      this.router.navigate([Rutas.documentInstruction + `${this.id}`]);
+    }else{
+      this.router.navigate([Rutas.documentCapture + `${this.id}`]);
+    }
+    
   }
 
   sendDocumentDaon(url) {
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     this.documentoSend.captured = new Date().toISOString();
     this.documentoSend.url = url;
     this.documentoSend.metodo = 'POST';
