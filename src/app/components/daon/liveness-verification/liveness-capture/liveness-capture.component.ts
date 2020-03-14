@@ -42,7 +42,7 @@ export class LivenessCaptureComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    //if (!this.alredySessionExist()) { return; }
+    if (!this.alredySessionExist()) { return; }
     this.isMobileBool= isMobile(navigator.userAgent);
     this.isEdge = window.navigator.userAgent.indexOf("Edge") > -1;
     this.blnStart = true;
