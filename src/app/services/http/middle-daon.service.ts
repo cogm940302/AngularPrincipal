@@ -76,6 +76,23 @@ export class MiddleDaonService {
     return statusCode;
   }
 
+  async sendLiveDaon(data, id: string) {
+    let statusCode = 0;
+    const result = this.http.post(urlMiddleDaon + `/live/${id}`, JSON.stringify(data), { headers: this.headers, });
+    await result.toPromise().then(datos => {
+      console.log(datos);
+      if (datos['errorType'] || datos['errorMessage']) {
+        statusCode = 400;
+      } else {
+        statusCode = 200;
+      }
+    }).catch(err => {
+      console.log(err);
+      statusCode = 400;
+    });
+    return statusCode;
+  }
+
 
   async createDaonRegister(correo: string, id: string) {
     console.log('servicio para crear registro en DAON');

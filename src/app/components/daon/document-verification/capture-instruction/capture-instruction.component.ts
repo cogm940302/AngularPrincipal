@@ -5,7 +5,7 @@ import { SessionService } from 'src/app/services/session/session.service';
 import { Rutas } from 'src/app/model/RutasUtil';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as DocumentCapture from '../../../../../assets/js/Daon.DocumentCapture.min.js';
-import  IconDefinitions  from '../../../../../assets/icons/icons-svn';
+import IconDefinitions from '../../../../../assets/icons/icons-svn';
 @Component({
   selector: 'app-capture-instruction',
   templateUrl: './capture-instruction.component.html',

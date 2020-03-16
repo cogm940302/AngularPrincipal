@@ -40,9 +40,9 @@ export class ConfirmDocumentComponent implements OnInit {
     this.processedImage = new ProcessedImage();
     this.sensitiveData = new SensitiveData();
     this.checkIdsGetSend = new CheckID();
-    this.checkIdsGetSend.url = "https://dobsdemo-idx-first.identityx-cloud.com/mitsoluciones3/DigitalOnBoardingServices/rest/v1/users/QTAz60XuGXnwddZAHUcgGbFJgA/idchecks";
-    this.checkIdsGetSend.metodo = "GET";
-    console.log(">>>>>>>>>>>>>>>>> " + this.serviciogeneralService.getImg64());
+    this.checkIdsGetSend.url = 'https://dobsdemo-idx-first.identityx-cloud.com/mitsoluciones3/DigitalOnBoardingServices/rest/v1/users/QTAz60XuGXnwddZAHUcgGbFJgA/idchecks';
+    this.checkIdsGetSend.metodo = 'GET';
+    console.log('>>>>>>>>>>>>>>>>> ' + this.serviciogeneralService.getImg64());
 
     this.img = this.serviciogeneralService.getImg64();
     this.filtersLoaded = Promise.resolve(true);
@@ -68,10 +68,9 @@ export class ConfirmDocumentComponent implements OnInit {
   }
 
   back() {
-    if(this.serviciogeneralService.getIsUpload())
-    {
+    if (this.serviciogeneralService.getIsUpload()) {
       this.router.navigate([Rutas.documentInstruction + `${this.id}`]);
-    }else{
+    } else {
       this.router.navigate([Rutas.documentCapture + `${this.id}`]);
     }
 
