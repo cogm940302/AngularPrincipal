@@ -172,6 +172,7 @@ export class LivenessCaptureComponent implements OnInit {
 
 FonTemplateCreated = (tpl) => {
   const base64template = this.arrayBufferToBase64(tpl);
+  console.log(base64template);
   this.getChecksID(base64template);
   //this.f3d.terminate();
 };

@@ -5,7 +5,8 @@
         <h1 class="center">Selfie</h1>    
         <p class="center">Are you happy with the selfie or would you like to retake the photo?</p>
         <div class="panel border-gray bg-row" style="height: 30vh;">        
-            <img *ngIf="filtersLoaded | async" src="{{'data:image/jpg;base64,' + foto}}" class="img-preview flip-x"  />          
+            <img  src="{{'data:image/jpg;base64,' + foto}}" class="{{(isAndroid && isNative) ? 'img-preview rotate-mobile-native':'img-preview flip-x'}}"  />          
+            <!-- *ngIf="filtersLoaded | async" -->
         </div>
         <div class="row row-justify-space">
             <button class="btn white" (click)="back()">retake the selfies</button>

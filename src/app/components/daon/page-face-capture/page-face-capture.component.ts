@@ -3,7 +3,7 @@ import { Component, OnInit,ViewChild, ElementRef } from '@angular/core';
 import * as Daonjs from '../../../../assets/js/Daon.FaceCapture.min.js';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from 'src/app/services/session/session.service.js';
-import { isMobile } from "../../../services/general/services-general.service";
+import { ServicesGeneralService,isMobile,isIphone } from "../../../services/general/services-general.service";
 import { Rutas } from 'src/app/model/RutasUtil.js';
 
 
@@ -28,9 +28,10 @@ export class PageFaceCaptureComponent implements OnInit {
   mensaje: string;
   btnB:boolean;
   isMobileBool:boolean;
+  isIphone:boolean;
   isEdge:boolean;
 
-  constructor(private router: Router, private session: SessionService, private actRoute: ActivatedRoute) {
+  constructor(private router: Router, private session: SessionService, private actRoute: ActivatedRoute, public serviciogeneralService: ServicesGeneralService) {
     this.htmlCanvasToBlob();
     this.fc = new Daonjs.Daon.FaceCapture({
       url: 'https://dobsdemo-facequality-first.identityx-cloud.com/rest/v1/quality/assessments'
@@ -42,8 +43,9 @@ export class PageFaceCaptureComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!this.alredySessionExist()) { return; }
+    //if (!this.alredySessionExist()) { return; }
     this.isMobileBool= isMobile(navigator.userAgent);
+    this.isIphone= isIphone(navigator.userAgent);
     this.isEdge = window.navigator.userAgent.indexOf("Edge") > -1;
     if (this.isEdge) {
       this.drawOutline(document.getElementById("scream"));
@@ -93,6 +95,7 @@ export class PageFaceCaptureComponent implements OnInit {
         },
         onFaceDetection: coords => {
           if (coords) {
+
           } else {
           }
         }
@@ -109,10 +112,13 @@ export class PageFaceCaptureComponent implements OnInit {
         this.mensaje = response.feedback;
         console.log('no pasa');
       } else if (response.result === 'PASS') {
+        this.serviciogeneralService.setIsCamNative(false);
         console.log('si pasa' + JSON.stringify(response, null, 2));
         this.mensaje = response.feedback;
         this.fc.stopAutoCapture();
         this.imageData = response.sentBlobImage;
+        this.serviciogeneralService.setImg64(this.imageData);
+        this.router.navigate([Rutas.selfieVerification+ `${this.id}`]);
         this.activator = false;
       }
     },
@@ -162,33 +168,49 @@ export class PageFaceCaptureComponent implements OnInit {
     }
   }
 
-  processFile(imageInput: any) {
-    this.mensaje="";
-    const file: File = imageInput.files[0];
-    console.log(file.type);
-    if(file.type.toUpperCase().includes("JPG".toUpperCase()) || file.type.toUpperCase().includes("JPEG".toUpperCase())){
-      this.fc.assessQuality(file)
-      .then( response => {
-        if (response.result === 'FAIL') {
-          this.mensaje = response.feedback;
-          console.log('no pasa');
-        } else if (response.result === 'PASS') {
-          console.log('si pasa' + JSON.stringify(response, null, 2));
-          this.mensaje = response.feedback;
-          this.fc.stopAutoCapture();
-          this.imageData = response.sentBlobImage;
-          this.activator = false;
-        }
-      })
-      .catch( err => {
-        this.mensaje = "No es una fotografia valida";
-        console.log(err);
-        this.btnB=true;
-      });
-    }else{
-      this.mensaje = "La extencion " + file.type.substr(6) + " es incorrecta";
-    }
+  processFile($event) {
+    // this.mensaje="entraaaa";
+    // const file: File = imageInput.files[0];
 
+    
+    
+    // if(file.type.toUpperCase().includes("JPG".toUpperCase()) || file.type.toUpperCase().includes("JPEG".toUpperCase())){
+    //   this.mensaje="entra3333333333";
+    //   try{  
+      // this.fc.assessQuality(file)
+      // .then( response => {
+      //   if (response.result === 'FAIL') {
+      //     this.mensaje = response.feedback;
+      //     console.log('no pasa');
+      //   } else if (response.result === 'PASS') {
+      //     this.mensaje="entra2222222222";
+      //     this.serviciogeneralService.setIsCamNative(true);
+      //     console.log('si pasa' + JSON.stringify(response, null, 2));
+      //     this.mensaje = response.feedback;
+      //     this.fc.stopAutoCapture();
+      //     this.imageData = response.sentBlobImage;
+      //     this.serviciogeneralService.setImg64(this.imageData);
+      //     this.router.navigate([Rutas.selfieVerification+ `${this.id}`]);
+      //     this.activator = false;
+      //   }
+      // }) 
+      // .catch( err => {
+      //   this.mensaje = "No es una fotografia valida";
+      //   console.log(err);
+      //   this.btnB=true;
+      // });
+    // }
+    // catch(e){
+    //   this.mensaje = "errrrrrrrrr= " + e;
+    //   setTimeout(() => {
+        
+    //   }, 500)
+    // }
+    // }else{
+    //   this.mensaje = "La extencion " + file.type.substr(6) + " es incorrecta";
+    // }
+     
+  
   }
 
 

@@ -14,8 +14,17 @@ export class ServicesGeneralService {
   isUpload:boolean;
   resultLiveness:string;
   mensajeLiveness:string;
+  isCamNative:boolean;
   
   constructor(private http: HttpClient) { }
+
+  setIsCamNative(b){
+    this.isCamNative=b;
+  }
+
+  getIsCamNative(){
+    return this.isCamNative;
+  }
 
   setIsUpload(b){
     this.isUpload=b;
@@ -101,4 +110,14 @@ export class ServicesGeneralService {
 
 export function isMobile(userAgent) {
   return !!userAgent.match(/(Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone)/i);
+}
+
+
+
+export function isAndroid(userAgent) {
+  return !!userAgent.match(/(Android)/i);
+}
+
+export function isIphone(userAgent) {
+  return !!userAgent.match(/(iPhone)/i);
 }
