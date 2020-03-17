@@ -22,5 +22,27 @@ body {
     text-align: center;
 }
 
+@media only screen and (min-height: 1400px) {
+    .img-preview {
+      width: 80%;
+      display: block;
+      margin: 0 auto;
+    }
+  }
+  
+  @media only screen and (max-height: 1400px) {
+    .img-preview {
+      width: 60%;
+      display: block;
+      margin: 0 auto;
+    }
 
+.rotate-mobile-native {
+    transform: rotate(90deg);
+    }
+    
+  }
 
+  .flip-x {
+    transform: scaleX(-1);
+  }

@@ -43,7 +43,7 @@ export class CaptureDocumentComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!this.alredySessionExist()) { return; }
+    //if (!this.alredySessionExist()) { return; }
     this.filtersLoaded =  Promise.resolve(true);
 
     this.isMobileBool= isMobile(navigator.userAgent);
@@ -79,6 +79,27 @@ export class CaptureDocumentComponent implements OnInit {
         this.mensaje = response.feedback;
         console.log('no pasa');
       } else if (response.result === 'PASS') {
+        // const imageFile = new File(  [this.dataURItoBlob(response.responseBase64Image)]  , "imageName", { type: 'image/jpeg' });
+        // this.dc.assessQuality(imageFile)
+        // .then( response => {
+        //   if (response.result === 'FAIL') {
+        //     this.mensaje = response.feedback;
+        //     console.log(this.mensaje);
+        //     console.log('no pasa');
+        //   } else if (response.result === 'PASS') {
+        //     console.log('siii pasa');
+        //     this.dc.stopCamera();
+        //     this.dc.stopAutoCapture();
+        //     this.img = 'data:image/jpeg;base64,' + response.responseBase64Image;
+        //     this.serviciogeneralService.setImg64(this.img);
+        //     this.serviciogeneralService.setIsUpload(true);
+        //     this.router.navigate([Rutas.documentConfirm+ `${this.id}`]);
+        //   }
+        // })
+        // .catch( err => {
+        //   console.log('err= ' + err);
+        // });
+        console.log('siii pasa');
         this.dc.stopCamera();
         this.dc.stopAutoCapture();
         this.img = 'data:image/jpeg;base64,' + response.responseBase64Image;
@@ -93,6 +114,16 @@ export class CaptureDocumentComponent implements OnInit {
       });
   }
 
+  dataURItoBlob(dataURI) {
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/jpeg' });    
+    return blob;
+ }
 
   blobToBase64(blob) {
     return new Promise((resolve, reject) => {
