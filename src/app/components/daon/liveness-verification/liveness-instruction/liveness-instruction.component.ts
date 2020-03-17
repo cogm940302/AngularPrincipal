@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Rutas } from 'src/app/model/RutasUtil.js';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from 'src/app/services/session/session.service';
-import { ErrorSelfieService } from 'src/app/services/errores/error-selfie.service';
+import { ErrorVidaService } from 'src/app/services/errores/error-vida.service';
 
 @Component({
   selector: 'app-liveness-instruction',
@@ -12,17 +12,21 @@ import { ErrorSelfieService } from 'src/app/services/errores/error-selfie.servic
 export class LivenessInstructionComponent implements OnInit {
 
   constructor(public router: Router, private session: SessionService, private actRoute: ActivatedRoute,
-              private errorSelfieService: ErrorSelfieService) { }
+              private errorVidaService: ErrorVidaService) { }
 
+  filtersLoaded: Promise<boolean>;
   errorMensaje: string;
   id: string;
 
   ngOnInit() {
-    this.errorMensaje = this.errorSelfieService.returnMensaje();
+    console.log('mensaje: ' + this.errorVidaService.mensaje);
+    console.log('mensaje: ' + this.errorVidaService.returnMensaje());
+    this.errorMensaje = this.errorVidaService.returnMensaje();
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
     if (!this.alredySessionExist()) { return; }
+    this.filtersLoaded = Promise.resolve(true);
   }
 
   async alredySessionExist() {
@@ -45,7 +49,7 @@ export class LivenessInstructionComponent implements OnInit {
   }
 
   enter() {
-    this.errorSelfieService.mensaje = '';
+    this.errorVidaService.mensaje = 'Ocurrio un error, favor de reintentar';
     this.router.navigate([Rutas.livenessCapture + `${this.id}`]);
   }
 

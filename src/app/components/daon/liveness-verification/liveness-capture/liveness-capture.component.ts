@@ -8,7 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from 'src/app/services/session/session.service.js';
 import { MiddleDaonService } from '../../../../services/http/middle-daon.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ErrorSelfieService } from 'src/app/services/errores/error-selfie.service.js';
+import { ErrorVidaService } from 'src/app/services/errores/error-vida.service.js';
 
 @Component({
   selector: 'app-liveness-capture',
@@ -33,7 +33,7 @@ export class LivenessCaptureComponent implements OnInit {
 
   constructor(public serviciogeneralService: ServicesGeneralService, public router: Router,
               private session: SessionService, private actRoute: ActivatedRoute, private middleDaon: MiddleDaonService,
-              private spinner: NgxSpinnerService, private errorSelfieService: ErrorSelfieService) {
+              private spinner: NgxSpinnerService) {
     this.fc = new Daonjs.Daon.FaceCapture({
       url: 'https://dobsdemo-facequality-first.identityx-cloud.com/rest/v1/quality/assessments'
     });
@@ -96,7 +96,6 @@ export class LivenessCaptureComponent implements OnInit {
     const resultCode = await this.middleDaon.sendLiveDaon(jsonSendFaceDaon, this.id);
     if (resultCode !== 200) {
       console.log('ocurrio un error, favor de reintentar');
-      this.errorSelfieService.mensaje = 'Ocurrio un error, favor de reintentar';
       this.router.navigate([Rutas.livenessInstruction + `${this.id}`]);
       return false;
     }

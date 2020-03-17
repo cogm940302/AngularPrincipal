@@ -1,5 +1,5 @@
-<div class="text-center">
-    <div class="errorMensaje" *ngIf="errorMensaje && errorMensaje.length > 0">
+<div *ngIf="filtersLoaded | async" class="text-center">
+    <div class="errorMensaje" style="color: red" *ngIf="errorMensaje && errorMensaje.length > 0">
         {{errorMensaje}}
     </div>
     <div class="m-5">
