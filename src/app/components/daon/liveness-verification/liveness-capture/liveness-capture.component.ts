@@ -79,6 +79,7 @@ export class LivenessCaptureComponent implements OnInit {
     if (await this.sendLivenessDaon('', value)) {
       const object = this.session.getObjectSession();
       object.daon.pruebaVida = true;
+      object.estatus = 'Terminado';
       this.session.updateModel(object);
       await this.middleDaon.updateDaonDataUser(object, this.id);
       console.log('ya termine' + JSON.stringify(object, null, 2));
