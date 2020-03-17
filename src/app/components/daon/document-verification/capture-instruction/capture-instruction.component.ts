@@ -6,6 +6,7 @@ import { Rutas } from 'src/app/model/RutasUtil';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as DocumentCapture from '../../../../../assets/js/Daon.DocumentCapture.min.js';
 import IconDefinitions from '../../../../../assets/icons/icons-svn';
+import { ErrorSelfieService } from 'src/app/services/errores/error-selfie.service';
 @Component({
   selector: 'app-capture-instruction',
   templateUrl: './capture-instruction.component.html',
@@ -14,7 +15,7 @@ import IconDefinitions from '../../../../../assets/icons/icons-svn';
 export class CaptureInstructionComponent implements OnInit {
 
   constructor(public router: Router, public serviciogeneralService: ServicesGeneralService, private actRoute: ActivatedRoute,
-              private session: SessionService, private spinner: NgxSpinnerService) {
+              private session: SessionService, private spinner: NgxSpinnerService, private errorSelfieService: ErrorSelfieService) {
     if (serviciogeneralService.gettI() !== undefined && serviciogeneralService.getFrontAndBack() !== undefined) {
       sessionStorage.setItem('ti', serviciogeneralService.gettI());
       sessionStorage.setItem('fb', serviciogeneralService.getFrontAndBack());
@@ -27,20 +28,22 @@ export class CaptureInstructionComponent implements OnInit {
 
     this.dc = new DocumentCapture.Daon.DocumentCapture({
       url: 'https://dobsdemo-docquality-first.identityx-cloud.com/rest/v1/quality/assessments',
-      documentType: 'ID_CARD'//sessionStorage.getItem('ti'),
+      documentType: 'ID_CARD'// sessionStorage.getItem('ti'),
     });
 
   }
 
+  errorMensaje: string;
   titulo: string;
   id: string;
   dc: any;
   mensaje: string;
   img: any;
-  icon:IconDefinitions;
+  icon: IconDefinitions;
 
   async ngOnInit() {
     await this.spinner.show();
+    this.errorMensaje = this.errorSelfieService.returnMensaje();
     console.log('titulo= ' + this.titulo);
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
@@ -77,7 +80,7 @@ export class CaptureInstructionComponent implements OnInit {
   }
 
   processFile(imageInput: any) {
-    this.mensaje="";
+    this.mensaje = '';
     const file: File = imageInput.files[0];
     console.log(file);
     this.dc.assessQuality(file)
@@ -92,7 +95,7 @@ export class CaptureInstructionComponent implements OnInit {
         this.img = 'data:image/jpeg;base64,' + response.responseBase64Image;
         this.serviciogeneralService.setImg64(this.img);
         this.serviciogeneralService.setIsUpload(true);
-        this.router.navigate([Rutas.documentConfirm+ `${this.id}`]);
+        this.router.navigate([Rutas.documentConfirm + `${this.id}`]);
       }
     })
     .catch( err => {

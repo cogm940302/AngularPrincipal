@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { sesionModel } from 'src/app/model/sesion/SessionPojo';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { urlMiddleMongo } from '../../model/LigasUtil';
-import { reject } from 'q';
+import { LigaUtil } from 'src/app/model/LigasUtil';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +16,7 @@ export class MiddleMongoService {
   async getDataUser(id: string) {
     console.log('El id que recibo es: ' + id);
     let result;
-    const servicio = this.http.get(urlMiddleMongo + `/${id}`, { headers: this.headers }).pipe(map((res: Response) => {
+    const servicio = this.http.get(LigaUtil.urlMiddleMongo() + `/${id}`, { headers: this.headers }).pipe(map((res: Response) => {
       return res || {};
     }),
       catchError(this.errorMgmt)
@@ -40,9 +38,6 @@ export class MiddleMongoService {
         result._id = 'Error';
       }
     });
-    // if (result !== undefined && result._id) {
-    //   exist = true;
-    // }
     console.log('ya voy a regresar los datos');
     console.log(result);
     return result;
@@ -52,7 +47,7 @@ export class MiddleMongoService {
     console.log('lo que voy actulizar es: ');
     console.log(datos);
     let mongoUpdate;
-    mongoUpdate = this.http.put(urlMiddleMongo + `/${id}`, datos, { headers: this.headers }).pipe(
+    mongoUpdate = this.http.put(LigaUtil.urlMiddleMongo() + `/${id}`, datos, { headers: this.headers }).pipe(
       map((res: Response) => {
         return res || {};
       }),
@@ -62,16 +57,6 @@ export class MiddleMongoService {
       console.log(data);
       mongoUpdate = data;
     });
-  }
-
-  getDataHrefUser(correo: string) {
-    console.log(urlMiddleMongo + `/correo/${correo}`);
-    return this.http.get(urlMiddleMongo + `/correo/${correo}`, { headers: this.headers }).pipe(
-      map((res: Response) => {
-        return res || {};
-      }),
-      catchError(this.errorMgmt)
-    );
   }
 
   // Error handling

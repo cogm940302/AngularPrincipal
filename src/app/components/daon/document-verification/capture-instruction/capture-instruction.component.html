@@ -1,47 +1,50 @@
 <div class="page-content">
+    <div class="errorMensaje" *ngIf="errorMensaje && errorMensaje.length > 0">
+        {{errorMensaje}}
+    </div>
     <div class="m-20">
-       <header>
-          <div class="button-back-container">
-            <button class="btn rounded" (click)="back()"><img src="../../../../assets/icons/left-curve-arrow.png" alt=""> back</button>
-          </div>
-       </header>
-       <h1>{{titulo}}</h1>
-       
-       <img class="icon-passport-example" src="../../../../assets/icons/icoscan.png" alt="doc capture icon" />
-       <p class="center">Upload a photo of your passport photo page.</p>
-       <div class="panel border-gray bg-row">
-          <div class="margin-h-auto">
-             <img class="img-document-example" src="../../../../assets/icons/idcard.png" alt="document example" />
-             <p class="center">This is how your photo should look - taken on a clear background, well lit and without glare</p>
-          </div>
-       </div>
+        <header>
+            <div class="button-back-container">
+                <button class="btn rounded" (click)="back()"><img src="../../../../assets/icons/left-curve-arrow.png" alt=""> back</button>
+            </div>
+        </header>
+        <h1>{{titulo}}</h1>
 
-       <div *ngIf="(this.mensaje=='' || this.mensaje==undefined) ; then thenOK else elseErr"></div>
-
-       <ng-template #elseErr>
-        <div>
-            <div class="panel bg-red flex-row">
-                <div class="round-icon round-icon-red">
-                    <svg class="icon  icon-Rejected icon-white">
-                        <use xlink:href="this.icon.icon-Rejected"></use>
-                    </svg>
-                </div>
-                <div class="panel-content">
-                    <p>{{mensaje}}</p>
-                </div>
+        <img class="icon-passport-example" src="../../../../assets/icons/icoscan.png" alt="doc capture icon" />
+        <p class="center">Upload a photo of your passport photo page.</p>
+        <div class="panel border-gray bg-row">
+            <div class="margin-h-auto">
+                <img class="img-document-example" src="../../../../assets/icons/idcard.png" alt="document example" />
+                <p class="center">This is how your photo should look - taken on a clear background, well lit and without glare</p>
             </div>
         </div>
-       </ng-template>
-     
 
-       <div>
+        <div *ngIf="(this.mensaje=='' || this.mensaje==undefined) ; then thenOK else elseErr"></div>
+
+        <ng-template #elseErr>
+            <div>
+                <div class="panel bg-red flex-row">
+                    <div class="round-icon round-icon-red">
+                        <svg class="icon  icon-Rejected icon-white">
+                        <use xlink:href="this.icon.icon-Rejected"></use>
+                    </svg>
+                    </div>
+                    <div class="panel-content">
+                        <p>{{mensaje}}</p>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+
+
+        <div>
             <span>
                 <input #imgInput type="file" accept="image/*" (change)="processFile(imgInput)">
                 <button (click)="imgInput.click()" class="btn blue">Upload document</button>
             </span>
-                <button type="button" (click)="captueWCamera()"  class="btn btn-light btn-lg btn-block">Capture with camera</button>
+            <button type="button" (click)="captueWCamera()" class="btn btn-light btn-lg btn-block">Capture with camera</button>
         </div>
 
     </div>
- 
- </div>
+
+</div>

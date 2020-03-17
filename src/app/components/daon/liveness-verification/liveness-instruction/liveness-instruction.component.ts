@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Rutas } from 'src/app/model/RutasUtil.js';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from 'src/app/services/session/session.service';
+import { ErrorSelfieService } from 'src/app/services/errores/error-selfie.service';
 
 @Component({
   selector: 'app-liveness-instruction',
@@ -10,10 +11,14 @@ import { SessionService } from 'src/app/services/session/session.service';
 })
 export class LivenessInstructionComponent implements OnInit {
 
-  constructor(public router: Router, private session: SessionService, private actRoute: ActivatedRoute) { }
+  constructor(public router: Router, private session: SessionService, private actRoute: ActivatedRoute,
+              private errorSelfieService: ErrorSelfieService) { }
+
+  errorMensaje: string;
   id: string;
 
   ngOnInit() {
+    this.errorMensaje = this.errorSelfieService.returnMensaje();
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
@@ -40,6 +45,7 @@ export class LivenessInstructionComponent implements OnInit {
   }
 
   enter() {
+    this.errorSelfieService.mensaje = '';
     this.router.navigate([Rutas.livenessCapture + `${this.id}`]);
   }
 

@@ -8,6 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from 'src/app/services/session/session.service.js';
 import { MiddleDaonService } from '../../../../services/http/middle-daon.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ErrorSelfieService } from 'src/app/services/errores/error-selfie.service.js';
 
 @Component({
   selector: 'app-liveness-capture',
@@ -32,7 +33,7 @@ export class LivenessCaptureComponent implements OnInit {
 
   constructor(public serviciogeneralService: ServicesGeneralService, public router: Router,
               private session: SessionService, private actRoute: ActivatedRoute, private middleDaon: MiddleDaonService,
-              private spinner: NgxSpinnerService) {
+              private spinner: NgxSpinnerService, private errorSelfieService: ErrorSelfieService) {
     this.fc = new Daonjs.Daon.FaceCapture({
       url: 'https://dobsdemo-facequality-first.identityx-cloud.com/rest/v1/quality/assessments'
     });
@@ -86,15 +87,6 @@ export class LivenessCaptureComponent implements OnInit {
       this.router.navigate([Rutas.fin]);
     }
     await this.spinner.hide();
-    // this.serviciogeneralService.middleDaon(this.checkIdsGetSend).subscribe(data => {
-    //   console.log(JSON.stringify(data, null, 2));
-    //   if (data.errorType) {
-    //     console.log('errorType= ' + JSON.stringify(data, null, 2));
-    //   } else {
-    //     console.log('link pa el video= ' + JSON.stringify(data.body.items[0].videos.href, null, 2));
-    //     this.sendLivenessDaon(data.body.items[0].videos.href, value);
-    //   }
-    // });
   }
 
   async sendLivenessDaon(href, value) {
@@ -104,53 +96,11 @@ export class LivenessCaptureComponent implements OnInit {
     const resultCode = await this.middleDaon.sendLiveDaon(jsonSendFaceDaon, this.id);
     if (resultCode !== 200) {
       console.log('ocurrio un error, favor de reintentar');
-      console.log('voy a redirigir a : ' + Rutas.livenessInstruction + `${this.id}` );
-      // this.errorSelfieService.mensaje = 'Error, favor de volver a intentar';
+      this.errorSelfieService.mensaje = 'Ocurrio un error, favor de reintentar';
       this.router.navigate([Rutas.livenessInstruction + `${this.id}`]);
       return false;
     }
     return true;
-
-
-    // let jsonvideo = {
-    //   'url': href,
-    //   'metodo': 'POST',
-    //   'subtype': 'SVR3DFL_CHALLENGE',
-    //   'captured': new Date().toISOString(),
-    //   'videoFormat': 'SVR3DFL',
-    //   'challenges': [{
-    //     'challenge': {
-    //       'id': 'ht1Vz_BTInMOFYlb42QaYg',
-    //       'type': 'SVR3DFL'
-    //     },
-    //     'start': 0,
-    //     'completed': 99999
-    //   }],
-    //   'sensitiveData': {
-    //     'format': 'SVR3DFL',
-    //     'value': value
-    //   }
-    // };
-    // console.log('jsonvideo= ' + JSON.stringify(jsonvideo, null, 2));
-    // this.serviciogeneralService.middleDaon(jsonvideo).subscribe(data => {
-    //   if (data.errorType) {
-    //     console.log('errorType= ' + JSON.stringify(data, null, 2));
-    //   } else {
-    //     console.log('link data= ' + JSON.stringify(data, null, 2));
-
-    //     if (data.statusCode == '200') {
-    //       //if(data.body.processingStatus != 'FAILED'){
-    //       this.serviciogeneralService.setResultLiveness(data.body.processingStatus);
-    //       this.serviciogeneralService.setMensaje(data.body.items[0].processingErrors.items[0].message);
-    //       this.router.navigate([Rutas.livenessResult + '/5e559f279279300008700482']);
-    //       //}
-    //     } else if (data.statusCode == '400') {
-    //       this.serviciogeneralService.setResultLiveness(data.body.name);
-    //       this.serviciogeneralService.setMensaje(data.body.message);
-    //       this.router.navigate([Rutas.livenessResult + '/5e559f279279300008700482']);
-    //     }
-    //   }
-    // });
   }
 
   arrayBufferToBase64(buffer) {
@@ -177,7 +127,7 @@ export class LivenessCaptureComponent implements OnInit {
       this.f3d.initialize(config);
       this.f3d.startProcessing();
       this.f3d.startSession();
-    }, 800)
+    }, 800);
   }
 
   capturar() {
@@ -200,8 +150,7 @@ export class LivenessCaptureComponent implements OnInit {
   FonTemplateCreated = (tpl) => {
     const base64template = this.arrayBufferToBase64(tpl);
     this.getChecksID(base64template);
-    //this.f3d.terminate();
-  };
+  }
 
   onUpdate = ((updateType, additional_data) => {
     const TYPES = FaceLineness3D.Daon.FaceLiveness3D.UPDATE_TYPES;
@@ -259,8 +208,8 @@ export class LivenessCaptureComponent implements OnInit {
     if (this.canvas.nativeElement.width < this.canvas.nativeElement.height) {
       scale = isMobile(navigator.userAgent) ? 0.75 : 0.75;
     }
-    let dx = (this.canvas.nativeElement.width - img.width * scale) / 2;
-    let dy = (this.canvas.nativeElement.height - img.height * scale * 1.4) / 2;
+    const dx = (this.canvas.nativeElement.width - img.width * scale) / 2;
+    const dy = (this.canvas.nativeElement.height - img.height * scale * 1.4) / 2;
     this.ctx.globalAlpha = 0.7;
     this.ctx.drawImage(img, dx, dy,
       img.width * scale,
@@ -279,7 +228,7 @@ export class LivenessCaptureComponent implements OnInit {
     const animationStepDuration = 40; // 25fps
     const currentTS = performance.now();
     if (currentTS < animationStopTS) {
-      let newScale = 1 + animationScalePerSec * (currentTS - animationStartTS) / 1000;
+      const newScale = 1 + animationScalePerSec * (currentTS - animationStartTS) / 1000;
       this.ctx.setTransform(newScale, 0, 0, newScale, -this.canvas.nativeElement.width * (newScale - 1) / 2, -this.canvas.nativeElement.height * (newScale - 1) / 2);
       this.drawOutline(document.getElementById('scream_g'));
       setTimeout(() => this.stepAnimation(animationStartTS, animationStopTS, animationScalePerSec), animationStepDuration);

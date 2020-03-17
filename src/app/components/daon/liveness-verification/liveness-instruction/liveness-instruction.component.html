@@ -1,14 +1,16 @@
 <div class="text-center">
-    
-    <div  class="m-5" >
+    <div class="errorMensaje" *ngIf="errorMensaje && errorMensaje.length > 0">
+        {{errorMensaje}}
+    </div>
+    <div class="m-5">
         <h1>Extra checks</h1>
     </div>
-    <div >
+    <div>
         <h5>We are about to perform some extra checks for your security. We simply want to check that it's really you applying. This won't take long!</h5>
-        
+
     </div>
     <br><br>
-    <div >
+    <div>
         <h5>On the next screen you will see a sequence of color flashes. Hold your phone in front of your face so that your face fits the oval.</h5>
     </div>
     <br>
@@ -49,5 +51,5 @@
     <div class="m-5 border">
         <button type="button" class="btn btn-primary btn-lg btn-block" (click)="enter()">Start</button>
     </div>
-    
+
 </div>
