@@ -5,7 +5,7 @@ import { SessionService } from 'src/app/services/session/session.service';
 import { Rutas } from 'src/app/model/RutasUtil';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as DocumentCapture from '../../../../../assets/js/Daon.DocumentCapture.min.js';
-import  IconDefinitions  from '../../../../../assets/icons/icons-svn'; 
+import IconDefinitions from '../../../../../assets/icons/icons-svn';
 @Component({
   selector: 'app-capture-instruction',
   templateUrl: './capture-instruction.component.html',
@@ -14,8 +14,7 @@ import  IconDefinitions  from '../../../../../assets/icons/icons-svn';
 export class CaptureInstructionComponent implements OnInit {
 
   constructor(public router: Router, public serviciogeneralService: ServicesGeneralService, private actRoute: ActivatedRoute,
-              private session: SessionService) {
-console.log("Ferrrrrrrr");
+              private session: SessionService, private spinner: NgxSpinnerService) {
     if (serviciogeneralService.gettI() !== undefined && serviciogeneralService.getFrontAndBack() !== undefined) {
       sessionStorage.setItem('ti', serviciogeneralService.gettI());
       sessionStorage.setItem('fb', serviciogeneralService.getFrontAndBack());
@@ -39,15 +38,15 @@ console.log("Ferrrrrrrr");
   mensaje: string;
   img: any;
   icon:IconDefinitions;
-  private spinner: NgxSpinnerService;
+
   async ngOnInit() {
-    //await this.spinner.show();
+    await this.spinner.show();
     console.log('titulo= ' + this.titulo);
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    //if (!this.alredySessionExist()) { return; }
-    //await this.spinner.hide(); 
+    if (!this.alredySessionExist()) { return; }
+    await this.spinner.hide();
   }
 
   async alredySessionExist() {

@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import * as FaceLineness3D from "../../../../../assets/js/Daon.FaceLiveness3D.min.js";
+import * as FaceLineness3D from '../../../../../assets/js/Daon.FaceLiveness3D.min.js';
 import * as Daonjs from '../../../../../assets/js/Daon.FaceCapture.min.js';
-import { CheckID } from "../../../../model/DaonPojos/CheckID";
-import { ServicesGeneralService, isMobile } from "../../../../services/general/services-general.service";
+import { CheckID } from '../../../../model/DaonPojos/CheckID';
+import { ServicesGeneralService, isMobile } from '../../../../services/general/services-general.service';
 import { Rutas } from 'src/app/model/RutasUtil.js';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from 'src/app/services/session/session.service.js';
 import { MiddleDaonService } from '../../../../services/http/middle-daon.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-liveness-capture',
@@ -23,14 +24,15 @@ export class LivenessCaptureComponent implements OnInit {
   checkIdsGetSend: any;
   id: string;
   fc: any;
-  f3d:any;
+  f3d: any;
   ctx: CanvasRenderingContext2D;
-  isMobileBool:boolean;
-  isEdge:boolean;
-  navegador:any;
+  isMobileBool: boolean;
+  isEdge: boolean;
+  navegador: any;
 
   constructor(public serviciogeneralService: ServicesGeneralService, public router: Router,
-              private session: SessionService, private actRoute: ActivatedRoute, private middleDaon: MiddleDaonService) {
+              private session: SessionService, private actRoute: ActivatedRoute, private middleDaon: MiddleDaonService,
+              private spinner: NgxSpinnerService) {
     this.fc = new Daonjs.Daon.FaceCapture({
       url: 'https://dobsdemo-facequality-first.identityx-cloud.com/rest/v1/quality/assessments'
     });
@@ -42,9 +44,9 @@ export class LivenessCaptureComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    //if (!this.alredySessionExist()) { return; }
-    this.isMobileBool= isMobile(navigator.userAgent);
-    this.isEdge = window.navigator.userAgent.indexOf("Edge") > -1;
+    if (!this.alredySessionExist()) { return; }
+    this.isMobileBool = isMobile(navigator.userAgent);
+    this.isEdge = window.navigator.userAgent.indexOf('Edge') > -1;
     this.blnStart = true;
     this.capturar();
     this.navegador = navigator.userAgent;
@@ -72,55 +74,80 @@ export class LivenessCaptureComponent implements OnInit {
     }
   }
 
-  getChecksID(value) {
+  async getChecksID(value) {
+    await this.spinner.show();
+    if (await this.sendLivenessDaon('', value)) {
+      const object = this.session.getObjectSession();
+      object.daon.pruebaVida = true;
+      object.estatus = 'Terminado';
+      this.session.updateModel(object);
+      await this.middleDaon.updateDaonDataUser(object, this.id);
+      console.log('ya termine' + JSON.stringify(object, null, 2));
+      this.router.navigate([Rutas.fin]);
+    }
+    await this.spinner.hide();
     // this.serviciogeneralService.middleDaon(this.checkIdsGetSend).subscribe(data => {
     //   console.log(JSON.stringify(data, null, 2));
     //   if (data.errorType) {
-    //     console.log("errorType= " + JSON.stringify(data, null, 2));
+    //     console.log('errorType= ' + JSON.stringify(data, null, 2));
     //   } else {
-    //     console.log("link pa el video= " + JSON.stringify(data.body.items[0].videos.href, null, 2));
+    //     console.log('link pa el video= ' + JSON.stringify(data.body.items[0].videos.href, null, 2));
     //     this.sendLivenessDaon(data.body.items[0].videos.href, value);
     //   }
     // });
   }
 
-  sendLivenessDaon(href, value) {
-    let jsonvideo = {
-      "url": href,
-      "metodo": "POST",
-      "subtype": "SVR3DFL_CHALLENGE",
-      "captured": new Date().toISOString(),
-      "videoFormat": "SVR3DFL",
-      "challenges": [{
-        "challenge": {
-          "id": "ht1Vz_BTInMOFYlb42QaYg",
-          "type": "SVR3DFL"
-        },
-        "start": 0,
-        "completed": 99999
-      }],
-      "sensitiveData": {
-        "format": "SVR3DFL",
-        "value": value
-      }
+  async sendLivenessDaon(href, value) {
+    const jsonSendFaceDaon = {
+      data: value,
     };
-    console.log("jsonvideo= " + JSON.stringify(jsonvideo, null, 2));
+    const resultCode = await this.middleDaon.sendLiveDaon(jsonSendFaceDaon, this.id);
+    if (resultCode !== 200) {
+      console.log('ocurrio un error, favor de reintentar');
+      console.log('voy a redirigir a : ' + Rutas.livenessInstruction + `${this.id}` );
+      // this.errorSelfieService.mensaje = 'Error, favor de volver a intentar';
+      this.router.navigate([Rutas.livenessInstruction + `${this.id}`]);
+      return false;
+    }
+    return true;
+
+
+    // let jsonvideo = {
+    //   'url': href,
+    //   'metodo': 'POST',
+    //   'subtype': 'SVR3DFL_CHALLENGE',
+    //   'captured': new Date().toISOString(),
+    //   'videoFormat': 'SVR3DFL',
+    //   'challenges': [{
+    //     'challenge': {
+    //       'id': 'ht1Vz_BTInMOFYlb42QaYg',
+    //       'type': 'SVR3DFL'
+    //     },
+    //     'start': 0,
+    //     'completed': 99999
+    //   }],
+    //   'sensitiveData': {
+    //     'format': 'SVR3DFL',
+    //     'value': value
+    //   }
+    // };
+    // console.log('jsonvideo= ' + JSON.stringify(jsonvideo, null, 2));
     // this.serviciogeneralService.middleDaon(jsonvideo).subscribe(data => {
     //   if (data.errorType) {
-    //     console.log("errorType= " + JSON.stringify(data, null, 2));
+    //     console.log('errorType= ' + JSON.stringify(data, null, 2));
     //   } else {
-    //     console.log("link data= " + JSON.stringify(data, null, 2));
+    //     console.log('link data= ' + JSON.stringify(data, null, 2));
 
-    //     if (data.statusCode == "200") {
-    //       //if(data.body.processingStatus != "FAILED"){
+    //     if (data.statusCode == '200') {
+    //       //if(data.body.processingStatus != 'FAILED'){
     //       this.serviciogeneralService.setResultLiveness(data.body.processingStatus);
     //       this.serviciogeneralService.setMensaje(data.body.items[0].processingErrors.items[0].message);
-    //       this.router.navigate([Rutas.livenessResult + "/5e559f279279300008700482"]);
+    //       this.router.navigate([Rutas.livenessResult + '/5e559f279279300008700482']);
     //       //}
-    //     } else if (data.statusCode == "400") {
+    //     } else if (data.statusCode == '400') {
     //       this.serviciogeneralService.setResultLiveness(data.body.name);
     //       this.serviciogeneralService.setMensaje(data.body.message);
-    //       this.router.navigate([Rutas.livenessResult + "/5e559f279279300008700482"]);
+    //       this.router.navigate([Rutas.livenessResult + '/5e559f279279300008700482']);
     //     }
     //   }
     // });
@@ -141,7 +168,7 @@ export class LivenessCaptureComponent implements OnInit {
     const DaonFaceQualityLiteWasm = window.location.origin + '/assets/js/DaonFaceQualityLite.wasm';
     this.f3d = new FaceLineness3D.Daon.FaceLiveness3D(DaonFaceQualityLiteWasm);
     const config = {
-      video: document.querySelector("video"),
+      video: document.querySelector('video'),
       onUpdate: this.onUpdate,
       onTemplateCreated: this.FonTemplateCreated,
       movementDelay: 1250
@@ -154,76 +181,75 @@ export class LivenessCaptureComponent implements OnInit {
   }
 
   capturar() {
-    this.fc.startCamera(document.querySelector("video")).then((response) => {
+    this.fc.startCamera(document.querySelector('video')).then((response) => {
       this.onCameraStarted(this.fc);
     });
   }
 
   onCameraStarted = fc => {
-    const video = document.querySelector("video");
+    const video = document.querySelector('video');
     video.onloadedmetadata = () => {
-        const { width, height } = fc.camera.settings;
-        if (isMobile(navigator.userAgent) && width > height) {
-            fc.camera.videoTracks[0].applyConstraints({ width, height }).then(() => {
-            })
-        }
-    }
-}
-
-FonTemplateCreated = (tpl) => {
-  const base64template = this.arrayBufferToBase64(tpl);
-  console.log(base64template);
-  this.getChecksID(base64template);
-  //this.f3d.terminate();
-};
-
-onUpdate = ((updateType, additional_data) => {
-  const TYPES = FaceLineness3D.Daon.FaceLiveness3D.UPDATE_TYPES;
-  switch (updateType) {
-    case TYPES.ERROR:
-      if (additional_data) {
-        alert('3DFL returned an error: ' + additional_data);
-      } else {
-        alert('3DFL returned an error.');
+      const { width, height } = fc.camera.settings;
+      if (isMobile(navigator.userAgent) && width > height) {
+        fc.camera.videoTracks[0].applyConstraints({ width, height }).then(() => {
+        });
       }
-      break;
-    case TYPES.MOVE_CLOSER:
-      this.instTxt = TYPES.MOVE_CLOSER;
-      this.startAnimation(2300);
-      break;
-    case TYPES.READY:
-      this.instTxt = 'Please center your face so it fills the guide.';
-      break;
-    case TYPES.AWAIT_RESULTS:
-      this.instTxt = 'analyzing...';
-      this.drawOutline(document.getElementById("scream_sn"));
-      break;
-    case TYPES.END_CAPTURE:
-      this.instTxt = TYPES.END_CAPTURE;
-      this.instTxt = '';
-      break;
-    case TYPES.NOT_CENTERED:
-      this.instTxt = 'Center Face';
-      this.drawOutline(document.getElementById("scream_r"));
-      break;
-    case TYPES.TOO_FAR:
-      this.instTxt = 'Too Far';
-      this.drawOutline(document.getElementById("scream_r"));
-      break;
-    case TYPES.TOO_CLOSE:
-      this.instTxt = 'Too Close';
-      this.drawOutline(document.getElementById("scream_r"));
-      break;
-    case TYPES.HOLD:
-      this.instTxt = TYPES.HOLD;
-      this.drawOutline(document.getElementById("scream_g"));
-      break;
-    case TYPES.FACE_BOX:
-      //this.instTxt = "sin reconocimiento facial";
-      //this.drawOutline(document.getElementById("scream_sn"));
-      break;
+    };
   }
-});
+
+  FonTemplateCreated = (tpl) => {
+    const base64template = this.arrayBufferToBase64(tpl);
+    this.getChecksID(base64template);
+    //this.f3d.terminate();
+  };
+
+  onUpdate = ((updateType, additional_data) => {
+    const TYPES = FaceLineness3D.Daon.FaceLiveness3D.UPDATE_TYPES;
+    switch (updateType) {
+      case TYPES.ERROR:
+        if (additional_data) {
+          alert('3DFL returned an error: ' + additional_data);
+        } else {
+          alert('3DFL returned an error.');
+        }
+        break;
+      case TYPES.MOVE_CLOSER:
+        this.instTxt = TYPES.MOVE_CLOSER;
+        this.startAnimation(2300);
+        break;
+      case TYPES.READY:
+        this.instTxt = 'Please center your face so it fills the guide.';
+        break;
+      case TYPES.AWAIT_RESULTS:
+        this.instTxt = 'analyzing...';
+        this.drawOutline(document.getElementById('scream_sn'));
+        break;
+      case TYPES.END_CAPTURE:
+        this.instTxt = TYPES.END_CAPTURE;
+        this.instTxt = '';
+        break;
+      case TYPES.NOT_CENTERED:
+        this.instTxt = 'Center Face';
+        this.drawOutline(document.getElementById('scream_r'));
+        break;
+      case TYPES.TOO_FAR:
+        this.instTxt = 'Too Far';
+        this.drawOutline(document.getElementById('scream_r'));
+        break;
+      case TYPES.TOO_CLOSE:
+        this.instTxt = 'Too Close';
+        this.drawOutline(document.getElementById('scream_r'));
+        break;
+      case TYPES.HOLD:
+        this.instTxt = TYPES.HOLD;
+        this.drawOutline(document.getElementById('scream_g'));
+        break;
+      case TYPES.FACE_BOX:
+        //this.instTxt = 'sin reconocimiento facial';
+        //this.drawOutline(document.getElementById('scream_sn'));
+        break;
+    }
+  });
 
 
   drawOutline(img) {
@@ -255,10 +281,9 @@ onUpdate = ((updateType, additional_data) => {
     if (currentTS < animationStopTS) {
       let newScale = 1 + animationScalePerSec * (currentTS - animationStartTS) / 1000;
       this.ctx.setTransform(newScale, 0, 0, newScale, -this.canvas.nativeElement.width * (newScale - 1) / 2, -this.canvas.nativeElement.height * (newScale - 1) / 2);
-      this.drawOutline(document.getElementById("scream_g"));
+      this.drawOutline(document.getElementById('scream_g'));
       setTimeout(() => this.stepAnimation(animationStartTS, animationStopTS, animationScalePerSec), animationStepDuration);
-    }
-    else {
+    } else {
       console.log('skip stepAnimation');
     }
   }
