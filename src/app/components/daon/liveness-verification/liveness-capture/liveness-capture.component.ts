@@ -8,7 +8,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from 'src/app/services/session/session.service.js';
 import { MiddleDaonService } from '../../../../services/http/middle-daon.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ErrorVidaService } from 'src/app/services/errores/error-vida.service.js';
 
 @Component({
   selector: 'app-liveness-capture',
@@ -83,6 +82,7 @@ export class LivenessCaptureComponent implements OnInit {
       object.estatus = 'Terminado';
       this.session.updateModel(object);
       await this.middleDaon.updateDaonDataUser(object, this.id);
+      await this.middleDaon.getResults(this.id);
       console.log('ya termine' + JSON.stringify(object, null, 2));
       this.router.navigate([Rutas.fin]);
     }

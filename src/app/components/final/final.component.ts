@@ -13,6 +13,7 @@ export class FinalComponent implements OnInit {
   constructor(private router: Router, private sesion: SessionService) { }
 
   ngOnInit() {
+    sessionStorage.clear();
   }
 
 }
