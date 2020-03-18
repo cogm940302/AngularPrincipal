@@ -1,9 +1,9 @@
 
-import { Component, OnInit,ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import * as Daonjs from '../../../../assets/js/Daon.FaceCapture.min.js';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from 'src/app/services/session/session.service.js';
-import { ServicesGeneralService,isMobile,isIphone } from "../../../services/general/services-general.service";
+import { ServicesGeneralService, isMobile, isIphone } from '../../../services/general/services-general.service';
 import { Rutas } from 'src/app/model/RutasUtil.js';
 
 
@@ -17,21 +17,22 @@ export class PageFaceCaptureComponent implements OnInit {
   @ViewChild('canvas', { static: true })
   canvas: ElementRef<HTMLCanvasElement>;
 
-  activator = true;
-  imageData: any;
-  id: string;
-  fc: any;
-  videoEl: any;
   ctx: CanvasRenderingContext2D;
-  imageGreen:any;
-  img:any;
+  isMobileBool: boolean;
+  isIphone: boolean;
+  activator = true;
+  imageGreen: any;
   mensaje: string;
-  btnB:boolean;
-  isMobileBool:boolean;
-  isIphone:boolean;
-  isEdge:boolean;
+  isEdge: boolean;
+  imageData: any;
+  btnB: boolean;
+  videoEl: any;
+  id: string;
+  img: any;
+  fc: any;
 
-  constructor(private router: Router, private session: SessionService, private actRoute: ActivatedRoute, public serviciogeneralService: ServicesGeneralService) {
+  constructor(private router: Router, private session: SessionService, private actRoute: ActivatedRoute,
+              public serviciogeneralService: ServicesGeneralService) {
     this.htmlCanvasToBlob();
     this.fc = new Daonjs.Daon.FaceCapture({
       url: 'https://dobsdemo-facequality-first.identityx-cloud.com/rest/v1/quality/assessments'
@@ -43,19 +44,19 @@ export class PageFaceCaptureComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    //if (!this.alredySessionExist()) { return; }
+    if (!this.alredySessionExist()) { return; }
     this.isMobileBool= isMobile(navigator.userAgent);
     this.isIphone= isIphone(navigator.userAgent);
-    this.isEdge = window.navigator.userAgent.indexOf("Edge") > -1;
+    this.isEdge = window.navigator.userAgent.indexOf('Edge') > -1;
     if (this.isEdge) {
-      this.drawOutline(document.getElementById("scream"));
+      this.drawOutline(document.getElementById('scream'));
     }
-    this.btnB=true;
-    this.mensaje="Posiciona tu cara dentro del area marcada";
+    this.btnB = true;
+    this.mensaje = 'Posiciona tu cara dentro del area marcada';
     this.imageData = '';
     this.videoEl = document.querySelector('video');
     this.fc.startCamera(this.videoEl).then((response) => {
-      this.onCameraStarted(this.fc,this.videoEl);
+      this.onCameraStarted(this.fc, this.videoEl);
     });
   }
 
@@ -80,7 +81,7 @@ export class PageFaceCaptureComponent implements OnInit {
 
   captura() {
    console.log();
-    this.fc.stopAutoCapture();
+   this.fc.stopAutoCapture();
   }
 
   onCameraStarted = (fc, video) => {
@@ -106,7 +107,7 @@ export class PageFaceCaptureComponent implements OnInit {
     return this.id;
   }
   tomarSelfie() {
-    this.btnB=false;
+    this.btnB = false;
     this.fc.startAutoCapture(response => {
       if (response.result === 'FAIL') {
         this.mensaje = response.feedback;
@@ -126,7 +127,7 @@ export class PageFaceCaptureComponent implements OnInit {
         console.log('error durante la captura');
         this.mensaje = error;
         console.log(error);
-        this.btnB=true;
+        this.btnB = true;
       });
   }
 
@@ -135,20 +136,20 @@ export class PageFaceCaptureComponent implements OnInit {
   }
 
   drawOutline(img) {
-    this.ctx = this.canvas.nativeElement.getContext("2d");
+    this.ctx = this.canvas.nativeElement.getContext('2d');
     this.ctx.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
-    let scale = 0.48;
-    let dx = (this.canvas.nativeElement.width - img.width * scale) / 2;
-    let dy = (this.canvas.nativeElement.height - img.height * scale * 3.5) / 2;
+    const scale = 0.48;
+    const dx = (this.canvas.nativeElement.width - img.width * scale) / 2;
+    const dy = (this.canvas.nativeElement.height - img.height * scale * 3.5) / 2;
     this.ctx.globalAlpha = 0.7;
     this.ctx.drawImage(img, dx, dy,
       img.width * scale,
       img.height * scale * 3.5);
   }
 
-  htmlCanvasToBlob(){
+  htmlCanvasToBlob() {
     if (!HTMLCanvasElement.prototype.toBlob) {
-      console.log("HTMLCanvasElement.prototype.toBlob 1 " + HTMLCanvasElement.prototype.toBlob);
+      console.log('HTMLCanvasElement.prototype.toBlob 1 ' + HTMLCanvasElement.prototype.toBlob);
       Object.defineProperty(HTMLCanvasElement.prototype, 'toBlob', {
         value: function (callback, type, quality) {
           var canvas = this;
@@ -160,7 +161,6 @@ export class PageFaceCaptureComponent implements OnInit {
             for (var i = 0; i < len; i++ ) {
                arr[i] = binStr.charCodeAt(i);
             }
-
             callback( new Blob( [arr], {type: type || 'image/png'} ) );
           });
         }
@@ -169,48 +169,6 @@ export class PageFaceCaptureComponent implements OnInit {
   }
 
   processFile($event) {
-    // this.mensaje="entraaaa";
-    // const file: File = imageInput.files[0];
-
-    
-    
-    // if(file.type.toUpperCase().includes("JPG".toUpperCase()) || file.type.toUpperCase().includes("JPEG".toUpperCase())){
-    //   this.mensaje="entra3333333333";
-    //   try{  
-      // this.fc.assessQuality(file)
-      // .then( response => {
-      //   if (response.result === 'FAIL') {
-      //     this.mensaje = response.feedback;
-      //     console.log('no pasa');
-      //   } else if (response.result === 'PASS') {
-      //     this.mensaje="entra2222222222";
-      //     this.serviciogeneralService.setIsCamNative(true);
-      //     console.log('si pasa' + JSON.stringify(response, null, 2));
-      //     this.mensaje = response.feedback;
-      //     this.fc.stopAutoCapture();
-      //     this.imageData = response.sentBlobImage;
-      //     this.serviciogeneralService.setImg64(this.imageData);
-      //     this.router.navigate([Rutas.selfieVerification+ `${this.id}`]);
-      //     this.activator = false;
-      //   }
-      // }) 
-      // .catch( err => {
-      //   this.mensaje = "No es una fotografia valida";
-      //   console.log(err);
-      //   this.btnB=true;
-      // });
-    // }
-    // catch(e){
-    //   this.mensaje = "errrrrrrrrr= " + e;
-    //   setTimeout(() => {
-        
-    //   }, 500)
-    // }
-    // }else{
-    //   this.mensaje = "La extencion " + file.type.substr(6) + " es incorrecta";
-    // }
-     
-  
   }
 
 

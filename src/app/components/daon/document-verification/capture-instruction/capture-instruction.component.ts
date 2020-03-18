@@ -19,7 +19,7 @@ export class CaptureInstructionComponent implements OnInit {
     if (serviciogeneralService.gettI() !== undefined && serviciogeneralService.getFrontAndBack() !== undefined) {
       sessionStorage.setItem('ti', serviciogeneralService.gettI());
       sessionStorage.setItem('fb', serviciogeneralService.getFrontAndBack());
-      this.titulo = serviciogeneralService.gettI() + ' 1photo page ' + serviciogeneralService.getFrontAndBack();
+      this.titulo = serviciogeneralService.gettI() + ' lado de la foto ' + serviciogeneralService.getFrontAndBack();
     } else if (sessionStorage.getItem('ti') === undefined || sessionStorage.getItem('fb') === undefined) {
       this.router.navigate(['']);
     } else {

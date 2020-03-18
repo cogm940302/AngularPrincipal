@@ -43,7 +43,7 @@ export class CaptureDocumentComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    //if (!this.alredySessionExist()) { return; }
+    if (!this.alredySessionExist()) { return; }
     this.filtersLoaded =  Promise.resolve(true);
 
     this.isMobileBool= isMobile(navigator.userAgent);
@@ -72,7 +72,7 @@ export class CaptureDocumentComponent implements OnInit {
   }
 
   enter() {
-    
+
     this.dc.capture().then(response => {
       console.log(response);
       if (response.result === 'FAIL') {
@@ -121,7 +121,7 @@ export class CaptureDocumentComponent implements OnInit {
     for (let i = 0; i < byteString.length; i++) {
       int8Array[i] = byteString.charCodeAt(i);
     }
-    const blob = new Blob([int8Array], { type: 'image/jpeg' });    
+    const blob = new Blob([int8Array], { type: 'image/jpeg' });
     return blob;
  }
 
@@ -149,7 +149,7 @@ export class CaptureDocumentComponent implements OnInit {
     //navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: 'user' } }).then(stream => { this.videoEl.srcObject = stream; }).catch(error => { console.error('Cannot get camera feed', error); alert('Unable to get hold of your camera.\nPlease ensure no other page/app is using it and reload.'); });
 
     this.dc.startCamera(this.videoEl).then((response) => {
-     
+
       console.log(response);
     });
     // this.videoEl.onloadedmetadata = () => {
@@ -170,11 +170,11 @@ export class CaptureDocumentComponent implements OnInit {
             var binStr = atob( canvas.toDataURL(type, quality).split(',')[1] ),
             len = binStr.length,
             arr = new Uint8Array(len);
-    
+
             for (var i = 0; i < len; i++ ) {
                arr[i] = binStr.charCodeAt(i);
             }
-    
+
             callback( new Blob( [arr], {type: type || 'image/png'} ) );
           });
         }
