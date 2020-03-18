@@ -62,4 +62,5 @@ const routes: Routes = [
 ];
 
 export const appRoutingProviders: any[] = [];
+// export const APP_ROUTING = RouterModule.forRoot(routes, {useHash: true});
 export const APP_ROUTING = RouterModule.forRoot(routes);

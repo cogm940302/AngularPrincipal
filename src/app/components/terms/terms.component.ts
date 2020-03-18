@@ -70,11 +70,14 @@ export class TermsComponent implements OnInit {
       console.log(this.datosDelCliente);
       if (this.datosDelCliente === undefined || this.datosDelCliente._id === 'Error') {
         this.router.navigate([Rutas.error]);
+        await this.spinner.hide();
+        return true;
       }
       this.datosDelCliente._id = this.id;
     }
     if (!this.datosDelCliente || this.datosDelCliente._id !== this.id) {
       this.router.navigate([Rutas.error]);
+      await this.spinner.hide();
       return true;
     }
     if (this.datosDelCliente.terminos) {

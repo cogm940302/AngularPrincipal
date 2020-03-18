@@ -16,11 +16,7 @@ export class MiddleMongoService {
   async getDataUser(id: string) {
     console.log('El id que recibo es: ' + id);
     let result;
-    const servicio = this.http.get(LigaUtil.urlMiddleMongo() + `/${id}`, { headers: this.headers }).pipe(map((res: Response) => {
-      return res || {};
-    }),
-      catchError(this.errorMgmt)
-    );
+    const servicio = this.http.get(LigaUtil.urlMiddleMongo() + `/${id}`, { headers: this.headers });
     await servicio.toPromise().then(data => {
       console.log('los datos que vienen son: ');
       console.log(data);
@@ -37,6 +33,9 @@ export class MiddleMongoService {
       } else {
         result._id = 'Error';
       }
+    }).catch((err) => {
+      console.log('entre al catch');
+      return undefined;
     });
     console.log('ya voy a regresar los datos');
     console.log(result);

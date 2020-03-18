@@ -1,17 +1,17 @@
-<div data-testid="wrapper" class="_loading_overlay_wrapper css-79elbk" >
-<div  class="page-content">
-    <div  class="m-20">
-        <header></header>
-        <h1 class="center">Selfie</h1>    
-        <p class="center">Are you happy with the selfie or would you like to retake the photo?</p>
-        <div class="panel border-gray bg-row" style="height: 30vh;">        
-            <img  src="{{'data:image/jpg;base64,' + foto}}" class="{{(isAndroid && isNative) ? 'img-preview rotate-mobile-native':'img-preview flip-x'}}"  />          
-            <!-- *ngIf="filtersLoaded | async" -->
-        </div>
-        <div class="row row-justify-space">
-            <button class="btn white" (click)="back()">retake the selfies</button>
-            <button class="btn blue" (click)="guardar()">Continue</button>
+<div data-testid="wrapper" class="_loading_overlay_wrapper css-79elbk">
+    <div class="page-content">
+        <div class="m-20">
+            <header></header>
+            <h1 class="center">Selfie</h1>
+            <!-- <p class="center">Are you happy with the selfie or would you like to retake the photo?</p> -->
+            <div class="panel border-gray bg-row" style="height: 30vh;">
+                <img src="{{'data:image/jpg;base64,' + foto}}" class="{{(isAndroid && isNative) ? 'img-preview rotate-mobile-native':'img-preview flip-x'}}" />
+                <!-- *ngIf="filtersLoaded | async" -->
+            </div>
+            <div class="row row-justify-space">
+                <button class="btn white" (click)="back()">Tomar de nuevo</button>
+                <button class="btn blue" (click)="guardar()">Continuar</button>
+            </div>
         </div>
     </div>
-</div>
 </div>
