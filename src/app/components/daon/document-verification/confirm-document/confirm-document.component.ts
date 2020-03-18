@@ -79,7 +79,7 @@ export class ConfirmDocumentComponent implements OnInit {
       data: this.serviciogeneralService.getImg64().replace('data:image/jpeg;base64,', ''),
     };
 
-    const resultCode = await this.middleDaon.sendDocumentDaon(jsonSendFaceDaon, this.id);
+    const resultCode = await this.middleDaon.sendInfoDaon(jsonSendFaceDaon, this.id, 'document');
     if (resultCode !== 200) {
       console.log('ocurrio un error, favor de reintentar');
       this.errorSelfieService.mensaje = 'Error, favor de volver a intentar';

@@ -57,7 +57,7 @@ export class FacialVerificationComponent implements OnInit {
       data: this.foto,
     };
 
-    const resultCode = await this.middleDaon.sendSelfieDaon(jsonSendFaceDaon, this.id);
+    const resultCode = await this.middleDaon.sendInfoDaon(jsonSendFaceDaon, this.id, 'selfie');
     if (resultCode !== 200) {
       console.log('ocurrio un error, favor de reintentar');
       console.log('voy a redirigir a : ' + Rutas.selfie + `${this.id}` );

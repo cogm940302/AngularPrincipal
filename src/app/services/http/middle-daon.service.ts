@@ -45,53 +45,6 @@ export class MiddleDaonService {
     return statusCode;
   }
 
-  async sendSelfieDaon(data, id: string) {
-    let statusCode = 0;
-    const result = this.http.post(LigaUtil.urlMiddleDaon(id) + `/selfie`, JSON.stringify(data), { headers: this.headers, });
-    await result.toPromise().then(datos => {
-      statusCode = 200;
-      console.log(datos);
-    }).catch(err => {
-      console.log(err);
-      statusCode = 400;
-    });
-    return statusCode;
-  }
-
-  async sendDocumentDaon(data, id: string) {
-    let statusCode = 0;
-    const result = this.http.post(LigaUtil.urlMiddleDaon(id) + `/document`, JSON.stringify(data), { headers: this.headers, });
-    await result.toPromise().then(datos => {
-      console.log(datos);
-      if (datos['errorType'] || datos['errorMessage']) {
-        statusCode = 400;
-      } else {
-        statusCode = 200;
-      }
-    }).catch(err => {
-      console.log(err);
-      statusCode = 400;
-    });
-    return statusCode;
-  }
-
-  async sendLiveDaon(data, id: string) {
-    let statusCode = 0;
-    const result = this.http.post(LigaUtil.urlMiddleDaon(id) + `/live`, JSON.stringify(data), { headers: this.headers, });
-    await result.toPromise().then(datos => {
-      console.log(datos);
-      if (datos['errorType'] || datos['errorMessage']) {
-        statusCode = 400;
-      } else {
-        statusCode = 200;
-      }
-    }).catch(err => {
-      console.log(err);
-      statusCode = 400;
-    });
-    return statusCode;
-  }
-
   async getResults(id: string) {
     let statusCode = 0;
     const result = this.http.post(LigaUtil.urlMiddleDaon(id) + `/evaluation`, {} , { headers: this.headers, });

@@ -93,7 +93,7 @@ export class LivenessCaptureComponent implements OnInit {
     const jsonSendFaceDaon = {
       data: value,
     };
-    const resultCode = await this.middleDaon.sendLiveDaon(jsonSendFaceDaon, this.id);
+    const resultCode = await this.middleDaon.sendInfoDaon(jsonSendFaceDaon, this.id, 'live');
     if (resultCode !== 200) {
       console.log('ocurrio un error, favor de reintentar');
       this.router.navigate([Rutas.livenessInstruction + `${this.id}`]);
