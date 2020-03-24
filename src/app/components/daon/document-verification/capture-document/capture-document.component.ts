@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import * as DocumentCapture from '../../../../../assets/js/Daon.DocumentCapture.min.js';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ServicesGeneralService, isMobile } from '../../../../services/general/services-general.service';
@@ -21,12 +21,12 @@ export class CaptureDocumentComponent implements OnInit {
     if (serviciogeneralService.gettI() !== undefined) {
       sessionStorage.setItem('ti', serviciogeneralService.gettI());
     } else if (sessionStorage.getItem('ti') === undefined) {
-      this.router.navigate([Rutas.chooseIdentity]);
+      this.router.navigate([Rutas.chooseIdentity + `${this.id}`]);
     }
 
     this.dc = new DocumentCapture.Daon.DocumentCapture({
       url: 'https://dobsdemo-docquality-first.identityx-cloud.com/rest/v1/quality/assessments',
-      documentType: 'ID_CARD'//sessionStorage.getItem('ti'),
+      documentType: sessionStorage.getItem('ti'),
     });
 
   }
@@ -36,8 +36,8 @@ export class CaptureDocumentComponent implements OnInit {
   id: string;
   dc: any;
   img: any;
-  isMobileBool:boolean;
-  isEdge:boolean;
+  isMobileBool: boolean;
+  isEdge: boolean;
 
   ngOnInit() {
     this.actRoute.params.subscribe(params => {
@@ -46,8 +46,8 @@ export class CaptureDocumentComponent implements OnInit {
     if (!this.alredySessionExist()) { return; }
     this.filtersLoaded =  Promise.resolve(true);
 
-    this.isMobileBool= isMobile(navigator.userAgent);
-    this.isEdge = window.navigator.userAgent.indexOf("Edge") > -1;
+    this.isMobileBool = isMobile(navigator.userAgent);
+    this.isEdge = window.navigator.userAgent.indexOf('Edge') > -1;
 
     this.capturar();
   }
@@ -79,37 +79,17 @@ export class CaptureDocumentComponent implements OnInit {
         this.mensaje = response.feedback;
         console.log('no pasa');
       } else if (response.result === 'PASS') {
-        // const imageFile = new File(  [this.dataURItoBlob(response.responseBase64Image)]  , "imageName", { type: 'image/jpeg' });
-        // this.dc.assessQuality(imageFile)
-        // .then( response => {
-        //   if (response.result === 'FAIL') {
-        //     this.mensaje = response.feedback;
-        //     console.log(this.mensaje);
-        //     console.log('no pasa');
-        //   } else if (response.result === 'PASS') {
-        //     console.log('siii pasa');
-        //     this.dc.stopCamera();
-        //     this.dc.stopAutoCapture();
-        //     this.img = 'data:image/jpeg;base64,' + response.responseBase64Image;
-        //     this.serviciogeneralService.setImg64(this.img);
-        //     this.serviciogeneralService.setIsUpload(true);
-        //     this.router.navigate([Rutas.documentConfirm+ `${this.id}`]);
-        //   }
-        // })
-        // .catch( err => {
-        //   console.log('err= ' + err);
-        // });
         console.log('siii pasa');
         this.dc.stopCamera();
         this.dc.stopAutoCapture();
         this.img = 'data:image/jpeg;base64,' + response.responseBase64Image;
         this.serviciogeneralService.setImg64(this.img);
         this.serviciogeneralService.setIsUpload(false);
-        this.router.navigate([Rutas.documentConfirm+ `${this.id}`]);
+        this.router.navigate([Rutas.documentConfirm + `${this.id}`]);
       }
     })
       .catch(err => {
-        this.mensaje=err;
+        this.mensaje = err;
         console.log('err= ' + err);
       });
   }
@@ -141,37 +121,29 @@ export class CaptureDocumentComponent implements OnInit {
 
   videoEl;
   capturar() {
-    let c = this.canvas;
+    const c = this.canvas;
     this.mensaje = 'Position your document inside the area';
     console.log('captura');
     this.videoEl = document.querySelector('video');
-    //this.videoEl.addEventListener('play', this.f(document.querySelector("video"),document.getElementById("scream_green")) );
-    //navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: 'user' } }).then(stream => { this.videoEl.srcObject = stream; }).catch(error => { console.error('Cannot get camera feed', error); alert('Unable to get hold of your camera.\nPlease ensure no other page/app is using it and reload.'); });
 
     this.dc.startCamera(this.videoEl).then((response) => {
 
       console.log(response);
     });
-    // this.videoEl.onloadedmetadata = () => {
-    //   c.nativeElement.width = this.videoEl.videoWidth/2.5;
-    //   c.nativeElement.height = this.videoEl.videoHeight/2.5;
-    //   console.log('result ' + this.videoEl.videoWidth + " - " + this.videoEl.videoHeight);
-    // };
-
   }
 
-  htmlCanvasToBlob(){
+  htmlCanvasToBlob() {
     if (!HTMLCanvasElement.prototype.toBlob) {
-      console.log("HTMLCanvasElement.prototype.toBlob 1 " + HTMLCanvasElement.prototype.toBlob);
+      console.log('HTMLCanvasElement.prototype.toBlob 1 ' + HTMLCanvasElement.prototype.toBlob);
       Object.defineProperty(HTMLCanvasElement.prototype, 'toBlob', {
         value: function (callback, type, quality) {
-          var canvas = this;
-          setTimeout(function() {
+          let canvas = this;
+          setTimeout(() => {
             var binStr = atob( canvas.toDataURL(type, quality).split(',')[1] ),
             len = binStr.length,
             arr = new Uint8Array(len);
 
-            for (var i = 0; i < len; i++ ) {
+            for (let i = 0; i < len; i++ ) {
                arr[i] = binStr.charCodeAt(i);
             }
 

@@ -1,9 +1,9 @@
 
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import * as Daonjs from '../../../../assets/js/Daon.FaceCapture.min.js';
+import * as Daonjs from '../../../../../assets/js/Daon.FaceCapture.min.js';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from 'src/app/services/session/session.service.js';
-import { ServicesGeneralService, isMobile, isIphone } from '../../../services/general/services-general.service';
+import { ServicesGeneralService, isMobile, isIphone } from '../../../../services/general/services-general.service';
 import { Rutas } from 'src/app/model/RutasUtil.js';
 
 

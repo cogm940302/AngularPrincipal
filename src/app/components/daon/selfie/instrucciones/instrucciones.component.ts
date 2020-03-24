@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { SessionService } from '../../../services/session/session.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Rutas } from 'src/app/model/RutasUtil';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ErrorSelfieService } from '../../../services/errores/error-selfie.service';
+import { ErrorSelfieService } from 'src/app/services/errores/error-selfie.service';
+import { SessionService } from 'src/app/services/session/session.service';
 
 @Component({
   selector: 'app-instrucciones',

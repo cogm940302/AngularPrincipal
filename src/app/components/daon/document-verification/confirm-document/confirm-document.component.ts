@@ -93,17 +93,26 @@ export class ConfirmDocumentComponent implements OnInit {
     await this.spinner.show();
     console.log('voy a enviar');
     if (await this.sendDocumentDaon()) {
-      if (this.serviciogeneralService.getFrontAndBack() === 'front') {
-        this.serviciogeneralService.setFrontAndBack('back');
-        this.router.navigate([Rutas.documentInstruction + `${this.id}`]);
-      } else if (this.serviciogeneralService.getFrontAndBack() === 'back') {
+      if ( (sessionStorage.getItem('ti') && sessionStorage.getItem('ti') !== 'ID_CARD')
+      || this.serviciogeneralService.getFrontAndBack() === 'back') {
         const object = this.session.getObjectSession();
         object.daon.identity = true;
         this.session.updateModel(object);
         await this.middleDaon.updateDaonDataUser(object, this.id);
         console.log('ya termine' + JSON.stringify(object, null, 2));
         this.router.navigate([Rutas.livenessInstruction + `${this.id}`]);
+      } else if (this.serviciogeneralService.getFrontAndBack() === 'front') {
+        this.serviciogeneralService.setFrontAndBack('back');
+        this.router.navigate([Rutas.documentInstruction + `${this.id}`]);
       }
+      // else if (this.serviciogeneralService.getFrontAndBack() === 'back') {
+      //   const object = this.session.getObjectSession();
+      //   object.daon.identity = true;
+      //   this.session.updateModel(object);
+      //   await this.middleDaon.updateDaonDataUser(object, this.id);
+      //   console.log('ya termine' + JSON.stringify(object, null, 2));
+      //   this.router.navigate([Rutas.livenessInstruction + `${this.id}`]);
+      // }
     }
     await this.spinner.hide();
   }

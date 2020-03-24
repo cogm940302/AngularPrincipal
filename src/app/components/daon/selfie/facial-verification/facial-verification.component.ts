@@ -1,16 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Rutas } from '../../../model/RutasUtil';
 import { catchError } from 'rxjs/operators';
 import { SelfieSend } from 'src/app/model/DaonPojos/Selfie';
 import { sesionModel } from 'src/app/model/sesion/SessionPojo';
 import { SessionService } from 'src/app/services/session/session.service';
-import { MiddleMongoService } from '../../../services/http/middle-mongo.service';
-import { ServicesGeneralService, isMobile, isAndroid } from '../../../services/general/services-general.service';
-import { MiddleDaonService } from '../../../services/http/middle-daon.service';
 import { ErrorSelfieService } from 'src/app/services/errores/error-selfie.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ServicesGeneralService, isMobile, isAndroid } from 'src/app/services/general/services-general.service';
+import { MiddleMongoService } from 'src/app/services/http/middle-mongo.service';
+import { MiddleDaonService } from 'src/app/services/http/middle-daon.service';
+import { Rutas } from 'src/app/model/RutasUtil';
 
 @Component({
   selector: 'app-facial-verification',

@@ -2,9 +2,7 @@ import { PlantillaComponent } from './components/plantilla.component';
 import { Routes, RouterModule } from '@angular/router';
 import { TermsComponent } from './components/terms/terms.component';
 import { CorreoVerificacionComponent } from './components/correo-verificacion/correo-verificacion.component';
-import { InstruccionesComponent } from './components/daon/instrucciones/instrucciones.component';
 import { FinalComponent } from './components/final/final.component';
-import { PageFaceCaptureComponent } from './components/daon/page-face-capture/page-face-capture.component';
 
 import { VerifyIdentityComponent } from './components/daon/document-verification/verify-identity/verify-identity.component';
 import { CaptureInstructionComponent } from './components/daon/document-verification/capture-instruction/capture-instruction.component';
@@ -13,8 +11,10 @@ import { ConfirmDocumentComponent } from './components/daon/document-verificatio
 import { LivenessInstructionComponent } from './components/daon/liveness-verification/liveness-instruction/liveness-instruction.component';
 import { LivenessCaptureComponent } from './components/daon/liveness-verification/liveness-capture/liveness-capture.component';
 import { LivenessResultComponent } from './components/daon/liveness-verification/liveness-result/liveness-result.component';
-import { FacialVerificationComponent } from './components/daon/facial-verification/facial-verification.component';
 import { ErrorComponent } from './components/error/error.component';
+import { InstruccionesComponent } from './components/daon/selfie/instrucciones/instrucciones.component';
+import { PageFaceCaptureComponent } from './components/daon/selfie/page-face-capture/page-face-capture.component';
+import { FacialVerificationComponent } from './components/daon/selfie/facial-verification/facial-verification.component';
 
 
 const APP_ROUTES: Routes = [

@@ -28,7 +28,7 @@ export class CaptureInstructionComponent implements OnInit {
 
     this.dc = new DocumentCapture.Daon.DocumentCapture({
       url: 'https://dobsdemo-docquality-first.identityx-cloud.com/rest/v1/quality/assessments',
-      documentType: 'ID_CARD'// sessionStorage.getItem('ti'),
+      documentType: sessionStorage.getItem('ti'),
     });
 
   }
@@ -56,14 +56,14 @@ export class CaptureInstructionComponent implements OnInit {
     const object = this.session.getObjectSession();
     console.log(object);
     if (object === null || object === undefined) {
-      this.router.navigate([Rutas.terminos + `/${this.id}`]);
+      this.router.navigate([Rutas.terminos + `${this.id}`]);
       return false;
     } else {
       if (object._id !== this.id) {
         this.router.navigate([Rutas.error]);
         return false;
       } else if (object.daon.identity) {
-        this.router.navigate([Rutas.livenessInstruction + `/${this.id}`]);
+        this.router.navigate([Rutas.livenessInstruction + `${this.id}`]);
         return false;
       } else {
         return true;
