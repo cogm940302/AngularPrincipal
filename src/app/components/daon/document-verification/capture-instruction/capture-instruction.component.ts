@@ -20,10 +20,20 @@ export class CaptureInstructionComponent implements OnInit {
       sessionStorage.setItem('ti', serviciogeneralService.gettI());
       sessionStorage.setItem('fb', serviciogeneralService.getFrontAndBack());
       this.titulo = serviciogeneralService.gettI() + ' lado de la foto ' + serviciogeneralService.getFrontAndBack();
+      if(serviciogeneralService.getFrontAndBack()==='front'){
+        this.idcard="id-card-front";      
+      }else{
+        this.idcard="id-card-back";
+      }
     } else if (sessionStorage.getItem('ti') === undefined || sessionStorage.getItem('fb') === undefined) {
       this.router.navigate(['']);
     } else {
       this.titulo = sessionStorage.getItem('ti') + ' 2photo page ' + sessionStorage.getItem('fb');
+      if(sessionStorage.getItem('fb')==='front'){
+        this.idcard="id-card-front";      
+      }else{
+        this.idcard="id-card-back";
+      }
     }
 
     this.dc = new DocumentCapture.Daon.DocumentCapture({
@@ -39,6 +49,7 @@ export class CaptureInstructionComponent implements OnInit {
   dc: any;
   mensaje: string;
   img: any;
+  idcard: any;
   icon: IconDefinitions;
 
   async ngOnInit() {
