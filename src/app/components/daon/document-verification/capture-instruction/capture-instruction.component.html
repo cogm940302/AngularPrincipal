@@ -21,6 +21,7 @@
 
         <div *ngIf="(this.mensaje=='' || this.mensaje==undefined) ; then thenOK else elseErr"></div>
 
+        <ng-template #thenOK></ng-template>
         <ng-template #elseErr>
             <div>
                 <div class="panel bg-red flex-row">
