@@ -21,16 +21,22 @@ export class CaptureInstructionComponent implements OnInit {
       sessionStorage.setItem('fb', serviciogeneralService.getFrontAndBack());
       this.titulo = serviciogeneralService.gettI() + ' lado de la foto ' + serviciogeneralService.getFrontAndBack();
       if(serviciogeneralService.getFrontAndBack()==='front'){
+        if(serviciogeneralService.gettI()==='ID_CARD')
         this.idcard="id-card-front";      
+        else
+        this.idcard="passport";      
       }else{
-        this.idcard="id-card-back";
+        this.idcard="id-card-front";
       }
     } else if (sessionStorage.getItem('ti') === undefined || sessionStorage.getItem('fb') === undefined) {
       this.router.navigate(['']);
     } else {
       this.titulo = sessionStorage.getItem('ti') + ' 2photo page ' + sessionStorage.getItem('fb');
       if(sessionStorage.getItem('fb')==='front'){
+        if(sessionStorage.getItem('ti')==='ID_CARD')
         this.idcard="id-card-front";      
+        else
+        this.idcard="passport";   
       }else{
         this.idcard="id-card-back";
       }
