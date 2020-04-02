@@ -8,7 +8,7 @@ export class sesionModel {
     identity: boolean;
     pruebaVida: boolean;
   };
-
+  callback: string;
   estatus: string;
   oferta: string;
   correo: boolean;

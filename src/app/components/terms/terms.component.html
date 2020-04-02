@@ -45,8 +45,7 @@
     <span aria-hidden="true">&times;</span>
   </button>
         </div>
-        <div class="modal-body">
-            <p>{{textoModal}}</p>
+        <div class="modal-body" [innerHTML]="textoModal">
         </div>
         <!-- <div class="modal-footer">
       <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
