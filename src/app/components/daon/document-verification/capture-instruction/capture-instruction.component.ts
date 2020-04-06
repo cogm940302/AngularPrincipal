@@ -26,7 +26,7 @@ export class CaptureInstructionComponent implements OnInit {
         else
         this.idcard="passport";      
       }else{
-        this.idcard="id-card-front";
+        this.idcard="id-card-back";
       }
     } else if (sessionStorage.getItem('ti') === undefined || sessionStorage.getItem('fb') === undefined) {
       this.router.navigate(['']);
