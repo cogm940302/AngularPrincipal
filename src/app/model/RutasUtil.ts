@@ -9,6 +9,7 @@ export let Rutas = {
   documentCapture: '/services/daon/document/capture/',
   documentConfirm: '/services/daon/document/confirm/',
   livenessInstruction: '/services/daon/liveness/instruction/',
+  ocrValidation: '/services/daon/document/ocr/',
 
   livenessCapture: '/services/daon/liveness/capture/',
   livenessResult: '/services/daon/liveness/result/',

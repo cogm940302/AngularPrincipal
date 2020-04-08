@@ -20,12 +20,7 @@ export class MiddleDaonService {
     console.log('lo que voy actulizar es: ');
     console.log(datos.daon);
     let mongoUpdate;
-    mongoUpdate = this.http.put(LigaUtil.urlMiddleMongo() + `/${id}`, datos.daon, { headers: this.headers }).pipe(
-      map((res: Response) => {
-        return res || {};
-      }),
-      catchError(this.errorMgmt)
-    );
+    mongoUpdate = this.http.put(LigaUtil.urlMiddleMongo() + `/${id}`, datos.daon, { headers: this.headers });
     await mongoUpdate.toPromise().then(data => {
       console.log(data);
       mongoUpdate = data;
@@ -47,7 +42,7 @@ export class MiddleDaonService {
 
   async getResults(id: string) {
     let statusCode = 0;
-    const result = this.http.post(LigaUtil.urlMiddleDaon(id) + `/evaluation`, {} , { headers: this.headers, });
+    const result = this.http.post(LigaUtil.urlMiddleDaon(id) + `/evaluation`, {}, { headers: this.headers, });
     await result.toPromise().then(datos => {
       console.log('resultados');
       console.log(datos);
@@ -86,17 +81,24 @@ export class MiddleDaonService {
     }
   }
 
-  errorMgmt(error: HttpErrorResponse) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // Get client-side error
-      errorMessage = error.error.message;
-    } else {
-      // Get server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-    }
-    console.log(errorMessage);
-    return throwError(errorMessage);
-  }
 
+  async getDataOCR(id: string) {
+    let dataOCR = {};
+    await this.http.get(LigaUtil.urlMiddleDaon(id) + `/ocrCheck`, { headers: this.headers, })
+      .toPromise().then(datos => {
+        console.log('resultados');
+        console.log(JSON.stringify(datos));
+        if (datos['errorType']) {
+          dataOCR = { error: datos['errorType'] };
+        } else if (datos['errorMessage']) {
+          dataOCR = { error: datos['errorMessage'] };
+        } else {
+          dataOCR = datos['0'];
+        }
+      }).catch(err => {
+        console.log(err);
+        dataOCR = { error: err };
+      });
+    return dataOCR;
+  }
 }

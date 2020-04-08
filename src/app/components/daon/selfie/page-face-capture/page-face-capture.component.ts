@@ -45,8 +45,8 @@ export class PageFaceCaptureComponent implements OnInit {
       this.id = params['id'];
     });
     if (!this.alredySessionExist()) { return; }
-    this.isMobileBool= isMobile(navigator.userAgent);
-    this.isIphone= isIphone(navigator.userAgent);
+    this.isMobileBool = isMobile(navigator.userAgent);
+    this.isIphone = isIphone(navigator.userAgent);
     this.isEdge = window.navigator.userAgent.indexOf('Edge') > -1;
     if (this.isEdge) {
       this.drawOutline(document.getElementById('scream'));
@@ -119,7 +119,7 @@ export class PageFaceCaptureComponent implements OnInit {
         this.fc.stopAutoCapture();
         this.imageData = response.sentBlobImage;
         this.serviciogeneralService.setImg64(this.imageData);
-        this.router.navigate([Rutas.selfieVerification+ `${this.id}`]);
+        this.router.navigate([Rutas.selfieVerification + `${this.id}`]);
         this.activator = false;
       }
     },

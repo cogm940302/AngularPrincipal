@@ -95,24 +95,16 @@ export class ConfirmDocumentComponent implements OnInit {
     if (await this.sendDocumentDaon()) {
       if ( (sessionStorage.getItem('ti') && sessionStorage.getItem('ti') !== 'ID_CARD')
       || (this.serviciogeneralService.getFrontAndBack() === 'back' || sessionStorage.getItem('fb') === 'back')) {
-        const object = this.session.getObjectSession();
-        object.daon.identity = true;
-        this.session.updateModel(object);
-        await this.middleDaon.updateDaonDataUser(object, this.id);
-        console.log('ya termine' + JSON.stringify(object, null, 2));
-        this.router.navigate([Rutas.livenessInstruction + `${this.id}`]);
+        // const object = this.session.getObjectSession();
+        // object.daon.identity = true;
+        // this.session.updateModel(object);
+        // await this.middleDaon.updateDaonDataUser(object, this.id);
+        // console.log('ya termine' + JSON.stringify(object, null, 2));
+        this.router.navigate([Rutas.ocrValidation + `${this.id}`]);
       } else if (this.serviciogeneralService.getFrontAndBack() === 'front' || sessionStorage.getItem('fb') === 'front') {
         this.serviciogeneralService.setFrontAndBack('back');
         this.router.navigate([Rutas.documentInstruction + `${this.id}`]);
       }
-      // else if (this.serviciogeneralService.getFrontAndBack() === 'back') {
-      //   const object = this.session.getObjectSession();
-      //   object.daon.identity = true;
-      //   this.session.updateModel(object);
-      //   await this.middleDaon.updateDaonDataUser(object, this.id);
-      //   console.log('ya termine' + JSON.stringify(object, null, 2));
-      //   this.router.navigate([Rutas.livenessInstruction + `${this.id}`]);
-      // }
     }
     await this.spinner.hide();
   }

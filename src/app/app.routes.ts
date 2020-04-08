@@ -15,6 +15,7 @@ import { ErrorComponent } from './components/error/error.component';
 import { InstruccionesComponent } from './components/daon/selfie/instrucciones/instrucciones.component';
 import { PageFaceCaptureComponent } from './components/daon/selfie/page-face-capture/page-face-capture.component';
 import { FacialVerificationComponent } from './components/daon/selfie/facial-verification/facial-verification.component';
+import { ValidaOcrComponent } from './components/daon/valida-ocr/valida-ocr.component';
 
 
 const APP_ROUTES: Routes = [
@@ -35,7 +36,7 @@ const APP_ROUTES: Routes = [
           {path: 'daon/document/capture/:id', component: CaptureDocumentComponent},
           {path: 'daon/document/confirm/:id', component: ConfirmDocumentComponent},
           {path: 'daon/liveness/instruction/:id', component: LivenessInstructionComponent},
-
+          {path: 'daon/document/ocr/:id', component: ValidaOcrComponent},
           {path: 'daon/liveness/capture/:id', component: LivenessCaptureComponent},
           {path: 'daon/liveness/result/:id', component: LivenessResultComponent},
 

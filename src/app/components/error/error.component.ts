@@ -9,7 +9,10 @@ export class ErrorComponent implements OnInit {
 
   constructor() { }
 
+  error: string;
+
   ngOnInit() {
+    this.error = sessionStorage.getItem('error');
     sessionStorage.clear();
   }
 
