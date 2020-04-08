@@ -27,8 +27,6 @@ export class ValidaOcrComponent implements OnInit {
     });
     if (!await this.alredySessionExist()) { return; }
     await this.getDataOcrConsume();
-    this.filtersLoaded = Promise.resolve(true);
-    await this.spinner.hide();
   }
 
   async getDataOcrConsume() {
@@ -38,7 +36,12 @@ export class ValidaOcrComponent implements OnInit {
       sessionStorage.setItem('error' , resultDatos['error']);
       this.router.navigate([Rutas.error]);
       return;
+    } else {
+      this.nombre = resultDatos['visualZone']['25']['value'].replace('^', ' ');
+      this.direccion = resultDatos['visualZone']['134873105']['value'].replace('^', ' ');
     }
+    this.filtersLoaded = Promise.resolve(true);
+    await this.spinner.hide();
   }
 
   async alredySessionExist() {

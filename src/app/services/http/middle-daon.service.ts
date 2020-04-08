@@ -93,7 +93,7 @@ export class MiddleDaonService {
         } else if (datos['errorMessage']) {
           dataOCR = { error: datos['errorMessage'] };
         } else {
-          dataOCR = datos['0'];
+          dataOCR = datos;
         }
       }).catch(err => {
         console.log(err);

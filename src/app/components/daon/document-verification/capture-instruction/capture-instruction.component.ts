@@ -22,9 +22,9 @@ export class CaptureInstructionComponent implements OnInit {
       this.titulo = serviciogeneralService.gettI() + ' lado de la foto ' + serviciogeneralService.getFrontAndBack();
       if(serviciogeneralService.getFrontAndBack()==='front'){
         if(serviciogeneralService.gettI()==='ID_CARD')
-        this.idcard="id-card-front";      
+        this.idcard="id-card-front";
         else
-        this.idcard="passport";      
+        this.idcard="passport";
       }else{
         this.idcard="id-card-front";
       }
@@ -34,9 +34,9 @@ export class CaptureInstructionComponent implements OnInit {
       this.titulo = sessionStorage.getItem('ti') + ' 2photo page ' + sessionStorage.getItem('fb');
       if(sessionStorage.getItem('fb')==='front'){
         if(sessionStorage.getItem('ti')==='ID_CARD')
-        this.idcard="id-card-front";      
+        this.idcard="id-card-front";
         else
-        this.idcard="passport";   
+        this.idcard="passport";
       }else{
         this.idcard="id-card-back";
       }
@@ -73,14 +73,14 @@ export class CaptureInstructionComponent implements OnInit {
     const object = this.session.getObjectSession();
     console.log(object);
     if (object === null || object === undefined) {
-      this.router.navigate([Rutas.terminos + `${this.id}`]);
+      this.router.navigate([Rutas.terminos + `/${this.id}`]);
       return false;
     } else {
       if (object._id !== this.id) {
         this.router.navigate([Rutas.error]);
         return false;
       } else if (object.daon.identity) {
-        this.router.navigate([Rutas.livenessInstruction + `${this.id}`]);
+        this.router.navigate([Rutas.livenessInstruction + `/${this.id}`]);
         return false;
       } else {
         return true;
