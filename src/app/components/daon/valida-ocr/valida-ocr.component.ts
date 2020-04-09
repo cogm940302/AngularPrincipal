@@ -35,6 +35,7 @@ export class ValidaOcrComponent implements OnInit {
     if (resultDatos['error']) {
       sessionStorage.setItem('error' , resultDatos['error']);
       this.router.navigate([Rutas.error]);
+      await this.spinner.hide();
       return;
     } else {
       this.nombre = resultDatos['visualZone']['25']['value'].replace('^', ' ');
