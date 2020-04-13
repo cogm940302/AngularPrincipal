@@ -25,7 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InstruccionesComponent } from './components/daon/selfie/instrucciones/instrucciones.component';
 import { PageFaceCaptureComponent } from './components/daon/selfie/page-face-capture/page-face-capture.component';
 import { FacialVerificationComponent } from './components/daon/selfie/facial-verification/facial-verification.component';
-import { ValidaOcrComponent } from './components/daon/valida-ocr/valida-ocr.component';
+import { ValidaOcrComponent } from './components/daon/document-verification/valida-ocr/valida-ocr.component';
 // import {  NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // import {  NgbModal } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
 
