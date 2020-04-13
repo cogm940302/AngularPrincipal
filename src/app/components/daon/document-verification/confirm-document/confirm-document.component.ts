@@ -104,9 +104,9 @@ export class ConfirmDocumentComponent implements OnInit {
       } else if (this.serviciogeneralService.getFrontAndBack() === 'front' || sessionStorage.getItem('fb') === 'front') {
         this.serviciogeneralService.setFrontAndBack('back');
         this.router.navigate([Rutas.documentInstruction + `${this.id}`]);
+        await this.spinner.hide();
       }
     }
-    await this.spinner.hide();
   }
 
 }

@@ -1,18 +1,25 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-3 col-7">Nombre</div>
+<div class="title mt-4">
+    <h2>Ayudanos a validar tu información</h2>
+</div>
+<div class="container body-content">
+    <div class="row algunBorder">
+        <div class="col-md-2 offset-2 col-7" style="font-weight: bold;">Nombre</div>
         <div class="col-md-6 col-12">{{nombre}}</div>
     </div>
-    <div class="row">
-        <div class="col-md-3 col-7">Direccion</div>
+    <div class="row algunBorder">
+        <div class="col-md-2 offset-2 col-7" style="font-weight: bold;">Direccion</div>
         <div class="col-md-6 col-12">{{direccion}}</div>
     </div>
-    <div class="row">
-        <div class="col-md-3 col-7">otro</div>
-        <div class="col-md-6 col-12">{{nombre}}</div>
+    <div *ngIf="curp" class="row algunBorder">
+        <div class="col-md-2 offset-2 col-7" style="font-weight: bold;">CURP</div>
+        <div class="col-md-6 col-12">{{curp}}</div>
     </div>
-    <div class="row">
-        <button class="col-12 col-md-5 btn-primary" (click)="updateValuesSession()">Continuar</button>
-        <button class="col-12 col-md-5 btn-secondary" (click)="updateValuesSession()">Volver a tomar</button>
+    <div *ngIf="!nombre" class="error">Ocurrio un error, favor de recargar presionando el boton</div>
+    <div *ngIf="!nombre" class="row">
+        <button (click)="getDataOcrConsume()">Recargar</button>
+    </div>
+    <div class="row justify-content-md-around mt-5">
+        <button class="col-12 col-md-4 btn-secondary" (click)="updateValuesSession()">Volver a tomar</button>
+        <button class="col-12 col-md-4 btn-primary" (click)="updateValuesSession()">Continuar</button>
     </div>
 </div>

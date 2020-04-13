@@ -19,6 +19,7 @@ export class ValidaOcrComponent implements OnInit {
   id: string;
   public nombre: string;
   public direccion: string;
+  public curp: string;
 
   async ngOnInit() {
     await this.spinner.show();
@@ -33,13 +34,14 @@ export class ValidaOcrComponent implements OnInit {
     const resultDatos = await this.middleDaon.getDataOCR(this.id);
     console.log(JSON.stringify(resultDatos) );
     if (resultDatos['error']) {
-      sessionStorage.setItem('error' , resultDatos['error']);
-      this.router.navigate([Rutas.error]);
+      // sessionStorage.setItem('error' , resultDatos['error']);
+      // this.router.navigate([Rutas.error]);
       await this.spinner.hide();
       return;
     } else {
-      this.nombre = resultDatos['visualZone']['25']['value'].replace('^', ' ');
-      this.direccion = resultDatos['visualZone']['134873105']['value'].replace('^', ' ');
+      this.nombre = resultDatos['visualZone']['25']['value'].replace(/\^/g, ' ');
+      this.direccion = resultDatos['visualZone']['134873105']['value'].replace(/\^/g, ' ');
+      this.curp = resultDatos['visualZone']['7']['value'];
     }
     this.filtersLoaded = Promise.resolve(true);
     await this.spinner.hide();
