@@ -44,7 +44,7 @@ export class LivenessCaptureComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!this.alredySessionExist()) { return; }
+    // if (!this.alredySessionExist()) { return; }
     this.isMobileBool = isMobile(navigator.userAgent);
     this.isEdge = window.navigator.userAgent.indexOf('Edge') > -1;
     this.blnStart = true;
@@ -86,7 +86,9 @@ export class LivenessCaptureComponent implements OnInit {
       console.log('ya termine' + JSON.stringify(object, null, 2));
       this.router.navigate([Rutas.fin]);
     }
+
     await this.spinner.hide();
+    // this.router.navigate([Rutas.livenessCapture + `${this.id}`]);
   }
 
   async sendLivenessDaon(href, value) {
@@ -94,7 +96,10 @@ export class LivenessCaptureComponent implements OnInit {
       data: value,
     };
     const resultCode = await this.middleDaon.sendInfoDaon(jsonSendFaceDaon, this.id, 'live');
+    console.log(resultCode);
     if (resultCode !== 200) {
+      console.log('entre al erro');
+      await this.spinner.hide();
       console.log('ocurrio un error, favor de reintentar');
       this.router.navigate([Rutas.livenessInstruction + `${this.id}`]);
       return false;
@@ -166,10 +171,10 @@ export class LivenessCaptureComponent implements OnInit {
         this.startAnimation(2300);
         break;
       case TYPES.READY:
-        this.instTxt = 'Please center your face so it fills the guide.';
+        this.instTxt = 'Por favor, centra tu cara en las lineas guía';
         break;
       case TYPES.AWAIT_RESULTS:
-        this.instTxt = 'analyzing...';
+        this.instTxt = 'Analizando';
         this.drawOutline(document.getElementById('scream_sn'));
         break;
       case TYPES.END_CAPTURE:
@@ -177,15 +182,15 @@ export class LivenessCaptureComponent implements OnInit {
         this.instTxt = '';
         break;
       case TYPES.NOT_CENTERED:
-        this.instTxt = 'Center Face';
+        this.instTxt = 'Centra la Cara';
         this.drawOutline(document.getElementById('scream_r'));
         break;
       case TYPES.TOO_FAR:
-        this.instTxt = 'Too Far';
+        this.instTxt = 'Muy Lejos';
         this.drawOutline(document.getElementById('scream_r'));
         break;
       case TYPES.TOO_CLOSE:
-        this.instTxt = 'Too Close';
+        this.instTxt = 'Muy Cerca';
         this.drawOutline(document.getElementById('scream_r'));
         break;
       case TYPES.HOLD:

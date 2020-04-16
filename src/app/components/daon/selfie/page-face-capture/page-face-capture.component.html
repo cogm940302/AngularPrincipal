@@ -10,7 +10,7 @@
                     <!-- Subir foto? -->
                     <span>
                         <input #imgInput type="file" accept="image/*" capture="user" (change)="processFile(imgInput)" >
-                        <button (click)="imgInput.click()" class="button-link">{{this.isMobileBool ? 'Try native camera' :  'Upload selfie'}}</button>
+                        <button  (click)="processFile(imgInput)" class="button-link">{{this.isMobileBool ? 'Lanzar camara' :  'Subir Foto'}}</button>
                     </span>
                 </div>
             </div>
@@ -28,7 +28,7 @@
             </canvas>
         <footer>
             <br>
-            <button class="btn blue" (click)="tomarSelfie()" [disabled]="!btnB">CAPTURE SELFIE</button>
+            <button class="btn blue" (click)="tomarSelfie()" [disabled]="!btnB">TOMAR FOTO</button>
             <p class="message-box box-shadow text-center">{{mensaje}}</p>
         </footer>
     </div>

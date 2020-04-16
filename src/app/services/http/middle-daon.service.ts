@@ -33,6 +33,11 @@ export class MiddleDaonService {
     await result.toPromise().then(datos => {
       statusCode = 200;
       console.log(datos);
+      console.log(JSON.stringify(datos));
+      console.log(data.processingStatus);
+      if (data.processingStatus === 'FAILED') {
+        statusCode = 400;
+      }
     }).catch(err => {
       console.log(err);
       statusCode = 400;
