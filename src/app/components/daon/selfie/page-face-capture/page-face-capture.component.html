@@ -10,7 +10,7 @@
                     <!-- Subir foto? -->
                     <span>
                         <input #imgInput type="file" accept="image/*" capture="user" (change)="processFile(imgInput)" >
-                        <button  (click)="processFile(imgInput)" class="button-link">{{this.isMobileBool ? 'Lanzar camara' :  'Subir Foto'}}</button>
+                        <button (click)="imgInput.click()" class="button-link">{{this.isMobileBool ? 'Lanzar camara' :  'Subir Foto'}}</button>
                     </span>
                 </div>
             </div>

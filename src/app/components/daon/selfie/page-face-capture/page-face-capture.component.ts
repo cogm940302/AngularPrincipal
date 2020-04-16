@@ -80,8 +80,8 @@ export class PageFaceCaptureComponent implements OnInit {
   }
 
   captura() {
-   console.log();
-   this.fc.stopAutoCapture();
+    console.log();
+    this.fc.stopAutoCapture();
   }
 
   onCameraStarted = (fc, video) => {
@@ -153,22 +153,49 @@ export class PageFaceCaptureComponent implements OnInit {
       Object.defineProperty(HTMLCanvasElement.prototype, 'toBlob', {
         value: function (callback, type, quality) {
           var canvas = this;
-          setTimeout(function() {
-            var binStr = atob( canvas.toDataURL(type, quality).split(',')[1] ),
-            len = binStr.length,
-            arr = new Uint8Array(len);
+          setTimeout(function () {
+            var binStr = atob(canvas.toDataURL(type, quality).split(',')[1]),
+              len = binStr.length,
+              arr = new Uint8Array(len);
 
-            for (var i = 0; i < len; i++ ) {
-               arr[i] = binStr.charCodeAt(i);
+            for (var i = 0; i < len; i++) {
+              arr[i] = binStr.charCodeAt(i);
             }
-            callback( new Blob( [arr], {type: type || 'image/png'} ) );
+            callback(new Blob([arr], { type: type || 'image/png' }));
           });
         }
-     });
+      });
     }
   }
 
-  processFile($event) {
+  processFile(imageInput: any) {
+    this.mensaje = '';
+    const file: File = imageInput.files[0];
+    console.log(file.type);
+    if (file.type.toUpperCase().includes('JPG'.toUpperCase()) || file.type.toUpperCase().includes('JPEG'.toUpperCase())) {
+      this.fc.assessQuality(file)
+        .then(response => {
+          if (response.result === 'FAIL') {
+            this.mensaje = response.feedback;
+            console.log('no pasa');
+          } else if (response.result === 'PASS') {
+            console.log('si pasa' + JSON.stringify(response, null, 2));
+            this.mensaje = response.feedback;
+            this.fc.stopAutoCapture();
+            this.imageData = response.sentBlobImage;
+            this.serviciogeneralService.setImg64(this.imageData);
+            this.router.navigate([Rutas.selfieVerification + `${this.id}`]);
+            this.activator = false;
+          }
+        })
+        .catch(err => {
+          this.mensaje = 'No es una fotografia valida';
+          console.log(err);
+          this.btnB = true;
+        });
+    } else {
+      this.mensaje = 'La extencion ' + file.type.substr(6) + ' es incorrecta';
+    }
   }
 
 

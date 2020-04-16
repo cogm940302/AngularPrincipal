@@ -31,6 +31,7 @@ export class ValidaOcrComponent implements OnInit {
   }
 
   async getDataOcrConsume() {
+    await this.spinner.show();
     const resultDatos = await this.middleDaon.getDataOCR(this.id);
     console.log(JSON.stringify(resultDatos) );
     if (resultDatos['error']) {
@@ -40,8 +41,15 @@ export class ValidaOcrComponent implements OnInit {
       return;
     } else {
       this.nombre = resultDatos['visualZone']['25']['value'].replace(/\^/g, ' ');
-      this.direccion = resultDatos['visualZone']['134873105']['value'].replace(/\^/g, ' ');
-      this.curp = resultDatos['visualZone']['7']['value'];
+      if (resultDatos['visualZone']['134873105']) {
+        this.direccion = resultDatos['visualZone']['134873105']['value'];
+        if (this.direccion) {
+          this.direccion = resultDatos['visualZone']['134873105']['value'].replace(/\^/g, ' ');
+        }
+      }
+      if (resultDatos['visualZone']['7'] && resultDatos['visualZone']['7']['value'].length > 10 ) {
+        this.curp = resultDatos['visualZone']['7']['value'];
+      }
     }
     this.filtersLoaded = Promise.resolve(true);
     await this.spinner.hide();
