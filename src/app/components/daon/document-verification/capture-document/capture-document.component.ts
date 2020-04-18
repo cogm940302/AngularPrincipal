@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ServicesGeneralService, isMobile } from '../../../../services/general/services-general.service';
 import { Rutas } from 'src/app/model/RutasUtil.js';
 import { SessionService } from 'src/app/services/session/session.service.js';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-capture-document',
@@ -15,7 +16,7 @@ export class CaptureDocumentComponent implements OnInit {
   canvas: ElementRef<HTMLCanvasElement>;
 
   constructor(public router: Router, public serviciogeneralService: ServicesGeneralService,
-              private session: SessionService, private actRoute: ActivatedRoute) {
+              private session: SessionService, private actRoute: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     this.htmlCanvasToBlob();
     if (serviciogeneralService.gettI() !== undefined) {
@@ -39,11 +40,13 @@ export class CaptureDocumentComponent implements OnInit {
   isMobileBool: boolean;
   isEdge: boolean;
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.spinner.show();
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!this.alredySessionExist()) { return; }
+    if (!await this.alredySessionExist()) { return; }
+    await this.spinner.hide();
     this.filtersLoaded =  Promise.resolve(true);
 
     this.isMobileBool = isMobile(navigator.userAgent);
@@ -71,13 +74,14 @@ export class CaptureDocumentComponent implements OnInit {
     }
   }
 
-  enter() {
-
-    this.dc.capture().then(response => {
+  async enter() {
+    await this.spinner.show();
+    this.dc.capture().then(async response => {
       console.log(response);
       if (response.result === 'FAIL') {
         this.mensaje = response.feedback;
         console.log('no pasa');
+        await this.spinner.hide();
       } else if (response.result === 'PASS') {
         console.log('siii pasa');
         this.dc.stopCamera();
@@ -85,12 +89,14 @@ export class CaptureDocumentComponent implements OnInit {
         this.img = 'data:image/jpeg;base64,' + response.responseBase64Image;
         this.serviciogeneralService.setImg64(this.img);
         this.serviciogeneralService.setIsUpload(false);
+        await this.spinner.hide();
         this.router.navigate([Rutas.documentConfirm + `${this.id}`]);
       }
     })
-      .catch(err => {
+      .catch(async err => {
         this.mensaje = err;
         console.log('err= ' + err);
+        await this.spinner.hide();
       });
   }
 
@@ -122,7 +128,7 @@ export class CaptureDocumentComponent implements OnInit {
   videoEl;
   capturar() {
     const c = this.canvas;
-    this.mensaje = 'Position your document inside the area';
+    this.mensaje = 'Posiciona tu documento dentro del area';
     console.log('captura');
     this.videoEl = document.querySelector('video');
 

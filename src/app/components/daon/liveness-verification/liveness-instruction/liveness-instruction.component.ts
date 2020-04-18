@@ -49,7 +49,7 @@ export class LivenessInstructionComponent implements OnInit {
   }
 
   enter() {
-    this.errorVidaService.mensaje = 'Ocurrio un error, favor de reintentar';
+    this.errorVidaService.mensaje = 'No se ha podido vlaidar tu video, intenta otra vez';
     this.router.navigate([Rutas.livenessCapture + `${this.id}`]);
   }
 

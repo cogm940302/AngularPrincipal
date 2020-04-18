@@ -34,8 +34,8 @@ export class MiddleDaonService {
       statusCode = 200;
       console.log(datos);
       console.log(JSON.stringify(datos));
-      console.log(data.processingStatus);
-      if (data.processingStatus === 'FAILED') {
+      console.log(datos['processingStatus']);
+      if (datos['processingStatus'] === 'FAILED') {
         statusCode = 400;
       }
     }).catch(err => {

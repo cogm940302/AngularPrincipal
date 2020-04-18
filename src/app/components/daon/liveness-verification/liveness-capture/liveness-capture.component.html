@@ -1,29 +1,28 @@
-
 <!-- <div class ="clientcontainer text-center"> -->
-    <!-- <h1>3D Face Liveness web-client</h1> -->
-    <!-- <h1>{{instTxt}}</h1> -->
-    <!-- <p id="instructions">{{instTxt}}</p>  -->
-    <div class ="page-capture">
-        <h1 class="capture-header">3D FACE LIVENESS</h1>
-        <div>
-            <div class="curtain" style="display: none;" ></div>
-            <div class ="page-capture">
-                <div class =" {{isEdge ? 'ui-canvas-container hiddenEdge':'ui-canvas-container'}}">
-                    <video class="{{this.isMobileBool ? 'ui-canvas' : isEdge ? 'ui-canvas scale-edge' : 'ui-canvas'}}" autoplay="" playsinline="" style="transform: scaleX(-1);"> </video>
-                </div>
-                <p class="instructions-on-face cyan">{{instTxt}}</p>
-                <canvas #canvas class="{{this.isMobileBool ? 'ui-canvas-container ui-canvas': 'ui-canvas-container' }}" width="480" height="640" >
+<!-- <h1>3D Face Liveness web-client</h1> -->
+<!-- <h1>{{instTxt}}</h1> -->
+<!-- <p id="instructions">{{instTxt}}</p>  -->
+<div class="page-capture">
+    <h1 class="capture-header">3D FACE LIVENESS</h1>
+    <div>
+        <div class="curtain" style="display: none;"></div>
+        <div class="page-capture">
+            <div class=" {{isEdge ? 'ui-canvas-container hiddenEdge':'ui-canvas-container'}}">
+                <video class="{{this.isMobileBool ? 'ui-canvas' : isEdge ? 'ui-canvas scale-edge' : 'ui-canvas'}}" autoplay="" playsinline="" style="transform: scaleX(-1);"> </video>
+            </div>
+            <p class="instructions-on-face cyan">{{instTxt}}</p>
+            <canvas #canvas class="{{this.isMobileBool ? 'ui-canvas-container ui-canvas': 'ui-canvas-container' }}" width="480" height="640">
                     <img #scream id="scream_g"  src="../../../../../assets/icons/frame_overlay_far_green.png" alt="The Scream"/>
                     <img #scream id="scream_sn"  src="../../../../../assets/icons/frame_overlay_far_sn.png" alt="The Scream"/>
                     <img #scream id="scream_r"  src="../../../../../assets/icons/frame_overlay_far_red.png" alt="The Scream"/>
                 </canvas>
-            </div>
         </div>
-        <footer>
-            <div class="message-box " ></div>
-            <button class="btn blue" [disabled]="!blnStart" (click)="startButton()">Start</button>
-            <!-- <button class="btn blue">Start</button> -->
-         </footer>
     </div>
-    
+    <footer>
+        <div class="message-box "></div>
+        <button class="btn blue" [disabled]="!blnStart" (click)="startButton()">Iniciar</button>
+        <!-- <button class="btn blue">Start</button> -->
+    </footer>
+</div>
+
 <!-- </div>      -->

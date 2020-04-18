@@ -20,25 +20,27 @@ export class CaptureInstructionComponent implements OnInit {
       sessionStorage.setItem('ti', serviciogeneralService.gettI());
       sessionStorage.setItem('fb', serviciogeneralService.getFrontAndBack());
       this.titulo = serviciogeneralService.gettI() + ' lado de la foto ' + serviciogeneralService.getFrontAndBack();
-      if(serviciogeneralService.getFrontAndBack()==='front'){
-        if(serviciogeneralService.gettI()==='ID_CARD')
-        this.idcard="id-card-front";
-        else
-        this.idcard="passport";
-      }else{
-        this.idcard="id-card-back";
+      if (serviciogeneralService.getFrontAndBack() === 'front') {
+        if (serviciogeneralService.gettI() === 'ID_CARD') {
+        this.idcard = 'id-card-front';
+        } else {
+        this.idcard = 'passport';
+        }
+      } else {
+        this.idcard = 'id-card-back';
       }
     } else if (sessionStorage.getItem('ti') === undefined || sessionStorage.getItem('fb') === undefined) {
       this.router.navigate(['']);
     } else {
       this.titulo = sessionStorage.getItem('ti') + ' 2photo page ' + sessionStorage.getItem('fb');
-      if(sessionStorage.getItem('fb')==='front'){
-        if(sessionStorage.getItem('ti')==='ID_CARD')
-        this.idcard="id-card-front";
-        else
-        this.idcard="passport";
-      }else{
-        this.idcard="id-card-back";
+      if (sessionStorage.getItem('fb') === 'front') {
+        if (sessionStorage.getItem('ti') === 'ID_CARD') {
+        this.idcard = 'id-card-front';
+        } else {
+         this.idcard = 'passport';
+        }
+      } else {
+        this.idcard = 'id-card-back';
       }
     }
 
@@ -65,7 +67,7 @@ export class CaptureInstructionComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!this.alredySessionExist()) { return; }
+    // if (! await this.alredySessionExist()) { return; }
     await this.spinner.hide();
   }
 
@@ -96,30 +98,32 @@ export class CaptureInstructionComponent implements OnInit {
     this.router.navigate([Rutas.documentCapture + `${this.id}`]);
   }
 
-  processFile(imageInput: any) {
+  async processFile(imageInput: any) {
+    await this.spinner.show();
     this.mensaje = '';
     const file: File = imageInput.files[0];
     console.log(file);
     this.dc.assessQuality(file)
-    .then( response => {
+    .then( async response => {
       if (response.result === 'FAIL') {
         this.mensaje = response.feedback;
         console.log(this.mensaje);
         console.log('no pasa');
+        await this.spinner.hide();
       } else if (response.result === 'PASS') {
         this.dc.stopCamera();
         this.dc.stopAutoCapture();
         this.img = 'data:image/jpeg;base64,' + response.responseBase64Image;
         this.serviciogeneralService.setImg64(this.img);
         this.serviciogeneralService.setIsUpload(true);
+        await this.spinner.hide();
         this.router.navigate([Rutas.documentConfirm + `${this.id}`]);
       }
     })
-    .catch( err => {
+    .catch( async err => {
       console.log('err= ' + err);
+      await this.spinner.hide();
     });
-
-
   }
 
 }

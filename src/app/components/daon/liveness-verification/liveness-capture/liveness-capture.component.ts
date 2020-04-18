@@ -8,6 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from 'src/app/services/session/session.service.js';
 import { MiddleDaonService } from '../../../../services/http/middle-daon.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ErrorVidaService } from 'src/app/services/errores/error-vida.service.js';
 
 @Component({
   selector: 'app-liveness-capture',
@@ -32,7 +33,7 @@ export class LivenessCaptureComponent implements OnInit {
 
   constructor(public serviciogeneralService: ServicesGeneralService, public router: Router,
               private session: SessionService, private actRoute: ActivatedRoute, private middleDaon: MiddleDaonService,
-              private spinner: NgxSpinnerService) {
+              private spinner: NgxSpinnerService, private errorVidaService: ErrorVidaService) {
     this.fc = new Daonjs.Daon.FaceCapture({
       url: 'https://dobsdemo-facequality-first.identityx-cloud.com/rest/v1/quality/assessments'
     });
@@ -44,7 +45,7 @@ export class LivenessCaptureComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    // if (!this.alredySessionExist()) { return; }
+    if (!this.alredySessionExist()) { return; }
     this.isMobileBool = isMobile(navigator.userAgent);
     this.isEdge = window.navigator.userAgent.indexOf('Edge') > -1;
     this.blnStart = true;
@@ -99,6 +100,7 @@ export class LivenessCaptureComponent implements OnInit {
     console.log(resultCode);
     if (resultCode !== 200) {
       console.log('entre al erro');
+      this.errorVidaService.mensaje = 'No se ha podido vlaidar tu video, intenta otra vez';
       await this.spinner.hide();
       console.log('ocurrio un error, favor de reintentar');
       this.router.navigate([Rutas.livenessInstruction + `${this.id}`]);
@@ -167,7 +169,7 @@ export class LivenessCaptureComponent implements OnInit {
         }
         break;
       case TYPES.MOVE_CLOSER:
-        this.instTxt = TYPES.MOVE_CLOSER;
+        this.instTxt = 'Acercate';
         this.startAnimation(2300);
         break;
       case TYPES.READY:
@@ -178,7 +180,6 @@ export class LivenessCaptureComponent implements OnInit {
         this.drawOutline(document.getElementById('scream_sn'));
         break;
       case TYPES.END_CAPTURE:
-        this.instTxt = TYPES.END_CAPTURE;
         this.instTxt = '';
         break;
       case TYPES.NOT_CENTERED:
@@ -194,7 +195,7 @@ export class LivenessCaptureComponent implements OnInit {
         this.drawOutline(document.getElementById('scream_r'));
         break;
       case TYPES.HOLD:
-        this.instTxt = TYPES.HOLD;
+        this.instTxt = 'Quieto';
         this.drawOutline(document.getElementById('scream_g'));
         break;
       case TYPES.FACE_BOX:

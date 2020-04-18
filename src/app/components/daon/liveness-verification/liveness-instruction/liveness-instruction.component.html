@@ -1,54 +1,58 @@
 <div *ngIf="filtersLoaded | async" class="text-center">
+
     <div class="errorMensaje" style="color: red" *ngIf="errorMensaje && errorMensaje.length > 0">
         {{errorMensaje}}
     </div>
-    <div class="m-5">
-        <h1>Prueba de Vida</h1>
-    </div>
-    <div>
-        <h5>Para una mayor seguridad, realizaremos un video de verificación</h5>
 
+    <div class="container mt-3">
+        <div class="row  justify-content-md-around">
+            <div class="col-12 col-lg-4 offset-1">
+                <h2>Prueba de Vida</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <h5>Para continuar, se tomará un video y tendrás que seguir las instrucciones que apareceran en pantalla</h5>
+            </div>
+        </div>
     </div>
-    <br><br>
-    <div>
-        <h5>En la siguiente pagina, se tomará un video donde tendrás que seguir las instrucciones que apareceran en pantalla</h5>
+
+    <div class="col-12 col-lg-4 offset-4 error">
     </div>
-    <br>
-    <div class="m-4 card">
-        <div class="m-1 row">
-            <div class="m-4">
+
+    <div class="container mt-4">
+        <div class="row align-items-center">
+            <div class="col-12 offset-2 col-lg-2 text-right">
                 <img src="../../../../../assets/icons/inst1.png" alt="">
             </div>
-            <div>
+            <div class="col-12 col-lg-7 text-left">
                 <h4>Asegúrate de estar en un área bien iluminada</h4>
             </div>
         </div>
-    </div>
 
-    <div class="m-4 card">
-        <div class="m-1 row">
-            <div class="m-4">
+        <div class="row align-items-center">
+            <div class="col-12 offset-2 col-lg-2 text-right">
                 <img src="../../../../../assets/icons/inst2.png" alt="">
             </div>
-            <div>
+            <div class="col-12 col-lg-7 text-left">
                 <h4>Sosten la camara de forma que tu cara este dentro del ovalo</h4>
             </div>
         </div>
-    </div>
-
-    <div class="m-4 card">
-        <div class="m-1 row">
-            <div class="m-4">
+        <div class="row align-items-center">
+            <div class="col-12 offset-2 col-lg-2 text-right">
                 <img src="../../../../../assets/icons/inst3.png" alt="">
             </div>
-            <div>
+            <div class="col-12 col-lg-7 text-left">
                 <h4>Continua cuando estes listo</h4>
             </div>
         </div>
+        <div class="row align-items-center justify-content-md-around">
+            <div class="col-12 col-lg-7 offset-1" id="sppinerPlace">
+                <button (click)="enter()" class="btn btn-primary">Iniciar</button>
+            </div>
+        </div>
+
     </div>
 
-    <div class="m-5 border">
-        <button type="button" class="btn btn-primary btn-lg btn-block" (click)="enter()">Iniciar</button>
-    </div>
 
 </div>
