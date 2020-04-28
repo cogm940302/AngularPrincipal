@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Rutas } from 'src/app/model/RutasUtil';
 import { SessionService } from '../../services/session/session.service';
 import { sesionModel } from 'src/app/model/sesion/SessionPojo';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { MiddleMongoService } from '../../services/http/middle-mongo.service';
 import { MiddleDaonService } from '../../services/http/middle-daon.service';
 import { NgxSpinnerService } from 'ngx-spinner';
