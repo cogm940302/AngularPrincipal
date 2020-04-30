@@ -40,6 +40,7 @@ export class TermsComponent implements OnInit {
   }
 
   async ngOnInit() {
+    console.log('0.0.2');
     await this.spinner.show();
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];

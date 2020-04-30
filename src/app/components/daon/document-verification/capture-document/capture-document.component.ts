@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import * as DocumentCapture from '../../../../../assets/js/Daon.DocumentCapture.min.js';
+import * as DocumentCapture from 'src/assets/js/Daon.DocumentCapture.min.js';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ServicesGeneralService, isMobile } from '../../../../services/general/services-general.service';
 import { Rutas } from 'src/app/model/RutasUtil.js';
@@ -41,13 +41,13 @@ export class CaptureDocumentComponent implements OnInit {
   isEdge: boolean;
 
   async ngOnInit() {
-    await this.spinner.show();
+    await this.spinner.show();
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
     if (!await this.alredySessionExist()) { return; }
-    await this.spinner.hide();
-    this.filtersLoaded =  Promise.resolve(true);
+    await this.spinner.hide();
+    this.filtersLoaded = Promise.resolve(true);
 
     this.isMobileBool = isMobile(navigator.userAgent);
     this.isEdge = window.navigator.userAgent.indexOf('Edge') > -1;
@@ -75,30 +75,66 @@ export class CaptureDocumentComponent implements OnInit {
   }
 
   async enter() {
-    await this.spinner.show();
-    this.dc.capture().then(async response => {
-      console.log(response);
-      if (response.result === 'FAIL') {
-        this.mensaje = response.feedback;
-        console.log('no pasa');
-        await this.spinner.hide();
-      } else if (response.result === 'PASS') {
-        console.log('siii pasa');
-        this.dc.stopCamera();
-        this.dc.stopAutoCapture();
-        this.img = 'data:image/jpeg;base64,' + response.responseBase64Image;
-        console.log(this.img);
-        this.serviciogeneralService.setImg64(this.img);
-        this.serviciogeneralService.setIsUpload(false);
-        await this.spinner.hide();
-        this.router.navigate([Rutas.documentConfirm + `${this.id}`]);
-      }
-    })
+    console.log(DocumentCapture);
+    await this.spinner.show();
+
+    const queryParams = {
+      // upperLeftX: 150,
+      // upperLeftY: 100,
+      // width: 920,
+      // height: 540
+    };
+
+    this.dc.captureFrame()
+    // tslint:disable-next-line: max-line-length
+      .then(blob => this.dc.assessQuality(blob, queryParams, this.serviciogeneralService.getFrontAndBack() === 'front'))
+      .then(response => this.onServerFeedback(response))
       .catch(async err => {
         this.mensaje = err;
         console.log('err= ' + err);
-        await this.spinner.hide();
+        await this.spinner.hide();
       });
+
+    // this.dc.capture().then(async response => {
+    //   console.log(response);
+    //   if (response.result === 'FAIL') {
+    //     this.mensaje = response.feedback;
+    //     console.log('no pasa');
+    //     await this.spinner.hide();
+    //   } else if (response.result === 'PASS') {
+    //     console.log('siii pasa');
+    //     this.dc.stopCamera();
+    //     this.dc.stopAutoCapture();
+    //     this.img = 'data:image/jpeg;base64,' + response.responseBase64Image;
+    //     console.log(this.img);
+    //     this.serviciogeneralService.setImg64(this.img);
+    //     this.serviciogeneralService.setIsUpload(false);
+    //     await this.spinner.hide();
+    //     this.router.navigate([Rutas.documentConfirm + `${this.id}`]);
+    //   }
+    // })
+    //   .catch(async err => {
+    //     this.mensaje = err;
+    //     console.log('err= ' + err);
+    //     await this.spinner.hide();
+    //   });
+  }
+
+
+  async onServerFeedback(response) {
+    if (response.result === 'FAIL') {
+      this.mensaje = response.feedback;
+      console.log('no pasa');
+      await this.spinner.hide();
+    } else {
+      console.log('siii pasa');
+      this.img = 'data:image/jpeg;base64,' + response.responseBase64Image;
+      console.log(this.img);
+      this.serviciogeneralService.setImg64(this.img);
+      this.serviciogeneralService.setIsUpload(false);
+      await this.spinner.hide();
+      this.router.navigate([Rutas.documentConfirm + `${this.id}`]);
+    }
   }
 
   dataURItoBlob(dataURI) {
@@ -110,7 +146,7 @@ export class CaptureDocumentComponent implements OnInit {
     }
     const blob = new Blob([int8Array], { type: 'image/jpeg' });
     return blob;
- }
+  }
 
   blobToBase64(blob) {
     return new Promise((resolve, reject) => {
@@ -146,18 +182,18 @@ export class CaptureDocumentComponent implements OnInit {
         value: function (callback, type, quality) {
           let canvas = this;
           setTimeout(() => {
-            var binStr = atob( canvas.toDataURL(type, quality).split(',')[1] ),
-            len = binStr.length,
-            arr = new Uint8Array(len);
+            var binStr = atob(canvas.toDataURL(type, quality).split(',')[1]),
+              len = binStr.length,
+              arr = new Uint8Array(len);
 
-            for (let i = 0; i < len; i++ ) {
-               arr[i] = binStr.charCodeAt(i);
+            for (let i = 0; i < len; i++) {
+              arr[i] = binStr.charCodeAt(i);
             }
 
-            callback( new Blob( [arr], {type: type || 'image/png'} ) );
+            callback(new Blob([arr], { type: type || 'image/png' }));
           });
         }
-     });
+      });
     }
   }
 
