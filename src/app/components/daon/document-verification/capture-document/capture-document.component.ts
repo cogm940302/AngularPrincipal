@@ -87,6 +87,7 @@ export class CaptureDocumentComponent implements OnInit {
         this.dc.stopCamera();
         this.dc.stopAutoCapture();
         this.img = 'data:image/jpeg;base64,' + response.responseBase64Image;
+        console.log(this.img);
         this.serviciogeneralService.setImg64(this.img);
         this.serviciogeneralService.setIsUpload(false);
         await this.spinner.hide();
