@@ -67,7 +67,7 @@ export class CaptureInstructionComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    // if (! await this.alredySessionExist()) { return; }
+    if (! await this.alredySessionExist()) { return; }
     await this.spinner.hide();
   }
 

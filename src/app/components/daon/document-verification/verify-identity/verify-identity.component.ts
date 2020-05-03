@@ -15,6 +15,7 @@ export class VerifyIdentityComponent implements OnInit {
 
   filtersLoaded: Promise<boolean>;
   typeIdentity: string;
+  error: string;
   id: string;
 
   ngOnInit() {
@@ -22,6 +23,7 @@ export class VerifyIdentityComponent implements OnInit {
       this.id = params['id'];
     });
     if (!this.alredySessionExist()) { return; }
+    this.error = sessionStorage.getItem('errorDocument');
     this.filtersLoaded = Promise.resolve(true);
   }
 
@@ -49,6 +51,7 @@ export class VerifyIdentityComponent implements OnInit {
     console.log('ti= ' + this.typeIdentity );
     this.servicesGeneralService.settI(this.typeIdentity);
     this.servicesGeneralService.setFrontAndBack('front');
+    sessionStorage.removeItem('errorDocument');
     this.router.navigate([Rutas.documentInstruction + `${this.id}`]);
   }
 

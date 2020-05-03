@@ -35,8 +35,8 @@ export class ValidaOcrComponent implements OnInit {
     const resultDatos = await this.middleDaon.getDataOCR(this.id);
     console.log(JSON.stringify(resultDatos) );
     if (resultDatos['error']) {
-      // sessionStorage.setItem('error' , resultDatos['error']);
-      // this.router.navigate([Rutas.error]);
+      sessionStorage.setItem('errorDocument' , 'Ocurrio un error, favor de volver a intentar');
+      this.router.navigate([Rutas.documentInstruction + `${this.id}`]);
       await this.spinner.hide();
       return;
     } else {
