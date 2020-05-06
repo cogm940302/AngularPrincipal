@@ -79,10 +79,10 @@ export class CaptureDocumentComponent implements OnInit {
     await this.spinner.show();
 
     const queryParams = {
-      // upperLeftX: 150,
-      // upperLeftY: 100,
-      // width: 920,
-      // height: 540
+      upperLeftX: 25,
+      upperLeftY: 100,
+      width: 754,
+      height: 475
     };
 
     this.dc.captureFrame()
