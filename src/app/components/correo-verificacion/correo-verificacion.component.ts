@@ -6,6 +6,7 @@ import { MiddleDaonService } from 'src/app/services/http/middle-daon.service';
 import { sesionModel } from '../../model/sesion/SessionPojo';
 import { MiddleMongoService } from '../../services/http/middle-mongo.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MiddleVerificacionService } from '../../services/http/middle-verificacion.service';
 
 @Component({
   selector: 'app-correo-verificacion',
@@ -16,12 +17,16 @@ export class CorreoVerificacionComponent implements OnInit {
 
   constructor(private router: Router, private session: SessionService,
               private actRoute: ActivatedRoute, private middleDaon: MiddleDaonService,
-              private middleMongo: MiddleMongoService, private spinner: NgxSpinnerService) { }
+              private middleMongo: MiddleMongoService, private spinner: NgxSpinnerService,
+              private middleVerifica: MiddleVerificacionService) { }
 
   filtersLoaded: Promise<boolean>;
-  correoText = '';
-  id: any;
+  validationResult = 'false';
+  validEmailField = false;
   object: sesionModel;
+  correoText = '';
+  error = '';
+  id: any;
 
   async ngOnInit() {
     await this.spinner.show();
@@ -53,12 +58,48 @@ export class CorreoVerificacionComponent implements OnInit {
     }
   }
 
+  reciveResultFromValidate(event) {
+    this.spinner.show();
+    this.validationResult = event;
+    if (event === 'OK') {
+      this.error = '';
+      this.object['emailVerified'] = true;
+      console.log('si cambie los valores');
+      // this.verificaCorreo();
+      this.spinner.hide();
+    } else {
+      this.error = 'El codigo es incorrecto';
+      this.spinner.hide();
+    }
+  }
+
   onSearchChange(searchValue: string): void {
     this.correoText = searchValue;
   }
 
-  async validaCorreo() {
+  changeEmail() {
+    this.validEmailField = false;
+  }
+
+  verifyEmail() {
+      this.validEmailField = true;
+  }
+
+  async aceptar() {
     await this.spinner.show();
+    if (this.object['emailVerified'] === false) {
+      this.validEmailField = true;
+      await this.middleVerifica.generaCodigoEmail(this.id, this.correoText);
+      this.error = 'Hemos enviado un correo de verificación al correo indicado, favor de ingresarlo';
+      await this.spinner.hide();
+    } else {
+      console.log('no entre');
+      // this.verificaCorreo();
+      await this.spinner.hide();
+    }
+  }
+
+  async verificaCorreo() {
     const objetoDaon = await this.middleDaon.createDaonRegister(this.correoText, this.id);
     if (objetoDaon === true) {
       this.object.correo = true;

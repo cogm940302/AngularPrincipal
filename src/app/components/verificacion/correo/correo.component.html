@@ -1,0 +1,17 @@
+<div *ngIf="filtersLoaded | async" class="container-fluid" style=" max-width:900px">
+    <div class="row justify-content-center rowNew">
+        <div class="col-12 col-md-6 columna" id="tituloDiv">
+            <h3> Codigo de validación</h3>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 ">
+            <input type="text" id="validacionInput" placeholder="Codigo" (input)="onSearchChange($event.target.value)">
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 ">
+            <button [disabled]="!codigoText" class="btn btn-primary" (click)="validaCodigo()" id="validarBoton">Validar</button>
+        </div>
+    </div>
+</div>

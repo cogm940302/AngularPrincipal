@@ -6,12 +6,21 @@
     </div>
     <div class="row justify-content-center">
         <div class="col-12 col-md-6 ">
-            <input type="text" id="correoInput" placeholder="Correo" (input)="onSearchChange($event.target.value)">
+            <input [disabled]="validEmailField" type="text" id="correoInput" placeholder="Correo" (input)="onSearchChange($event.target.value)">
         </div>
     </div>
     <div class="row justify-content-center">
         <div class="col-12 col-md-6 ">
-            <button [disabled]="!correoText" class="btn btn-primary" (click)="validaCorreo()" id="validarBoton">Validar Correo</button>
+            <button [disabled]="!correoText || validEmailField" class="btn btn-primary" (click)="aceptar()" id="validarBoton">Validar Correo</button>
         </div>
     </div>
+
+
+
+</div>
+
+<div *ngIf="validEmailField">
+    <div>{{error}}</div>
+    <app-correo [id]="id" (resultValidation)='reciveResultFromValidate($event)'></app-correo>
+    <!-- <button class="btn btn-primary" (click)="changeEmail()" id="cambiarEmailBoton">Cambiar Correo</button> -->
 </div>

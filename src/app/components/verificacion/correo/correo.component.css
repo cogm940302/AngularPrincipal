@@ -7,9 +7,9 @@ h3 {
 }
 
 .container-fluid {
-    margin-top: 60px;
+    /* margin-top: 60px;
     border-style: solid;
-    border-color: green;
+    border-color: green; */
 }
 
 .row {
@@ -19,16 +19,16 @@ h3 {
 }
 
 .rowNew {
-    margin-top: 20px;
+    margin-top: 10px;
     height: 70px;
 }
 
 .col {
-    background: #f2f2f2;
-    border: 1px solid #4d5061;
+    /* background: #f2f2f2;
+    border: 1px solid #4d5061; */
 }
 
-#correoInput {
+#validacionInput {
     height: 45px;
     text-align: center;
     width: 100%;
@@ -41,8 +41,4 @@ h3 {
 #validarBoton {
     margin-bottom: 28px;
     width: 100%;
-}
-
-#cambiarEmailBoton {
-    padding: 12px 28px;
 }
