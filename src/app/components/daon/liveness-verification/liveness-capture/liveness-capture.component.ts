@@ -84,6 +84,8 @@ export class LivenessCaptureComponent implements OnInit {
       this.session.updateModel(object);
       await this.middleDaon.updateDaonDataUser(object, this.id);
       await this.middleDaon.getResults(this.id);
+      this.fc.stopCamera();
+      this.f3d.terminate();
       console.log('ya termine' + JSON.stringify(object, null, 2));
       this.router.navigate([Rutas.fin]);
     }
