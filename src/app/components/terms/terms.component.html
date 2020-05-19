@@ -1,8 +1,33 @@
 <div *ngIf="filtersLoaded | async" class="container">
-
-
-
-
+    <div class="row justify-content-center">
+        <div class="col col-md-4">
+            <main role="main" id="adentro" class="flex-shrink-0">
+                <!-- Esta es la parte que se debe cambiar-->
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col py-4 text-center">
+                            <h2>Identifícate</h2>
+                            <p class="px-5">
+                                <img alt="" class="img-fluid" src="../../../assets/img/Daon/1.Identificate.png">
+                            </p>
+                            <p class="text-2 tex-muted">
+                                Por tu seguridad y la nuestra es necesario validar tu identidad.
+                            </p>
+                            <p class="mt-3">
+                                Al dar clic en el botón Iniciar, aceptas nuestros <strong>Términos
+										de uso</strong> y <strong>Políticas de privacidad.</strong>
+                            </p>
+                            <p class="my-3">
+                                <!-- <button class="btn btn-lg btn-block btn-danger mr-3 btnUrl" data-url="persona.html">Iniciar</button> -->
+                                <button class="btn btn-lg btn-block btn-danger mr-3 btnUrl" id="aceptarBoton" (click)="siguiente()">Iniciar</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <!-- Esta es la parte que se debe cambiar-->
+        </div>
+    </div>
 </div>
 
 
@@ -10,7 +35,8 @@
 
 
 
-<div *ngIf="filtersLoaded | async" class="container">
+
+<!-- <div *ngIf="filtersLoaded | async" class="container">
     <header class="header mt-4 mb-5">
         <img alt="daon_image" class="daon-image" src="../../../assets/daon/mitLogo.png" />
     </header>
@@ -58,11 +84,11 @@
   </button>
         </div>
         <div class="modal-body" [innerHTML]="textoModal">
-        </div>
-        <!-- <div class="modal-footer">
+        </div> -->
+<!-- <div class="modal-footer">
       <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
   </div> -->
-    </ng-template>
+<!-- </ng-template>
 
     <div class="row row-justify-center">
         <button [disabled]="!state.checked" class="btn btn-primary" id="aceptarBoton" (click)="siguiente()">Acepto </button>
@@ -73,4 +99,4 @@
             version 0.0.7
         </div>
     </div>
-</div>
+</div> -->
