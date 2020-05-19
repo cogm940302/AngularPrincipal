@@ -1,3 +1,4 @@
+
 html,body {
     height: 100%;
   }
@@ -19,6 +20,7 @@ html,body {
       line-height: 1.2
   }
   
+  /* Pinche David*/
   .text-2{
       font-size: 1.5em;
       font-weight: 700;
