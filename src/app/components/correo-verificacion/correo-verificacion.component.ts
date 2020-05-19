@@ -57,7 +57,7 @@ export class CorreoVerificacionComponent implements OnInit {
       }
     }
   }
-
+ 
   reciveResultFromValidate(event) {
     this.spinner.show();
     this.validationResult = event;
@@ -65,7 +65,7 @@ export class CorreoVerificacionComponent implements OnInit {
       this.error = '';
       this.object['emailVerified'] = true;
       console.log('si cambie los valores');
-      // this.verificaCorreo();
+      this.verificaCorreo();
       this.spinner.hide();
     } else {
       this.error = 'El codigo es incorrecto';
@@ -94,7 +94,7 @@ export class CorreoVerificacionComponent implements OnInit {
       await this.spinner.hide();
     } else {
       console.log('no entre');
-      // this.verificaCorreo();
+      this.verificaCorreo();
       await this.spinner.hide();
     }
   }

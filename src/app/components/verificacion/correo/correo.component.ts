@@ -14,7 +14,7 @@ export class CorreoComponent implements OnInit {
   filtersLoaded: Promise<boolean>;
   codigoText = '';
   @Input() id;
-
+ 
   ngOnInit() {
     this.filtersLoaded = Promise.resolve(true);
   }
@@ -24,7 +24,9 @@ export class CorreoComponent implements OnInit {
   }
 
   async validaCodigo() {
+
     const result = await this.middleVerifica.validaCodigoEmail(this.id, this.codigoText);
+    console.log("result= " + result + " - " + this.id +" - " + this.codigoText)
     if (result === 200) {
       this.resultValidation.emit('OK');
     } else {
