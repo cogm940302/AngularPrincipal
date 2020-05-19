@@ -3,6 +3,8 @@ import { Rutas } from 'src/app/model/RutasUtil.js';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from 'src/app/services/session/session.service';
 import { ErrorVidaService } from 'src/app/services/errores/error-vida.service';
+import { environment } from '../../../../../environments/environment';
+import { FP } from '@fp-pro/client';
 
 @Component({
   selector: 'app-liveness-instruction',
@@ -18,14 +20,16 @@ export class LivenessInstructionComponent implements OnInit {
   errorMensaje: string;
   id: string;
 
-  ngOnInit() {
+  async ngOnInit() {
     console.log('mensaje: ' + this.errorVidaService.mensaje);
     console.log('mensaje: ' + this.errorVidaService.returnMensaje());
     this.errorMensaje = this.errorVidaService.returnMensaje();
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!this.alredySessionExist()) { return; }
+    const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
+    fp.send({linkedId: this.id});
+    if (!(await this.alredySessionExist())) { return; }
     this.filtersLoaded = Promise.resolve(true);
   }
 

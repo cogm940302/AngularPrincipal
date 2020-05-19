@@ -4,6 +4,8 @@ import { SessionService } from 'src/app/services/session/session.service';
 import { Rutas } from 'src/app/model/RutasUtil';
 import { MiddleDaonService } from 'src/app/services/http/middle-daon.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from '../../../../../environments/environment';
+import { FP } from '@fp-pro/client';
 
 @Component({
   selector: 'app-valida-ocr',
@@ -26,7 +28,9 @@ export class ValidaOcrComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!await this.alredySessionExist()) { return; }
+    const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
+    fp.send({linkedId: this.id});
+    if (!(await this.alredySessionExist())) { return; }
     await this.getDataOcrConsume();
   }
 

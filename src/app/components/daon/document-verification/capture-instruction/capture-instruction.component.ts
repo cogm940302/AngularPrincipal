@@ -7,6 +7,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import * as DocumentCapture from '../../../../../assets/js/Daon.DocumentCapture.min.js';
 import IconDefinitions from '../../../../../assets/icons/icons-svn';
 import { ErrorSelfieService } from 'src/app/services/errores/error-selfie.service';
+import { environment } from '../../../../../environments/environment';
+import { FP } from '@fp-pro/client';
+
 @Component({
   selector: 'app-capture-instruction',
   templateUrl: './capture-instruction.component.html',
@@ -67,7 +70,9 @@ export class CaptureInstructionComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (! await this.alredySessionExist()) { return; }
+    const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
+    fp.send({linkedId: this.id});
+    if (! (await this.alredySessionExist())) { return; }
     await this.spinner.hide();
   }
 

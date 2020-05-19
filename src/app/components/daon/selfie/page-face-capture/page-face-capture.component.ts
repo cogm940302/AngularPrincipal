@@ -5,6 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from 'src/app/services/session/session.service.js';
 import { ServicesGeneralService, isMobile, isIphone } from '../../../../services/general/services-general.service';
 import { Rutas } from 'src/app/model/RutasUtil.js';
+import { environment } from '../../../../../environments/environment';
+import { FP } from '@fp-pro/client';
 
 
 // TODO verificar las rutas de los archivos
@@ -44,7 +46,12 @@ export class PageFaceCaptureComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!this.alredySessionExist()) { return; }
+    FP.load({client: environment.fingerJsToken, region: 'us'})
+      .then(fp =>{
+        fp.send({linkedId: this.id});
+      });
+
+    if (!(await this.alredySessionExist())) { return; }
     this.isMobileBool = isMobile(navigator.userAgent);
     this.isIphone = isIphone(navigator.userAgent);
     this.isEdge = window.navigator.userAgent.indexOf('Edge') > -1;

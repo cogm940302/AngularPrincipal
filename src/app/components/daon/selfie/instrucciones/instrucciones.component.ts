@@ -4,6 +4,8 @@ import { Rutas } from 'src/app/model/RutasUtil';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ErrorSelfieService } from 'src/app/services/errores/error-selfie.service';
 import { SessionService } from 'src/app/services/session/session.service';
+import { environment } from '../../../../../environments/environment';
+import { FP } from '@fp-pro/client';
 
 @Component({
   selector: 'app-instrucciones',
@@ -25,7 +27,9 @@ export class InstruccionesComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!this.alredySessionExist()) { return; }
+    const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
+    fp.send({linkedId: this.id});
+    if (!(await this.alredySessionExist())) { return; }
     this.filtersLoaded = Promise.resolve(true);
     await this.spinner.hide();
   }

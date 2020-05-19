@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ServicesGeneralService } from '../../../../services/general/services-general.service';
 import { SessionService } from 'src/app/services/session/session.service';
 import { Rutas } from 'src/app/model/RutasUtil';
+import { environment } from '../../../../../environments/environment';
+import { FP } from '@fp-pro/client';
 
 @Component({
   selector: 'app-verify-identity',
@@ -18,11 +20,13 @@ export class VerifyIdentityComponent implements OnInit {
   error: string;
   id: string;
 
-  ngOnInit() {
+  async ngOnInit() {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!this.alredySessionExist()) { return; }
+    const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
+    fp.send({linkedId: this.id});
+    if (!(await this.alredySessionExist())) { return; }
     this.error = sessionStorage.getItem('errorDocument');
     this.filtersLoaded = Promise.resolve(true);
   }

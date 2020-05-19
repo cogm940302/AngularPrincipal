@@ -9,6 +9,8 @@ import { SessionService } from 'src/app/services/session/session.service.js';
 import { MiddleDaonService } from '../../../../services/http/middle-daon.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ErrorVidaService } from 'src/app/services/errores/error-vida.service.js';
+import { environment } from '../../../../../environments/environment';
+import { FP } from '@fp-pro/client';
 
 @Component({
   selector: 'app-liveness-capture',
@@ -40,12 +42,14 @@ export class LivenessCaptureComponent implements OnInit {
   }
 
   instructions = document.querySelector('#instructions');
-  ngOnInit() {
+  async ngOnInit() {
     this.ctx = this.canvas.nativeElement.getContext('2d');
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!this.alredySessionExist()) { return; }
+    const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
+    fp.send({linkedId: this.id});
+    if (!(await this.alredySessionExist())) { return; }
     this.isMobileBool = isMobile(navigator.userAgent);
     this.isEdge = window.navigator.userAgent.indexOf('Edge') > -1;
     this.blnStart = true;

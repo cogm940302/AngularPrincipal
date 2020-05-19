@@ -6,6 +6,8 @@ import { MiddleDaonService } from 'src/app/services/http/middle-daon.service';
 import { sesionModel } from '../../model/sesion/SessionPojo';
 import { MiddleMongoService } from '../../services/http/middle-mongo.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from '../../../../../environments/environment';
+import { FP } from '@fp-pro/client';
 
 @Component({
   selector: 'app-correo-verificacion',
@@ -28,7 +30,9 @@ export class CorreoVerificacionComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!await this.alredySessionExist()) { return; }
+    const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
+    fp.send({linkedId: this.id});
+    if (!(await this.alredySessionExist())) { return; }
     this.filtersLoaded = Promise.resolve(true);
     await this.spinner.hide();
   }

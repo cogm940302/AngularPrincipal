@@ -8,6 +8,8 @@ import { Rutas } from 'src/app/model/RutasUtil';
 import { MiddleDaonService } from 'src/app/services/http/middle-daon.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ErrorSelfieService } from 'src/app/services/errores/error-selfie.service';
+import { environment } from '../../../../../environments/environment';
+import { FP } from '@fp-pro/client';
 
 
 @Component({
@@ -30,11 +32,13 @@ export class ConfirmDocumentComponent implements OnInit {
   id: string;
   img: any;
 
-  ngOnInit() {
+  async ngOnInit() {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!this.alredySessionExist()) { return; }
+    const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
+    fp.send({linkedId: this.id});
+    if (!(await this.alredySessionExist())) { return; }
     this.documentoSend = new DocumentoSend();
     this.clientCapture = new ClientCapture();
     this.processedImage = new ProcessedImage();
