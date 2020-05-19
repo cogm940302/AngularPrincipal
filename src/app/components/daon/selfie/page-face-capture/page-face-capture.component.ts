@@ -112,7 +112,7 @@ export class PageFaceCaptureComponent implements OnInit {
   }
   returnId() {
     return this.id;
-  }
+  } 
   tomarSelfie() {
     this.btnB = false;
     this.fc.startAutoCapture(response => {
@@ -124,6 +124,7 @@ export class PageFaceCaptureComponent implements OnInit {
         console.log('si pasa' + JSON.stringify(response, null, 2));
         this.mensaje = response.feedback;
         this.fc.stopAutoCapture();
+        this.fc.stopCamera();
         this.imageData = response.sentBlobImage;
         this.serviciogeneralService.setImg64(this.imageData);
         this.router.navigate([Rutas.selfieVerification + `${this.id}`]);
