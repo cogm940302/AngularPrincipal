@@ -4,36 +4,28 @@
             <main role="main" id="adentro" class="flex-shrink-0"> <!-- Esta es la parte que se debe cambiar-->
                 <div class="container-fluid">
                     <div class="row justify-content-center">
-                        <div class="col py-4 text-center">
-                            <h2>Correo electrónico</h2>
-                            <p class="px-5">
-                                <img alt="" class="img-fluid" src="img/3.1.Requerimos correo.png">
-                            </p>
-                            <p class="text-2 tex-muted">
-                                Ingresa tu e-mail. te enviaremos un correo de confirmación.
-                            </p>
-                            
-<div *ngIf="filtersLoaded | async" class="container-fluid" style=" max-width:750px">
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-6 ">
-            <input [disabled]="validEmailField" type="text" id="correoInput" placeholder="Correo" (input)="onSearchChange($event.target.value)">
-        </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-6 ">
-            <button [disabled]="!correoText || validEmailField" class="btn btn-primary" (click)="aceptar()" id="validarBoton">Validar Correo</button>
-        </div>
-    </div>
+                        <div *ngIf="filtersLoaded | async" class="container-fluid" style=" max-width:750px">
+                            <div class="col py-4 text-center">
+                                <h2>Correo electrónico</h2>
+                                <p class="px-5">
+                                    <img alt="" class="img-fluid" src="../../../../../assets/img/daon/3.1.Requerimos correo.png">
+                                </p>
+                                <p class="text-2 tex-muted">
+                                    Ingresa tu e-mail. te enviaremos un correo de confirmación.
+                                </p>
+                                <div class="form-group">
+                                    <input placeholder="Ingresa tu correo electrónico" class="form-control" [disabled]="validEmailField" type="text" id="correoInput" (input)="onSearchChange($event.target.value)">
+                                </div>
+                                <p class="my-3">
+                                    <button type="button" [disabled]="!correoText || validEmailField" class="btn btn-lg btn-block btn-danger rounded-lg mr-3 btnUrl" (click)="aceptar()" id="validarBoton">Enviar correo</button>
+								</p>
+                            </div>
 
-
-
-</div>
-
-<div *ngIf="validEmailField">
-    <div>{{error}}</div>
-    <app-correo [id]="id" (resultValidation)='reciveResultFromValidate($event)'></app-correo>
-    <!-- <button class="btn btn-primary" (click)="changeEmail()" id="cambiarEmailBoton">Cambiar Correo</button> -->
-</div>
+                            <div *ngIf="validEmailField">
+                                <div>{{error}}</div>
+                                <app-correo [id]="id" (resultValidation)='reciveResultFromValidate($event)'></app-correo>
+                                <!-- <button class="btn btn-primary" (click)="changeEmail()" id="cambiarEmailBoton">Cambiar Correo</button> -->
+                            </div>
 
                         </div>
                     </div>
