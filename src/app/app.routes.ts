@@ -26,7 +26,7 @@ const APP_ROUTES: Routes = [
   },
   {
       path: 'services',
-      component: PlantillaComponent,
+      
       children: [
           {path: 'daon/instruction/:id', component: InstruccionesComponent},
           {path: 'daon/selfie/:id', component: PageFaceCaptureComponent},
