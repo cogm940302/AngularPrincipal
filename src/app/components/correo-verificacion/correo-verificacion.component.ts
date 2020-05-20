@@ -6,7 +6,7 @@ import { MiddleDaonService } from 'src/app/services/http/middle-daon.service';
 import { sesionModel } from '../../model/sesion/SessionPojo';
 import { MiddleMongoService } from '../../services/http/middle-mongo.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { environment } from '../../../../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { FP } from '@fp-pro/client';
 
 @Component({
