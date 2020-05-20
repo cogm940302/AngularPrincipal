@@ -71,7 +71,7 @@ export class CaptureInstructionComponent implements OnInit {
       this.id = params['id'];
     });
     const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
-    fp.send({linkedId: this.id});
+    fp.send({tag: this.id});
     if (! (await this.alredySessionExist())) { return; }
     await this.spinner.hide();
   }
