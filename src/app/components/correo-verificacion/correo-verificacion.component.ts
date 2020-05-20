@@ -11,7 +11,7 @@ import { MiddleVerificacionService } from '../../services/http/middle-verificaci
 @Component({
   selector: 'app-correo-verificacion',
   templateUrl: './correo-verificacion.component.html',
-  styleUrls: ['./correo-verificacion.component.css']
+/*  styleUrls: ['./correo-verificacion.component.css']*/
 })
 export class CorreoVerificacionComponent implements OnInit {
 

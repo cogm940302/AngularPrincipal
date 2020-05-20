@@ -27,6 +27,8 @@ import { PageFaceCaptureComponent } from './components/daon/selfie/page-face-cap
 import { FacialVerificationComponent } from './components/daon/selfie/facial-verification/facial-verification.component';
 import { ValidaOcrComponent } from './components/daon/document-verification/valida-ocr/valida-ocr.component';
 import { CorreoComponent } from './components/verificacion/correo/correo.component';
+import { FooterComponent } from './components/compartidos/footer/footer.component';
+import { HeaderComponent } from './components/compartidos/header/header.component';
 // import {  NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // import {  NgbModal } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
 
@@ -50,6 +52,8 @@ import { CorreoComponent } from './components/verificacion/correo/correo.compone
     LivenessResultComponent,
     ValidaOcrComponent,
     CorreoComponent,
+    FooterComponent,
+    HeaderComponent,
 
   ],
   imports: [

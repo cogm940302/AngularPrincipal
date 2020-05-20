@@ -1,12 +1,10 @@
-<header class="footer py-3">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-4 col-md-2">
-                <img alt="" class="img-fluid" src="../../../../../assets/img/commons/Logo e-spug.png">
-            </div>
-        </div>
-    </div>
-</header>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col col-md-4">
+            <main role="main" id="adentro" class="flex-shrink-0"> <!-- Esta es la parte que se debe cambiar-->
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col py-4 text-center">
 
 <div *ngIf="filtersLoaded | async" class="container-fluid" style=" max-width:750px">
     <div class="row justify-content-center rowNew">
@@ -33,4 +31,12 @@
     <div>{{error}}</div>
     <app-correo [id]="id" (resultValidation)='reciveResultFromValidate($event)'></app-correo>
     <!-- <button class="btn btn-primary" (click)="changeEmail()" id="cambiarEmailBoton">Cambiar Correo</button> -->
+</div>
+
+                        </div>
+                    </div>
+                </div>
+            </main>      
+        </div>
+    </div>
 </div>
