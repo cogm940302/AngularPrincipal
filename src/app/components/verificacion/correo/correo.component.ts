@@ -32,9 +32,9 @@ export class CorreoComponent implements OnInit {
       this.id = params['id'];
     });
 
-    /*if(this.serviciogeneralService.getCorreo() === undefined || this.serviciogeneralService.getCorreo() === ''){
+    if(this.serviciogeneralService.getCorreo() === undefined || this.serviciogeneralService.getCorreo() === ''){
       this.router.navigate([Rutas.correo + `${this.id}`]);
-    }*/
+    }
 
     if (!await this.alredySessionExist()) { return; }
     this.filtersLoaded = Promise.resolve(true);

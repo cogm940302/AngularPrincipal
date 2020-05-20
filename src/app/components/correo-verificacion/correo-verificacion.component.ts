@@ -58,51 +58,16 @@ export class CorreoVerificacionComponent implements OnInit {
     }
   }
  
-  /*reciveResultFromValidate(event) {
-    this.spinner.show();
-    this.validationResult = event;
-    if (event === 'OK') {
-      this.error = '';
-      this.object['emailVerified'] = true;
-      console.log('si cambie los valores');
-      this.verificaCorreo();
-      this.spinner.hide();
-    } else {
-      this.error = 'El codigo es incorrecto';
-      this.spinner.hide();
-    }
-  }*/
-
   onSearchChange(searchValue: string): void {
     this.correoText = searchValue;
   }
 
   async aceptar() {
     await this.spinner.show();
-    //if (this.object['emailVerified'] === false) {
       console.log("id >>>" + this.id + " - correoText >>> " + this.correoText + " - " + this.object['emailVerified'])
       await this.middleVerifica.generaCodigoEmail(this.id, this.correoText);
       this.serviciogeneralService.setCorreo(this.correoText);
-      //this.error = 'Hemos enviado un correo de verificación al correo indicado, favor de ingresarlo';
       this.router.navigate([Rutas.correoCode + `${this.id}`]);
       await this.spinner.hide();
-    //} else {
-      //console.log('no entre');
-      //this.verificaCorreo();
-      //await this.spinner.hide();
-    //}
   }
-
-  /*async verificaCorreo() {
-    const objetoDaon = await this.middleDaon.createDaonRegister(this.correoText, this.id);
-    if (objetoDaon === true) {
-      this.object.correo = true;
-      this.session.updateModel(this.object);
-      await this.middleDaon.updateDaonDataUser(this.object, this.id);
-      this.router.navigate([Rutas.instrucciones + `${this.id}`]);
-    } else {
-      this.router.navigate([Rutas.error]);
-    }
-    await this.spinner.hide();
-  }*/
 }
