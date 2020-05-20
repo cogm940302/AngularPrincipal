@@ -1,17 +1,51 @@
-<div *ngIf="filtersLoaded | async" class="container-fluid" style=" max-width:900px">
-    <div class="row justify-content-center rowNew">
-        <div class="col-12 col-md-6 columna" id="tituloDiv">
-            <h3> Codigo de validación</h3>
-        </div>
-    </div>
+<div class="container">
     <div class="row justify-content-center">
-        <div class="col-12 col-md-6 ">
-            <input type="text" id="validacionInput" placeholder="Codigo" (input)="onSearchChange($event.target.value)">
-        </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-6 ">
-            <button [disabled]="!codigoText" class="btn btn-primary" (click)="validaCodigo()" id="validarBoton">Validar</button>
+        <div class="col col-md-4">
+            <main role="main" id="adentro" class="flex-shrink-0">
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col  text-center">
+                            <h3>Verifica tu correo</h3>
+                            <p > <img alt="" class="img-fluid" src="../../../../../../assets/img/daon/4.Verificacion de correo.png"/> </p>
+                            <p class="text-1 overflow-visible"> Ingresa la clave de verificación
+                              que te hemos enviado a <strong>{{serviciogeneralService.getCorreo()}}</strong> </p>
+
+                            <form>
+                                <div class="form-row py-3">
+                                  <div class="col">
+                                    <input (input)="onSearchChange1($event.target.value,1)" type="text" class="form-control  border shadow" style="text-align:center;" id="verifica.1" maxlength="1">
+                                  </div>
+                                  <div class="col">
+                                    <input (input)="onSearchChange1($event.target.value,2)" type="text" class="form-control  border shadow" style="text-align:center;" id="verifica.2" maxlength="1">
+                                  </div>
+                                  <div class="col">
+                                    <input (input)="onSearchChange1($event.target.value,3)" type="text" class="form-control  border shadow" style="text-align:center;" id="verifica.3" maxlength="1">
+                                  </div>
+                                  <div class="col">
+                                    <input (input)="onSearchChange1($event.target.value,4)" type="text" class="form-control  border shadow" style="text-align:center;" id="verifica.4" maxlength="1">
+                                  </div>
+                                  <div class="col">
+                                    <input (input)="onSearchChange1($event.target.value,5)" type="text" class="form-control  border shadow" style="text-align:center;" id="verifica.5" maxlength="1">
+                                  </div>
+                                  <div class="col">
+                                    <input (input)="onSearchChange1($event.target.value,6)" type="text" class="form-control  border shadow" style="text-align:center;" id="verifica.6" maxlength="1">
+                                  </div>
+                                  <div class="col">
+                                    <input (input)="onSearchChange1($event.target.value,7)" type="text" class="form-control  border shadow" style="text-align:center;" id="verifica.7" maxlength="1">
+                                  </div>
+                                  <div class="col">
+                                    <input (input)="onSearchChange1($event.target.value,8)" type="text" class="form-control  border shadow" style="text-align:center;" id="verifica.8" maxlength="1">
+                                  </div>
+                                </div>
+                                <div>{{error}}</div>
+                                <p class="my-3">
+                                    <button type="button"  class="btn btn-lg btn-block btn-danger rounded-lg mr-3 btnUrl" (click)="validaCodigo()" id="validarBoton">Validar</button>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </main>
         </div>
     </div>
 </div>

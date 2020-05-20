@@ -1,5 +1,12 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { MiddleVerificacionService } from 'src/app/services/http/middle-verificacion.service';
+import { MiddleDaonService } from 'src/app/services/http/middle-daon.service';
+import { sesionModel } from '../../../model/sesion/SessionPojo';
+import { SessionService } from '../../../services/session/session.service';
+import { Rutas } from '../../../model/RutasUtil';
+import { Router, ActivatedRoute } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ServicesGeneralService } from '../../../services/general/services-general.service';
 
 @Component({
   selector: 'app-correo',
@@ -8,30 +15,101 @@ import { MiddleVerificacionService } from 'src/app/services/http/middle-verifica
 })
 export class CorreoComponent implements OnInit {
 
-  constructor(private middleVerifica: MiddleVerificacionService) { }
+  constructor(public serviciogeneralService: ServicesGeneralService, private actRoute: ActivatedRoute, private spinner: NgxSpinnerService, private router: Router, private middleVerifica: MiddleVerificacionService, private middleDaon: MiddleDaonService,
+    private session: SessionService) {
+      
+     }
 
-  @Output() resultValidation = new EventEmitter<string>();
   filtersLoaded: Promise<boolean>;
   codigoText = '';
-  @Input() id;
- 
-  ngOnInit() {
+  error = '';
+  id: any;
+  object: sesionModel; 
+
+  async ngOnInit() {
+    await this.spinner.show();
+    this.actRoute.params.subscribe(params => {
+      this.id = params['id'];
+    });
+
+    /*if(this.serviciogeneralService.getCorreo() === undefined || this.serviciogeneralService.getCorreo() === ''){
+      this.router.navigate([Rutas.correo + `${this.id}`]);
+    }*/
+
+    if (!await this.alredySessionExist()) { return; }
     this.filtersLoaded = Promise.resolve(true);
+    await this.spinner.hide();
   }
 
-  onSearchChange(searchValue: string): void {
-    this.codigoText = searchValue;
-  }
-
-  async validaCodigo() {
-
-    const result = await this.middleVerifica.validaCodigoEmail(this.id, this.codigoText);
-    console.log("result= " + result + " - " + this.id +" - " + this.codigoText)
-    if (result === 200) {
-      this.resultValidation.emit('OK');
+  async alredySessionExist() {
+    this.object = this.session.getObjectSession();
+    console.log("***object***")
+    console.log(this.object);
+    if (this.object === null || this.object === undefined) {
+      this.router.navigate([Rutas.terminos + `/${this.id}`]);
+      return false;
     } else {
-      this.resultValidation.emit('FALSE');
+      if (this.object._id !== this.id) {
+        this.router.navigate([Rutas.error]);
+        return false;
+      } else if (this.object.correo !== null && this.object.correo !== undefined && this.object.correo) {
+        console.log('voy a instrucciones');
+        this.router.navigate([Rutas.instrucciones + `${this.id}`]);
+        return false;
+      } else {
+        return true;
+      }
     }
   }
 
+   a='';b='';c='';d='';e='';f='';g='';h='';
+  onSearchChange1(searchValue: string, index): void {
+    
+    if(index === 1){
+      this.a=searchValue
+    }else if(index === 2){
+      this.b=searchValue
+    }else if(index === 3){
+      this.c=searchValue
+    }else if(index === 4){
+      this.d=searchValue
+    }else if(index === 5){
+      this.e=searchValue
+    }else if(index === 6){
+      this.f=searchValue
+    }else if(index === 7){
+      this.g=searchValue
+    }else if(index === 8){
+      this.h=searchValue
+    }
+    
+    this.codigoText = this.a+this.b+this.c+this.d+this.e+this.f+this.g+this.h;
+    console.log("codigo= " + this.codigoText);
+  }
+
+
+
+  async validaCodigo() {
+    const result = await this.middleVerifica.validaCodigoEmail(this.id, this.codigoText);
+    console.log("result= " + result + " - " + this.id +" - " + this.codigoText)
+    if (result === 200) {
+    this.verificaCorreo();
+    } else {
+      this.error = 'El codigo es incorrecto';
+      
+    }
+  }
+  async verificaCorreo() {
+    console.log("cr = " + this.serviciogeneralService.getCorreo());
+    const objetoDaon = await this.middleDaon.createDaonRegister(this.serviciogeneralService.getCorreo(), this.id);
+    if (objetoDaon === true) {
+      this.object.correo = true;
+      this.session.updateModel(this.object);
+      await this.middleDaon.updateDaonDataUser(this.object, this.id);
+      this.router.navigate([Rutas.instrucciones + `${this.id}`]);
+    } else {
+      this.router.navigate([Rutas.error]);
+    }
+    await this.spinner.hide();
+  }
 }

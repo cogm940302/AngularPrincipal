@@ -1,10 +1,10 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col col-md-4">
-            <main role="main" id="adentro" class="flex-shrink-0"> <!-- Esta es la parte que se debe cambiar-->
+            <main role="main" id="adentro" class="flex-shrink-0">
                 <div class="container-fluid">
                     <div class="row justify-content-center">
-                        <div *ngIf="filtersLoaded | async" class="container-fluid" style=" max-width:750px">
+                        <!--<div *ngIf="filtersLoaded | async" class="container-fluid" style=" max-width:750px">-->
                             <div class="col py-4 text-center">
                                 <h2>Correo electrónico</h2>
                                 <p class="px-5">
@@ -14,20 +14,18 @@
                                     Ingresa tu e-mail. te enviaremos un correo de confirmación.
                                 </p>
                                 <div class="form-group">
-                                    <input placeholder="Ingresa tu correo electrónico" class="form-control" [disabled]="validEmailField" type="text" id="correoInput" (input)="onSearchChange($event.target.value)">
+                                    <input placeholder="Ingresa tu correo electrónico" class="form-control"  type="text" id="correoInput" (input)="onSearchChange($event.target.value)">
                                 </div>
                                 <p class="my-3">
-                                    <button type="button" [disabled]="!correoText || validEmailField" class="btn btn-lg btn-block btn-danger rounded-lg mr-3 btnUrl" (click)="aceptar()" id="validarBoton">Enviar correo</button>
+                                    <button type="button"  class="btn btn-lg btn-block btn-danger rounded-lg mr-3 btnUrl" (click)="aceptar()" id="validarBoton">Enviar correo</button>
 								</p>
                             </div>
-
-                            <div *ngIf="validEmailField">
+                            <!--<div *ngIf="validEmailField">
                                 <div>{{error}}</div>
                                 <app-correo [id]="id" (resultValidation)='reciveResultFromValidate($event)'></app-correo>
-                                <!-- <button class="btn btn-primary" (click)="changeEmail()" id="cambiarEmailBoton">Cambiar Correo</button> -->
-                            </div>
+                                </div>-->
 
-                        </div>
+                       <!-- </div> -->
                     </div>
                 </div>
             </main>      

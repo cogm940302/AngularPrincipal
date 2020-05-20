@@ -7,6 +7,7 @@ import { sesionModel } from '../../model/sesion/SessionPojo';
 import { MiddleMongoService } from '../../services/http/middle-mongo.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MiddleVerificacionService } from '../../services/http/middle-verificacion.service';
+import { ServicesGeneralService } from '../../services/general/services-general.service';
 
 @Component({
   selector: 'app-correo-verificacion',
@@ -15,14 +16,12 @@ import { MiddleVerificacionService } from '../../services/http/middle-verificaci
 })
 export class CorreoVerificacionComponent implements OnInit {
 
-  constructor(private router: Router, private session: SessionService,
+  constructor(public serviciogeneralService: ServicesGeneralService, private router: Router, private session: SessionService,
               private actRoute: ActivatedRoute, private middleDaon: MiddleDaonService,
               private middleMongo: MiddleMongoService, private spinner: NgxSpinnerService,
               private middleVerifica: MiddleVerificacionService) { }
 
   filtersLoaded: Promise<boolean>;
-  validationResult = 'false';
-  validEmailField = false;
   object: sesionModel;
   correoText = '';
   error = '';
@@ -40,6 +39,7 @@ export class CorreoVerificacionComponent implements OnInit {
 
   async alredySessionExist() {
     this.object = this.session.getObjectSession();
+    console.log("***object***")
     console.log(this.object);
     if (this.object === null || this.object === undefined) {
       this.router.navigate([Rutas.terminos + `/${this.id}`]);
@@ -58,7 +58,7 @@ export class CorreoVerificacionComponent implements OnInit {
     }
   }
  
-  reciveResultFromValidate(event) {
+  /*reciveResultFromValidate(event) {
     this.spinner.show();
     this.validationResult = event;
     if (event === 'OK') {
@@ -71,35 +71,29 @@ export class CorreoVerificacionComponent implements OnInit {
       this.error = 'El codigo es incorrecto';
       this.spinner.hide();
     }
-  }
+  }*/
 
   onSearchChange(searchValue: string): void {
     this.correoText = searchValue;
   }
 
-  changeEmail() {
-    this.validEmailField = false;
-  }
-
-  verifyEmail() {
-      this.validEmailField = true;
-  }
-
   async aceptar() {
     await this.spinner.show();
-    if (this.object['emailVerified'] === false) {
-      this.validEmailField = true;
+    //if (this.object['emailVerified'] === false) {
+      console.log("id >>>" + this.id + " - correoText >>> " + this.correoText + " - " + this.object['emailVerified'])
       await this.middleVerifica.generaCodigoEmail(this.id, this.correoText);
-      this.error = 'Hemos enviado un correo de verificación al correo indicado, favor de ingresarlo';
+      this.serviciogeneralService.setCorreo(this.correoText);
+      //this.error = 'Hemos enviado un correo de verificación al correo indicado, favor de ingresarlo';
+      this.router.navigate([Rutas.correoCode + `${this.id}`]);
       await this.spinner.hide();
-    } else {
-      console.log('no entre');
-      this.verificaCorreo();
-      await this.spinner.hide();
-    }
+    //} else {
+      //console.log('no entre');
+      //this.verificaCorreo();
+      //await this.spinner.hide();
+    //}
   }
 
-  async verificaCorreo() {
+  /*async verificaCorreo() {
     const objetoDaon = await this.middleDaon.createDaonRegister(this.correoText, this.id);
     if (objetoDaon === true) {
       this.object.correo = true;
@@ -110,5 +104,5 @@ export class CorreoVerificacionComponent implements OnInit {
       this.router.navigate([Rutas.error]);
     }
     await this.spinner.hide();
-  }
+  }*/
 }
