@@ -58,6 +58,11 @@ export class PageFaceCaptureComponent implements OnInit {
     this.fc.startCamera(this.videoEl).then((response) => {
       this.onCameraStarted(this.fc, this.videoEl);
     });
+    setTimeout(() => {
+      console.log('sleep');
+      this.tomarSelfie();
+    }, 5000);
+    
   }
 
   async alredySessionExist() {

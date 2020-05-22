@@ -62,7 +62,7 @@ export class CorreoComponent implements OnInit {
     }
   }
 
-   a='';b='';c='';d='';e='';f='';g='';h='';
+   a='';b='';c='';d='';
   onSearchChange1(searchValue: string, index): void {
     
     if(index === 1){
@@ -73,21 +73,10 @@ export class CorreoComponent implements OnInit {
       this.c=searchValue
     }else if(index === 4){
       this.d=searchValue
-    }else if(index === 5){
-      this.e=searchValue
-    }else if(index === 6){
-      this.f=searchValue
-    }else if(index === 7){
-      this.g=searchValue
-    }else if(index === 8){
-      this.h=searchValue
     }
-    
-    this.codigoText = this.a+this.b+this.c+this.d+this.e+this.f+this.g+this.h;
+    this.codigoText = this.a+this.b+this.c+this.d;
     console.log("codigo= " + this.codigoText);
   }
-
-
 
   async validaCodigo() {
     const result = await this.middleVerifica.validaCodigoEmail(this.id, this.codigoText);

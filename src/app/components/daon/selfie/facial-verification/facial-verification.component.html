@@ -1,17 +1,27 @@
-<div data-testid="wrapper" class="_loading_overlay_wrapper css-79elbk">
-    <div class="page-content">
-        <div class="m-20">
-            <header></header>
-            <h1 class="center">Selfie</h1>
-            <!-- <p class="center">Are you happy with the selfie or would you like to retake the photo?</p> -->
-            <div class="panel border-gray bg-row" style="height: 30vh;">
-                <img src="{{'data:image/jpg;base64,' + foto}}" class="{{(isAndroid && isNative) ? 'img-preview rotate-mobile-native':'img-preview flip-x'}}" />
-                <!-- *ngIf="filtersLoaded | async" -->
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col col-md-4">
+        <main role="main" id="adentro" class="flex-shrink-0"> <!-- Esta es la parte que se debe cambiar-->
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="col py-4">
+                <h2 class="text-center">Verifica tu selfie</h2>
+                 <img alt="" class="img-fluid" src="img/8.Verificacion de selfie.png"> 
+                 <p class="px-5"> <img src="{{'data:image/jpg;base64,' + foto}}" class="{{(isAndroid && isNative) ? 'img-preview rotate-mobile-native':'img-preview flip-x'}}" /></p>
+                <form class="form-control-lg">
+                  <p class="my-3">
+                    <button type="button" class="btn btn-lg btn-block btn-outline-danger rounded-lg mr-3 btnUrl"
+                    (click)="back()">Tomar de nuevo</button>
+                  </p>
+                  <p class="my-3">
+                    <button type="button" class="btn btn-lg btn-block btn-danger rounded-lg mr-3 btnUrl"
+                    (click)="guardar()">Usar foto</button>
+                  </p>
+                </form>
+              </div>
             </div>
-            <div class="row row-justify-space">
-                <button class="btn blue" (click)="guardar()">Continuar</button>
-                <button class="btn white" (click)="back()">Tomar de nuevo</button>
-            </div>
-        </div>
+          </div>
+        </main>
+      </div>
     </div>
-</div>
+  </div>

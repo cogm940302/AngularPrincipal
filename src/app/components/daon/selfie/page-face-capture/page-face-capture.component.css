@@ -47,6 +47,7 @@ input[type=file] {
 
 .center {
   text-align: center;
+  color: rgba(255, 250, 240, 1);
 }
 
 .column {
@@ -106,6 +107,7 @@ input[type=file] {
   top: 0;
   bottom: 0;
   display: flex;
+  
 }
 
 .instruction_gif {
@@ -137,8 +139,19 @@ input[type=file] {
   object-fit: cover;
   width: 100%;
   height: 100%;
+  
 }
 
+.page-capture {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  right: 0;
+  background-color: rgba(135, 128, 118, 1);
+}
+
+/*es el contenedor del ovalo de la selfie*/
 .overlay {
   z-index: 10;
   position: absolute;
@@ -146,8 +159,9 @@ input[type=file] {
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(92, 110, 119, 0.6);
+  background-color: rgba(135, 128, 118, 1);
 }
+
 
 .overlay-rect {
   -webkit-mask-size: cover;
@@ -165,8 +179,10 @@ input[type=file] {
 }
 
 .overlay-oval {
-  mask-image: radial-gradient(70% 65% ellipse at 50% 42%, transparent 50%, white 53%);
-  -webkit-mask-image: radial-gradient(70% 65% ellipse at 50% 42%, transparent 50%, white 53%);
+  mask-image: radial-gradient(70% 65% ellipse at 50% 50%,
+   transparent 50%, white 53%);
+  -webkit-mask-image: radial-gradient(75% 70% ellipse at 50% 55%,
+   transparent 50%, white 53%);
   mask-size: cover;
   -webkit-mask-size: cover;
 }
@@ -227,17 +243,6 @@ input[type=file] {
 
 .hiddenEdge {
   overflow: hidden;
-}
-
-
-
-.page-capture {
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  left: 0;
-  right: 0;
-  background-color:gray;
 }
 
 ._loading_overlay_wrapper {
