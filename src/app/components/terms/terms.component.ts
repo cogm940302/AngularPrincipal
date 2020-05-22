@@ -103,16 +103,16 @@ export class TermsComponent implements OnInit {
     this.router.navigate([Rutas.correo + `${this.id}`]);
   }
 
-  open(content, tipo) {
-    console.log(tipo);
-    if (tipo === 'terminos') {
-      this.textoModal = terminosDeUso;
-      this.tituloModal = 'Terminos de Uso';
-    } else {
-      this.textoModal = politicaDePrivacidad;
-      this.tituloModal = 'Politica de Privacidad';
-    }
-    this.modalService.open(content);
-  }
+  // open(content, tipo) {
+  //   console.log(tipo);
+  //   if (tipo === 'terminos') {
+  //     this.textoModal = terminosDeUso;
+  //     this.tituloModal = 'Terminos de Uso';
+  //   } else {
+  //     this.textoModal = politicaDePrivacidad;
+  //     this.tituloModal = 'Politica de Privacidad';
+  //   }
+  //   this.modalService.open(content);
+  // }
 
 }

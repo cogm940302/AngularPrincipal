@@ -135,6 +135,13 @@ export class CaptureDocumentComponent implements OnInit {
     console.log("<<>> " + JSON.stringify(rectCoords) +
     this.serviciogeneralService.getFrontAndBack());
   
+    const queryParams = {
+      upperLeftX: 25,
+      upperLeftY: 100,
+      width: 754,
+      height: 475
+    };
+
     this.dc.captureFrame()
       .then(blob => this.dc.assessQuality(blob, rectCoords,
          (this.serviciogeneralService.getFrontAndBack() === 'front')))

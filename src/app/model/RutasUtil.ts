@@ -15,6 +15,7 @@ export let Rutas = {
   livenessResult: '/services/daon/liveness/result/',
 
   correo: '/services/correo/',
+  correoCode: '/services/correo/code/',
   error: '/services/error',
   fin: '/services/final',
   terminos: '/services/terminos',

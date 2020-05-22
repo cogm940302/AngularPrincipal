@@ -1,7 +1,9 @@
 import { PlantillaComponent } from './components/plantilla.component';
+import { PlantillaSdkDaonComponent } from './components/plantillas/plantilla-sdk-daon/plantilla-sdk-daon.component';
 import { Routes, RouterModule } from '@angular/router';
 import { TermsComponent } from './components/terms/terms.component';
 import { CorreoVerificacionComponent } from './components/correo-verificacion/correo-verificacion.component';
+import { CorreoComponent } from './components/verificacion/correo/correo.component';
 import { FinalComponent } from './components/final/final.component';
 
 import { VerifyIdentityComponent } from './components/daon/document-verification/verify-identity/verify-identity.component';
@@ -26,26 +28,33 @@ const APP_ROUTES: Routes = [
   },
   {
       path: 'services',
+    
+    children: [{path: 'daon/selfie/:id', component: PageFaceCaptureComponent},
+    {path: 'daon/document/capture/:id', component: CaptureDocumentComponent},]
+  },
+  {
+      path: 'services',
       component: PlantillaComponent,
       children: [
           {path: 'daon/instruction/:id', component: InstruccionesComponent},
-          {path: 'daon/selfie/:id', component: PageFaceCaptureComponent},
+          
           {path: 'daon/selfie/verification/:id', component: FacialVerificationComponent},
           {path: 'daon/document/identity/:id', component: VerifyIdentityComponent},
           {path: 'daon/document/instruction/:id', component: CaptureInstructionComponent},
-          {path: 'daon/document/capture/:id', component: CaptureDocumentComponent},
+          
           {path: 'daon/document/confirm/:id', component: ConfirmDocumentComponent},
           {path: 'daon/liveness/instruction/:id', component: LivenessInstructionComponent},
           {path: 'daon/document/ocr/:id', component: ValidaOcrComponent},
           {path: 'daon/liveness/capture/:id', component: LivenessCaptureComponent},
           {path: 'daon/liveness/result/:id', component: LivenessResultComponent},
-
           {path: 'correo/:id', component: CorreoVerificacionComponent},
+          {path: 'correo/code/:id', component: CorreoComponent},
           {path: 'terminos/:id', component: TermsComponent},
           {path: 'error', component: ErrorComponent},
           {path: 'final', component: FinalComponent},
           {path: '**', component: ErrorComponent}
-      ]
+      ],
+      
   },
 ];
 

@@ -1,4 +1,98 @@
+html,body {
+    height: 100%;
+}
+
+/*sdk-daon*/
+body {
+    margin: 0;
+    padding: 0;
+    background-color: gray;
+    font-family: 'Raleway';
+}
+/*sdk-daon*/
+
+/* Fuentes*/
+body {
+    font-family: 'Raleway', sans-serif;
+}
+
+/* Cambio algunos colores*/
+.footer {
+    background-color: #f5f5f5;
+}
+
+/*sdk-daon*/
+@media (min-aspect-ratio: 3/4) {
+    .ui-canvas-container {
+        height: 100%;
+        width: calc(100vh*3.1/4);
+        margin: 0 auto;
+    }
+    /*footer {
+        width: calc(95vh*3/4);
+        margin: 0 auto;
+    }*/
+}
+
+/*footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+}*/
+/*sdk-daon*/
+
+.h1,.h2,.h3,.h4,.h5,.h6,h1,h2,h3,h4,h5,h6 {
+    margin-bottom: .5rem;
+    font-weight: 700;
+    line-height: 1.2
+}
+
+.text-1 {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: #747474;
+    line-height: 1
+}
+
+.text-2 {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #747474;
+    line-height: 1
+}
+
+.texto-3 {
+    font-size: .9em;
+    color: #000000;
+}
+
+.border {
+    border-width: 3px !important;
+}
+
+.rounded {
+    border-radius: 1rem!important;
+}
+
+.shadow {
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .5)!important;
+}
+
+.img-inverted {
+    filter: invert(100%);
+    -webkit-filter: invert(100%);
+}
+
+.bg-light {
+    background-color: #D0D0D0 !important;
+}
+
+
 /* You can add global styles to this file, and also import other style files */
+
+/*sdk-daon*/
 
 #root {
     height: 100%;
@@ -7,13 +101,6 @@
 .container {
     font-family: 'Raleway';
     font-size: '18px'
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    background-color: gray;
-    font-family: 'Raleway';
 }
 
 input[type=file] {
@@ -26,6 +113,7 @@ input[type=file] {
     justify-content: space-between;
     height: 100%;
     margin: 0 auto;
+    
 }
 
 @media only screen and (min-width: 600px) {
@@ -42,6 +130,7 @@ input[type=file] {
     margin: 20px;
 }
 
+/*
 .row {
     display: flex;
     flex-direction: row;
@@ -59,7 +148,8 @@ input[type=file] {
 
 .row-justify-space button {
     width: 48%;
-}
+}*/
+
 
 .column {
     flex-flow: row wrap;
@@ -69,88 +159,8 @@ input[type=file] {
     flex-basis: 100%;
 }
 
-.row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    /* min-height: 71px; */
-}
-
-.row-justify-center {
-    justify-content: center;
-}
-
-p {
-    color: rgb(121, 140, 149);
-    font-size: 18px;
-    line-height: 20px;
-}
-
-
-/* header {
-min-height: 36px;
-} */
-
-@media (min-aspect-ratio: 3/4) {
-    .ui-canvas-container {
-        height: 100%;
-        width: calc(100vh*3/4);
-        margin: 0 auto;
-    }
-    footer {
-        width: calc(95vh*3/4);
-        margin: 0 auto;
-    }
-}
-
-
-/*Botones*/
-
-.btn {
-    height: 44px;
-    width: 100%;
-    border-radius: 3px;
-    -webkit-appearance: none;
-    -moz-box-shadow: inset 0 1px 0 1px rgba(255, 255, 255, 0.1), 0 1px 0 0 rgba(54, 64, 69, 0.1);
-    -webkit-box-shadow: inset 0 1px 0 1px rgba(255, 255, 255, 0.1), 0 1px 0 0 rgba(54, 64, 69, 0.1);
-    box-shadow: inset 0 1px 0 1px rgba(255, 255, 255, 0.1), 0 1px 0 0 rgba(54, 64, 69, 0.1);
-    font-size: 14px;
-    font-weight: bold;
-    line-height: 16px;
-    text-align: center;
-    margin-top: 24px;
-    color: white;
-}
-
-.btn.blue {
-    border: 1px solid rgb(0, 151, 221);
-    background-color: rgb(0, 164, 245);
-}
-
-.btn.green {
-    border: 1px solid rgb(13, 128, 70);
-    background-color: rgb(74, 179, 54);
-}
-
-.btn.white {
-    border: 1px solid rgb(187, 197, 201);
-    background: linear-gradient(180deg, rgb(255, 255, 255) 0%, rgb(248, 249, 249) 100%);
-    color: rgb(56, 64, 72);
-    box-shadow: 0 1px 0 0 rgba(54, 64, 69, 0.05);
-}
-
-.btn.gray {
-    border: 0;
-    background-color: #ececec;
-    color: #c6c4c4;
-}
-
-
-/*Panel*/
-
 .panel {
     display: flex;
-    /* border: 1px solid;	 */
     border-radius: 5px;
     align-items: center;
     height: auto;
@@ -159,30 +169,6 @@ min-height: 36px;
 
 .panel p {
     margin-right: 15px;
-}
-
-.border-green {
-    border: solid 1px rgb(191, 230, 184);
-}
-
-.border-gray {
-    border: solid 1px rgb(220, 225, 227);
-}
-
-.bg-gray {
-    background-color: rgb(248, 249, 249);
-}
-
-.bg-green {
-    background-color: #E8F2E6;
-}
-
-.bg-blue {
-    background-color: #E3F5FD;
-}
-
-.bg-red {
-    background-color: #FFECE6;
 }
 
 .flip-x {
@@ -196,18 +182,20 @@ min-height: 36px;
     left: 0;
     bottom: 0;
     right: 0;
-    background-color: rgba(92, 110, 119, 0.6);
+    background-color: rgba(135, 128, 118, 1);
     ;
 }
 
 .overlay-rect {
     -webkit-mask-size: cover;
     mask-size: cover;
+    background-color: rgba(135, 128, 118, 1);
 }
 
 .overlay-rect-id {
     mask-image: url(overlay-id-sm.png);
     -webkit-mask-image: url(overlay-id-sm.png);
+    
 }
 
 .overlay-rect-passport {
@@ -237,14 +225,11 @@ min-height: 36px;
     position: fixed;
 }
 
-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 15px;
-}
-
 .scale-edge {
     transform: scale(-2, 2.4) !important;
 }
+
+/*sdk-daon*/
+
+
+

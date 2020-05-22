@@ -1,5 +1,44 @@
 <div *ngIf="filtersLoaded | async" class="container">
     <div class="row justify-content-center">
+        <div class="errorMensaje" *ngIf="errorMensaje && errorMensaje.length > 0">
+            {{errorMensaje}}
+        </div>
+        <div class="col col-md-4">
+            <main role="main" id="adentro" class="flex-shrink-0">
+                <!-- Esta es la parte que se debe cambiar-->
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col py-4">
+                            <h2 class="text-center">Tomate una selfie</h2>
+                            <p class="px-5"> <img alt="" class="img-fluid" src="../../../../../assets/img/Daon/5.Toma de selfie.png"> </p>
+
+                            <ul class="fa-ul text-2">
+                                <li class="mb-4"><span class="fa-li"><i class="far fa-check-circle text-success fa-lg"></i></span> Asegúrate de estar en un área bien iluminada.</li>
+                                <li class="mb-4"><span class="fa-li"><i class="far fa-check-circle text-success fa-lg"></i></span> Estár en un fondo liso.</li>
+                                <li class="mb-4"><span class="fa-li"><i class="far fa-check-circle text-success fa-lg"></i></span> No tener gorras, lentes o algo que pueda ocultar tu rostro.</li>
+                                <li class="mb-4"><span class="fa-li"><i class="far fa-check-circle text-success fa-lg"></i></span> Manten una expresión seria.</li>
+                            </ul>
+
+                            <form class="form-control-lg">
+                                <p class="my-3">
+                                    <button type="button" class="btn btn-lg btn-block btn-danger rounded-lg mr-3 btnUrl" (click)="continuar()" id="validarBoton">Continuar</button>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <!-- Esta es la parte que se debe cambiar-->
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--
+<div *ngIf="filtersLoaded | async" class="container">
+    <div class="row justify-content-center">
         <header class="header mt-2">
             <img alt="daon_image" class="daon-image" src="../../../../../assets/daon/mitLogo.png" />
         </header>
@@ -40,4 +79,4 @@
             <button class="btn btn-primary" (click)="continuar()" id="validarBoton">Continuar</button>
         </div>
     </div>
-</div>
+</div> -->

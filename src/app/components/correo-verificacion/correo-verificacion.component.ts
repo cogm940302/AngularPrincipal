@@ -8,22 +8,26 @@ import { MiddleMongoService } from '../../services/http/middle-mongo.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from '../../../environments/environment';
 import { FP } from '@fp-pro/client';
+import { MiddleVerificacionService } from '../../services/http/middle-verificacion.service';
+import { ServicesGeneralService } from '../../services/general/services-general.service';
 
 @Component({
   selector: 'app-correo-verificacion',
   templateUrl: './correo-verificacion.component.html',
-  styleUrls: ['./correo-verificacion.component.css']
+/*  styleUrls: ['./correo-verificacion.component.css']*/
 })
 export class CorreoVerificacionComponent implements OnInit {
 
-  constructor(private router: Router, private session: SessionService,
+  constructor(public serviciogeneralService: ServicesGeneralService, private router: Router, private session: SessionService,
               private actRoute: ActivatedRoute, private middleDaon: MiddleDaonService,
-              private middleMongo: MiddleMongoService, private spinner: NgxSpinnerService) { }
+              private middleMongo: MiddleMongoService, private spinner: NgxSpinnerService,
+              private middleVerifica: MiddleVerificacionService) { }
 
   filtersLoaded: Promise<boolean>;
-  correoText = '';
-  id: any;
   object: sesionModel;
+  correoText = '';
+  error = '';
+  id: any;
 
   async ngOnInit() {
     await this.spinner.show();
@@ -39,6 +43,7 @@ export class CorreoVerificacionComponent implements OnInit {
 
   async alredySessionExist() {
     this.object = this.session.getObjectSession();
+    console.log("***object***")
     console.log(this.object);
     if (this.object === null || this.object === undefined) {
       this.router.navigate([Rutas.terminos + `/${this.id}`]);
@@ -56,22 +61,17 @@ export class CorreoVerificacionComponent implements OnInit {
       }
     }
   }
-
+ 
   onSearchChange(searchValue: string): void {
     this.correoText = searchValue;
   }
 
-  async validaCorreo() {
+  async aceptar() {
     await this.spinner.show();
-    const objetoDaon = await this.middleDaon.createDaonRegister(this.correoText, this.id);
-    if (objetoDaon === true) {
-      this.object.correo = true;
-      this.session.updateModel(this.object);
-      await this.middleDaon.updateDaonDataUser(this.object, this.id);
-      this.router.navigate([Rutas.instrucciones + `${this.id}`]);
-    } else {
-      this.router.navigate([Rutas.error]);
-    }
-    await this.spinner.hide();
+      console.log("id >>>" + this.id + " - correoText >>> " + this.correoText + " - " + this.object['emailVerified'])
+      await this.middleVerifica.generaCodigoEmail(this.id, this.correoText);
+      this.serviciogeneralService.setCorreo(this.correoText);
+      this.router.navigate([Rutas.correoCode + `${this.id}`]);
+      await this.spinner.hide();
   }
 }
