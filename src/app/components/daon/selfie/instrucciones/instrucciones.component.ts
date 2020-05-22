@@ -36,6 +36,7 @@ export class InstruccionesComponent implements OnInit {
 
   async alredySessionExist() {
     const object = this.session.getObjectSession();
+    const objectSecureToken = this.session.getSecureTouchToken();
     console.log(object);
     if (object === null || object === undefined) {
       this.router.navigate([Rutas.terminos + `/${this.id}`]);
