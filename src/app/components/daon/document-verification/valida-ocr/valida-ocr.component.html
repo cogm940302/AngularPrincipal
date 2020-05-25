@@ -1,25 +1,49 @@
-<div class="title mt-4">
-    <h2>Ayudanos a validar tu información</h2>
-</div>
-<div class="container body-content">
-    <div class="row algunBorder">
-        <div class="col-md-2 offset-2 col-7" style="font-weight: bold;">Nombre</div>
-        <div class="col-md-6 col-12">{{nombre}}</div>
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col col-md-4">
+        <main role="main" id="adentro" class="flex-shrink-0">
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="col py-4">
+                <h2 class="text-center">
+                  Valida tu información</h2>
+                  
+                  <p class="text-2 text-center">
+                      Esta información la extrajimos
+  de tu identificación, sino es
+  correcta vuelve a subir una imagen.
+                  </p>
+                  
+                  <form>
+                  <div class="form-group">
+                      <label>Nombre</label>
+                    <input [readonly]="true"  type="text" class="form-control form-control-lg" value="{{nombre}}">
+                    <small class="form-text text-muted"></small>
+                  </div>
+                      
+                      <div class="form-group">
+                      <label>Dirección</label>
+                    <input [readonly]="true" type="text" class="form-control form-control-lg" value="{{direccion}}">
+                    <small class="form-text text-muted"></small>
+                  </div>
+                      
+                      <div class="form-group">
+                      <label>CURP</label>
+                    <input [readonly]="true" type="text" class="form-control form-control-lg" value="{{curp}}">
+                    <small class="form-text text-muted"></small>
+                  </div>
+                  </form>   
+                      <p class="my-3">
+                    <button (click)="updateValuesSession()" type ="button" class="btn btn-lg btn-block btn-danger mr-3 btnUrl" >Continuar</button>
+                  </p>
+                  <p class="my-3">
+                    <button (click)="backAndTakeAgain()"  type ="button" class="btn btn-lg btn-block btn-outline-danger mr-3 btnUrl">Intentar de nuevo</button>
+                  </p>
+                
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
-    <div *ngIf="direccion" class="row algunBorder">
-        <div class="col-md-2 offset-2 col-7" style="font-weight: bold;">Dirección</div>
-        <div class="col-md-6 col-12">{{direccion}}</div>
-    </div>
-    <div *ngIf="curp" class="row algunBorder">
-        <div class="col-md-2 offset-2 col-7" style="font-weight: bold;">CURP</div>
-        <div class="col-md-6 col-12">{{curp}}</div>
-    </div>
-    <!-- <div *ngIf="!nombre" class="error">Ocurrio un error, favor de recargar presionando el boton</div>
-    <div *ngIf="!nombre" class="row">
-        <button (click)="getDataOcrConsume()">Recargar</button>
-    </div> -->
-    <div class="row justify-content-md-around mt-5">
-        <button class="col-12 col-md-4 btn-secondary" (click)="backAndTakeAgain()">Volver a tomar</button>
-        <button class="col-12 col-md-4 btn-primary" (click)="updateValuesSession()">Continuar</button>
-    </div>
-</div>
+  </div>

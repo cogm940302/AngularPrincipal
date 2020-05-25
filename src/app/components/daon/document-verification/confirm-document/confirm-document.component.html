@@ -1,21 +1,29 @@
-<div class="text-center  border">
-    <div class="ui-canvas-container embed-responsive-item text-center">
-        <div class="m-5">
-            <h1>Imagen Capturada</h1>
-        </div>
-        <div class="m-2 pb-4">
-            <h4>
-                <!-- <p class="font-weight-light text-secondary">Are you happy with the image or would you like to retake the photo?</p> -->
-            </h4>
-        </div>
-        <div class="m-4   bg-light text-center">
-            <div class="m-4  text-center">
-                <img src="{{img}}"  width="60%" height="60%" />
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col col-md-4">
+        <main role="main" id="adentro" class="flex-shrink-0"> <!-- Esta es la parte que se debe cambiar-->
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="col py-4">
+                <h2 class="text-center">Verifica tu identificación</h2>
+                  <p class="p-2 border border-danger text-center"> 
+                      <img alt="" class="img-fluid" src="{{img}}">
+                    </p>
+                  <p class="text-2 text-center">
+                      {{titulo}}
+                  </p>    
+                  <p class="my-3">
+                    <button (click)="back()" type ="button" class="btn btn-lg btn-block btn-outline-danger mr-3 btnUrl"><i class="fas fa-camera"></i> Intentar de nuevo</button>
+                  </p>
+                  <p class="my-3">
+                    <button (click)="continue()" type ="button" class="btn btn-lg btn-block btn-danger mr-3 btnUrl">Usar ésta foto</button>
+                  </p>
+              </div>
             </div>
-        </div>
-        <div class="m-4 card-body text-center">
-            <button type="button" class="btn btn-primary border m-4" (click)="continue()">Continuar</button>
-            <button type="button" class="btn btn-light  border m-4" (click)="back()">Tomar de nuevo</button>
-        </div>
+          </div>
+        </main>
+        <!-- Esta es la parte que se debe cambiar--> 
+      </div>
     </div>
-</div>
+  </div>
+  

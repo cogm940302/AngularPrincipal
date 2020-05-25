@@ -7,6 +7,7 @@ import { Rutas } from 'src/app/model/RutasUtil';
 @Component({
   selector: 'app-verify-identity',
   templateUrl: './verify-identity.component.html',
+  styleUrls: ['./verify-identity.component.css']
 })
 export class VerifyIdentityComponent implements OnInit {
 
@@ -17,7 +18,7 @@ export class VerifyIdentityComponent implements OnInit {
   typeIdentity: string;
   error: string;
   id: string;
-
+  
   ngOnInit() {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
@@ -45,14 +46,20 @@ export class VerifyIdentityComponent implements OnInit {
       }
     }
   }
-
-  agregarOferta(ti) {
-    this.typeIdentity = ti;
-    console.log('ti= ' + this.typeIdentity );
-    this.servicesGeneralService.settI(this.typeIdentity);
-    this.servicesGeneralService.setFrontAndBack('front');
-    sessionStorage.removeItem('errorDocument');
-    this.router.navigate([Rutas.documentInstruction + `${this.id}`]);
+    ti="";
+    sentTi(ti_){
+      this.ti=ti_;
+    }
+    sendDoc() {
+    if(this.ti!==""){
+      this.typeIdentity = this.ti;
+      console.log('ti= ' + this.typeIdentity );
+      this.servicesGeneralService.settI(this.typeIdentity);
+      this.servicesGeneralService.setFrontAndBack('front');
+      sessionStorage.removeItem('errorDocument');
+      this.router.navigate([Rutas.documentInstruction + `${this.id}`]);
+    }
+    
   }
 
 }

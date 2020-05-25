@@ -16,30 +16,37 @@ export class CaptureInstructionComponent implements OnInit {
 
   constructor(public router: Router, public serviciogeneralService: ServicesGeneralService, private actRoute: ActivatedRoute,
               private session: SessionService, private spinner: NgxSpinnerService, private errorSelfieService: ErrorSelfieService) {
-    if (serviciogeneralService.gettI() !== undefined && serviciogeneralService.getFrontAndBack() !== undefined) {
+    if (serviciogeneralService.gettI() !== undefined &&
+     serviciogeneralService.getFrontAndBack() !== undefined) {
+
       sessionStorage.setItem('ti', serviciogeneralService.gettI());
       sessionStorage.setItem('fb', serviciogeneralService.getFrontAndBack());
-      this.titulo = serviciogeneralService.gettI() + ' lado de la foto ' + serviciogeneralService.getFrontAndBack();
-      if (serviciogeneralService.getFrontAndBack() === 'front') {
+      
+      if (serviciogeneralService.getFrontAndBack() === 'front') { 
+        this.titulo = 'Identificación de frente';
         if (serviciogeneralService.gettI() === 'ID_CARD') {
-        this.idcard = 'id-card-front';
+        this.idcard = 'id-card-front sv';
         } else {
         this.idcard = 'passport';
-        }
+        } 
       } else {
+        this.titulo = 'Identificación de posterior';
         this.idcard = 'id-card-back';
       }
-    } else if (sessionStorage.getItem('ti') === undefined || sessionStorage.getItem('fb') === undefined) {
+    } else if (sessionStorage.getItem('ti') === undefined ||
+     sessionStorage.getItem('fb') === undefined) {
       this.router.navigate(['']);
     } else {
-      this.titulo = sessionStorage.getItem('ti') + ' 2photo page ' + sessionStorage.getItem('fb');
+      
       if (sessionStorage.getItem('fb') === 'front') {
+        this.titulo = 'Identificación de frente';
         if (sessionStorage.getItem('ti') === 'ID_CARD') {
-        this.idcard = 'id-card-front';
+        this.idcard = 'id-card-front ss';
         } else {
          this.idcard = 'passport';
         }
       } else {
+        this.titulo = 'Identificación de posterior';
         this.idcard = 'id-card-back';
       }
     }
@@ -106,6 +113,7 @@ export class CaptureInstructionComponent implements OnInit {
     this.dc.assessQuality(file)
     .then( async response => {
       if (response.result === 'FAIL') {
+        this.titulo="Error en el documento";
         this.mensaje = response.feedback;
         console.log(this.mensaje);
         console.log('no pasa');
@@ -116,12 +124,15 @@ export class CaptureInstructionComponent implements OnInit {
         this.img = 'data:image/jpeg;base64,' + response.responseBase64Image;
         this.serviciogeneralService.setImg64(this.img);
         this.serviciogeneralService.setIsUpload(true);
+        
         await this.spinner.hide();
         this.router.navigate([Rutas.documentConfirm + `${this.id}`]);
       }
     })
     .catch( async err => {
       console.log('err= ' + err);
+      this.titulo="Error en el documento";
+      this.mensaje="Imagen no permitida";
       await this.spinner.hide();
     });
   }
