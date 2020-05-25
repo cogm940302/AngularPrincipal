@@ -37,6 +37,7 @@
                             "src/assets/js/SecureOnBoarding.js",
                             "src/assets/js/SecuredTouch.js"
                             
+                            
                         ]
                     },
                     "configurations": {

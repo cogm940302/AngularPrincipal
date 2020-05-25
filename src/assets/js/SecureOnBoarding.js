@@ -1,4 +1,5 @@
 
+    console.log("JS SecureOnBoarding");
     var idSessionStorage = sessionStorage.getItem('currentSessionDaon');
     var environmentToken = sessionStorage.getItem('environment');
     console.log("js_token_" +environmentToken);
@@ -29,6 +30,8 @@
             
             //document.write('<script id="cc091bb3a3e3bef61d49e360dcfdbc84" src="https://static.securedtouch.com/sdk/st-ping-1.1.0p.js"></script>');
         }
+    }else{
+        console.log("no entro al if");
     }
 
     

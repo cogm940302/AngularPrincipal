@@ -11,6 +11,11 @@ import { sesionModel } from 'src/app/model/sesion/SessionPojo';
 })
 export class FinalComponent implements OnInit {
 
+  title = "¡Listo!";      
+  imgUrl="../../../../../assets/img/final/22.Final.png";
+  instruction="¡Gracias por verificar tu identidad!";
+  btnText = "Finalizar";
+
   constructor(private router: Router, private sesion: SessionService, private session: SessionService) { }
 
   object: sesionModel;
@@ -18,6 +23,11 @@ export class FinalComponent implements OnInit {
 
   ngOnInit() {
     this.getDataToRedirect();
+
+    $("#finalizarBtn").click(function(){
+      console.log('click on btn finalizar');
+      
+    });
   }
 
   getDataToRedirect() {
@@ -25,9 +35,6 @@ export class FinalComponent implements OnInit {
     if ( this.object !== undefined && this.object !== null && this.object.callback) {
       const returnUrl = this.object.callback;
       sessionStorage.clear();
-      setTimeout( () => {
-        window.location.href = returnUrl;
-      }, 5000 );
     }
   }
 }

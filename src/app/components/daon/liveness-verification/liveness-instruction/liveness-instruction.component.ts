@@ -13,6 +13,13 @@ import { FP } from '@fp-pro/client';
 })
 export class LivenessInstructionComponent implements OnInit {
 
+  title = "Prueba de vida";      
+  imgUrl="../../../../../assets/img/Daon/19.Prueba_de_vida.png";
+  instruction="A continuación se te tomará un video.";
+  stepOne="Aségurate de estar en un área bien iluminada."; 
+  stepTwo="Sigue las instrucciones de la pantalla.";  
+  btnTitle = "Iniciar grabación";
+
   constructor(public router: Router, private session: SessionService, private actRoute: ActivatedRoute,
               private errorVidaService: ErrorVidaService) { }
 
