@@ -1,0 +1,10 @@
+/* Red */
+.danger {
+    border-color: gray;
+    color: gray
+  }
+
+  .btn:focus, .btn:active:focus {
+    outline: 0 none;
+    border-color: red;
+}

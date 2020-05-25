@@ -1,10 +1,15 @@
-<div class="page-capture">
-    <div class=" {{isEdge ? 'ui-canvas-container hiddenEdge':'ui-canvas-container'}}">
-        <video class="{{this.isMobileBool ? 'ui-canvas' : isEdge ? 'ui-canvas scale-edge' : 'ui-canvas'}}" autoplay="" playsinline="" ng-style="{this.isMobileBool ? 'display: inherit;' :  'display: inherit; transform: scaleX(-1);'}"></video>
-        <div class="overlay overlay-rect overlay-rect-id"></div>
-    </div>
-    <footer>
-        <div class="message-box box-shadow ">{{mensaje}}</div>
-        <button class="btn blue" (click)="enter()">Captura documento</button>
-    </footer>
-</div>
+    <div class="page-capture ">                        
+        <div class=" {{isEdge ? 'ui-canvas-container hiddenEdge':'ui-canvas-container'}}">            
+            <video class="{{this.isMobileBool ? 'ui-canvas' : isEdge ? 'ui-canvas scale-edge' : 'ui-canvas'}}" autoplay="" playsinline="" ng-style="{this.isMobileBool ? 'display: inherit;' :  'display: inherit; transform: scaleX(-1);'}"></video>
+            <div class="overlay overlay-rect overlay-rect-id"></div>            
+        </div>
+        <div class="fq">
+            <h3 class="center">{{mensaje}}</h3>
+            <p class="center">
+                <button (click)="enter()" type ="button" class="btn btn-lg btn-danger"><i class="fas fa-camera"></i> Tomar foto</button>
+            </p>
+        </div>
+    </div>  
+                   
+
+                    

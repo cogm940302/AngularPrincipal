@@ -1,38 +1,30 @@
-<div *ngIf="filtersLoaded | async" class="text-center">
-    <div class="m-5">
-        <h1>Verificación de Identidad</h1>
-    </div>
-    <div class="m-2 pb-4">
-        <h4>
-            <p class="font-weight-light text-secondary">Selecciona el tipo de documento a validar</p>
-        </h4>
-    </div>
-    <div class="error">{{error}}</div>
-    <div class="m-4 card  bg-light" (click)="agregarOferta('PASSPORT')">
-        <div class="m-1 row">
-            <div class="m-4 card">
-                <img src="../../../../../assets/icons/world-wide-web.png" alt="">
-            </div>
-            <div>
-                <h3>Pasaporte</h3>
-                <h4>
-                    <p class="font-weight-light text-secondary">Fotografía frontal</p>
-                </h4>
-            </div>
-        </div>
-    </div>
 
-    <div class="m-4 card  bg-light" (click)="agregarOferta('ID_CARD')">
-        <div class="m-1 row">
-            <div class="m-4 card">
-                <img src="../../../../../assets/icons/world-wide-web.png" alt="">
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col col-md-4">
+        <main role="main" id="adentro" class="flex-shrink-0"> 
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="col py-4">
+                <h2 class="text-center">Identificación oficial</h2>
+                  <p class="text-2 text-center">
+                      Elige que identificación nos proporcionaras
+                  </p>    
+                  <div class="error">{{error}}</div>
+                  <p class="my-3">
+                    <button (click)="sentTi('ID_CARD')" type ="button"  class="text-left btn btn-lg btn-block btn-outline-secondary mr-3" ><i class="fas fa-address-card"></i> Credencial de elector</button>
+                  </p>
+                  <!--<p class="my-3">
+                    <button (click)="sentTi('PASSPORT')" type ="button" class="text-left btn btn-lg btn-block btn-outline-secondary mr-3" ><i class="fas fa-passport"></i> Pasaporte</button>
+                  </p>-->
+                  <p class="my-3">
+                    <button (click)="sendDoc()" type ="button" class="btn btn-lg btn-block btn-danger mr-3 btnUrl" data-url="identificacionFrente.html">Continuar</button>
+                  </p>
+                
+              </div>
             </div>
-            <div>
-                <h3>INE</h3>
-                <h4>
-                    <p class="font-weight-light text-secondary">Frente y Reverso</p>
-                </h4>
-            </div>
-        </div>
+          </div>
+        </main>
+      </div>
     </div>
-</div>
+  </div>
