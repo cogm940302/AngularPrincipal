@@ -35,7 +35,8 @@
                             "src/assets/js/Daon.FaceCapture.min.js",
                             "src/assets/js/Daon.FaceLiveness3D.min.js",
                             "src/assets/js/SecureOnBoarding.js",
-                            "src/assets/js/SecuredTouch.js"
+                            "src/assets/js/SecuredTouch.js",
+                            "src/assets/js/person.js"
                             
                             
                         ]

@@ -1,0 +1,47 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="errorMensaje" *ngIf="errorMensaje && errorMensaje.length > 0">
+            {{errorMensaje}}
+        </div>
+        <div class="col col-md-4">
+            <main role="main" id="adentro" class="flex-shrink-0">
+                <!-- Esta es la parte que se debe cambiar-->
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                      <div class="col py-4 text-center">
+                        <h2>{{title}}</h2>
+                        <!--poner dos columnas -->
+                        <div class="row">
+                          <div class="col-6">
+                            <p class="text-2" id="titleFisica">Persona <br> fisica</p>
+                            <div class="border border-secondary rounded bg-white shadow p-4" id="borderFisica"> <img alt="" class="img-fluid" [src]="imgUrlPersonaFisica" id="imgFisica"> </div>
+                            <p class="texto-3 my-3">{{btnTitlePersonaFisica}}</p>
+                            <a href="#" data-persona ="fisica" class="eligePersona stretched-link"></a> </div>
+                          <div class="col-6">
+                            <p class="text-2" id="titleMoral">{{labelPersonaMoral}}</p>
+                            <div class="border border-secondary rounded bg-white shadow p-4" id="borderMoral"> <img alt="" class="img-fluid" [src]="imgUrlPersonaMoral" id="imgMoral"> </div>
+                            <p class="texto-3 my-3">{{btnTitlePersonaMoral}}</p>
+                            <a href="#" data-persona ="moral" class="stretched-link eligePersona"></a> </div>
+                        </div>
+                        <form>
+                          <div class="form-group">
+                            <input type="text" placeholder="Ingresa tu RFC" id="rfc" class="form-control form-control-lg">
+                            <small class="form-text text-muted"></small> </div>
+                            
+                            <div class="form-group" id="controlMoral">
+                            <input type="text" placeholder="Razón Social" id="razonSocial" class="form-control form-control-lg">
+                            <small iclass="form-text text-muted">(Ej. Mi Negocio, S.A. de C.V.</small> </div>
+                            
+                            
+                          <p class="my-3">
+                            <button id="btnContinuarPerson" type ="button" class="btn btn-lg btn-block btn-danger mr-3 btnUrl">{{btnContinuar}}</button>
+                          </p>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+            </main>
+            <!-- Esta es la parte que se debe cambiar-->
+        </div>
+    </div>
+</div>

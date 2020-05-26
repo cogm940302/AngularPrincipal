@@ -51,7 +51,7 @@ export class LivenessInstructionComponent implements OnInit {
         this.router.navigate([Rutas.error]);
         return false;
       } else if (object.daon.pruebaVida) {
-        this.router.navigate([Rutas.fin]);
+        this.router.navigate([Rutas.cuentaClabe]);
         return false;
       } else {
         return true;

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ModalModule} from 'ng2-modal';
 import { HttpClientModule } from '@angular/common/http';
-
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { PlantillaComponent } from './components/plantilla.component';
 import { APP_ROUTING } from './app.routes';
@@ -31,6 +31,7 @@ import { FooterComponent } from './components/compartidos/footer/footer.componen
 import { HeaderComponent } from './components/compartidos/header/header.component';
 import { PlantillaSdkDaonComponent } from './components/plantillas/plantilla-sdk-daon/plantilla-sdk-daon.component';
 import { CuentaClabeComponent } from './components/verificacion/cuenta-clabe/cuenta-clabe.component';
+import { PersonComponent } from './components/person/person.component';
 // import {  NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // import {  NgbModal } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
 
@@ -58,13 +59,15 @@ import { CuentaClabeComponent } from './components/verificacion/cuenta-clabe/cue
     HeaderComponent,
     PlantillaSdkDaonComponent,
     CuentaClabeComponent,
-
+    PersonComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule,
     APP_ROUTING,
     ModalModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgbModule,
     HttpClientModule,
     NgxSpinnerModule,

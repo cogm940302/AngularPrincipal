@@ -6,6 +6,7 @@ import { CorreoVerificacionComponent } from './components/correo-verificacion/co
 import { CorreoComponent } from './components/verificacion/correo/correo.component';
 import { FinalComponent } from './components/final/final.component';
 import { CuentaClabeComponent } from './components/verificacion/cuenta-clabe/cuenta-clabe.component';
+import { PersonComponent } from './components/person/person.component';
 import { VerifyIdentityComponent } from './components/daon/document-verification/verify-identity/verify-identity.component';
 import { CaptureInstructionComponent } from './components/daon/document-verification/capture-instruction/capture-instruction.component';
 import { CaptureDocumentComponent } from './components/daon/document-verification/capture-document/capture-document.component';
@@ -52,6 +53,7 @@ const APP_ROUTES: Routes = [
           {path: 'correo/:id', component: CorreoVerificacionComponent},
           {path: 'correo/code/:id', component: CorreoComponent},
           {path: 'terminos/:id', component: TermsComponent},
+          {path: 'person/:id', component: PersonComponent},
           {path: 'error', component: ErrorComponent},
           {path: 'final', component: FinalComponent},
           {path: '**', component: ErrorComponent}
