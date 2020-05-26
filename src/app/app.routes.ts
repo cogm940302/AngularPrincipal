@@ -5,7 +5,7 @@ import { TermsComponent } from './components/terms/terms.component';
 import { CorreoVerificacionComponent } from './components/correo-verificacion/correo-verificacion.component';
 import { CorreoComponent } from './components/verificacion/correo/correo.component';
 import { FinalComponent } from './components/final/final.component';
-
+import { CuentaClabeComponent } from './components/verificacion/cuenta-clabe/cuenta-clabe.component';
 import { VerifyIdentityComponent } from './components/daon/document-verification/verify-identity/verify-identity.component';
 import { CaptureInstructionComponent } from './components/daon/document-verification/capture-instruction/capture-instruction.component';
 import { CaptureDocumentComponent } from './components/daon/document-verification/capture-document/capture-document.component';
@@ -29,24 +29,26 @@ const APP_ROUTES: Routes = [
   {
       path: 'services',
     
-    children: [{path: 'daon/selfie/:id', component: PageFaceCaptureComponent},
-    {path: 'daon/document/capture/:id', component: CaptureDocumentComponent},]
+    children: [
+        {path: 'daon/selfie/:id', component: PageFaceCaptureComponent},
+        {path: 'daon/document/capture/:id', component: CaptureDocumentComponent},
+        {path: 'daon/liveness/capture/:id', component: LivenessCaptureComponent},
+    ]
   },
   {
       path: 'services',
       component: PlantillaComponent,
       children: [
           {path: 'daon/instruction/:id', component: InstruccionesComponent},
-          
           {path: 'daon/selfie/verification/:id', component: FacialVerificationComponent},
           {path: 'daon/document/identity/:id', component: VerifyIdentityComponent},
           {path: 'daon/document/instruction/:id', component: CaptureInstructionComponent},
-          
           {path: 'daon/document/confirm/:id', component: ConfirmDocumentComponent},
           {path: 'daon/liveness/instruction/:id', component: LivenessInstructionComponent},
           {path: 'daon/document/ocr/:id', component: ValidaOcrComponent},
-          {path: 'daon/liveness/capture/:id', component: LivenessCaptureComponent},
+          
           {path: 'daon/liveness/result/:id', component: LivenessResultComponent},
+          {path: 'cuenta-clabe/:id', component: CuentaClabeComponent},
           {path: 'correo/:id', component: CorreoVerificacionComponent},
           {path: 'correo/code/:id', component: CorreoComponent},
           {path: 'terminos/:id', component: TermsComponent},

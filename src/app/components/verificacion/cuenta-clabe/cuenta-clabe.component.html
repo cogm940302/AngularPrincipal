@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="row justify-content-center">
+      <div class="col col-md-4">
+        <main role="main" id="adentro" class="flex-shrink-0"> <!-- Esta es la parte que se debe cambiar-->
+          <div class="container-fluid">
+            <div class="row justify-content-center">
+              <div class="col py-4">
+                <h2 class="text-center">
+                  Cuenta CLABE</h2>                  
+                  <p class="text-2 text-center">
+                    Proporcionanos la cuenta CLABE donde te depositaremos el dinero de tus ventas.
+                </p>
+                  <form>
+                  <div class="form-group">
+                    <input type="text" class="form-control form-control-lg" placeholder="CLABE de 18 dígitos" maxlength="18" #cuentaClabe>
+                    <small class="form-text text-muted"></small>
+                  </div>
+                  </form>
+                      <p class="my-3">
+                    <button (click)="continuar()" type ="button" class="btn btn-lg btn-block btn-danger mr-3 btnUrl" data-url="listo.html">Continuar</button>
+                  </p>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
