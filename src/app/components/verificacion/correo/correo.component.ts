@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, Inject, ElementRef, ViewChild } from '@angular/core';
 import { MiddleVerificacionService } from 'src/app/services/http/middle-verificacion.service';
 import { MiddleDaonService } from 'src/app/services/http/middle-daon.service';
 import { sesionModel } from '../../../model/sesion/SessionPojo';
@@ -15,16 +15,22 @@ import { ServicesGeneralService } from '../../../services/general/services-gener
 })
 export class CorreoComponent implements OnInit {
 
-  constructor(public serviciogeneralService: ServicesGeneralService, private actRoute: ActivatedRoute, private spinner: NgxSpinnerService, private router: Router, private middleVerifica: MiddleVerificacionService, private middleDaon: MiddleDaonService,
-    private session: SessionService) {
-      
+  constructor(public serviciogeneralService: ServicesGeneralService,
+              private actRoute: ActivatedRoute, private spinner: NgxSpinnerService,
+              private router: Router, private middleVerifica: MiddleVerificacionService, private middleDaon: MiddleDaonService,
+              private session: SessionService) {
      }
 
   filtersLoaded: Promise<boolean>;
   codigoText = '';
   error = '';
   id: any;
-  object: sesionModel; 
+  object: sesionModel;
+  a = ''; b = ''; c = ''; d = '';
+  @ViewChild('box2', { read: false, static: false }) box2: ElementRef;
+  @ViewChild('box3', { read: false, static: false }) box3: ElementRef;
+  @ViewChild('box4', { read: false, static: false }) box4: ElementRef;
+  @ViewChild('validarBoton', { read: false, static: false }) validarBoton: ElementRef;
 
   async ngOnInit() {
     await this.spinner.show();
@@ -43,7 +49,7 @@ export class CorreoComponent implements OnInit {
 
   async alredySessionExist() {
     this.object = this.session.getObjectSession();
-    console.log("***object***")
+    console.log('***object***');
     console.log(this.object);
     if (this.object === null || this.object === undefined) {
       this.router.navigate([Rutas.terminos + `/${this.id}`]);
@@ -61,35 +67,36 @@ export class CorreoComponent implements OnInit {
       }
     }
   }
-
-   a='';b='';c='';d='';
   onSearchChange1(searchValue: string, index): void {
-    
-    if(index === 1){
-      this.a=searchValue
-    }else if(index === 2){
-      this.b=searchValue
-    }else if(index === 3){
-      this.c=searchValue
-    }else if(index === 4){
-      this.d=searchValue
+    if (index === 1) {
+      this.a = searchValue;
+      this.box2.nativeElement.focus();
+    } else if (index === 2) {
+      this.b = searchValue;
+      this.box3.nativeElement.focus();
+    } else if (index === 3) {
+      this.c = searchValue;
+      this.box4.nativeElement.focus();
+    } else if (index === 4) {
+      this.d = searchValue;
+      this.validarBoton.nativeElement.focus();
+      // document.getElementById('validarBoton').focus();
     }
-    this.codigoText = this.a+this.b+this.c+this.d;
-    console.log("codigo= " + this.codigoText);
+    this.codigoText = this.a + this.b + this.c + this.d;
+    console.log('codigo= ' + this.codigoText);
   }
 
   async validaCodigo() {
     const result = await this.middleVerifica.validaCodigoEmail(this.id, this.codigoText);
-    console.log("result= " + result + " - " + this.id +" - " + this.codigoText)
+    console.log('result= ' + result + ' - ' + this.id + ' - ' + this.codigoText);
     if (result === 200) {
     this.verificaCorreo();
     } else {
       this.error = 'El codigo es incorrecto';
-      
     }
   }
   async verificaCorreo() {
-    console.log("cr = " + this.serviciogeneralService.getCorreo());
+    console.log('cr = ' + this.serviciogeneralService.getCorreo());
     const objetoDaon = await this.middleDaon.createDaonRegister(this.serviciogeneralService.getCorreo(), this.id);
     if (objetoDaon === true) {
       this.object.correo = true;

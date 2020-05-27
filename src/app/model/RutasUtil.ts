@@ -14,6 +14,8 @@ export let Rutas = {
   livenessCapture: '/services/daon/liveness/capture/',
   livenessResult: '/services/daon/liveness/result/',
 
+  cuentaClabe: '/services/cuenta-clabe/',
+
   correo: '/services/correo/',
   correoCode: '/services/correo/code/',
   error: '/services/error',

@@ -35,7 +35,7 @@ export class LivenessInstructionComponent implements OnInit {
       this.id = params['id'];
     });
     const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
-    fp.send({linkedId: this.id});
+    fp.send({tag: {tag:this.id}});
     if (!(await this.alredySessionExist())) { return; }
     this.filtersLoaded = Promise.resolve(true);
   }
@@ -51,7 +51,7 @@ export class LivenessInstructionComponent implements OnInit {
         this.router.navigate([Rutas.error]);
         return false;
       } else if (object.daon.pruebaVida) {
-        this.router.navigate([Rutas.fin]);
+        this.router.navigate([Rutas.cuentaClabe]);
         return false;
       } else {
         return true;
