@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Rutas } from 'src/app/model/RutasUtil.js';
 import { Router, ActivatedRoute, NavigationEnd, RouterModule } from '@angular/router';
-import { SessionService } from 'src/app/services/session/session.service';
+import { SessionService } from '../../services/session/session.service';
+import { MiddleDaonService } from 'src/app/services/http/middle-daon.service';
+import { sesionModel } from '../../model/sesion/SessionPojo';
+import { MiddleMongoService } from '../../services/http/middle-mongo.service';
 import { environment } from '../../../environments/environment';
 import { FP } from '@fp-pro/client';
 import { ɵAnimationGroupPlayer } from '@angular/animations';
@@ -24,11 +27,13 @@ export class PersonComponent implements OnInit {
   btnTitleContinuar = "Continuar";
   
 
-  constructor(public router: Router, private session: SessionService, private actRoute: ActivatedRoute) { }
+  constructor(public router: Router, private session: SessionService, private actRoute: ActivatedRoute, private middleDaon: MiddleDaonService,
+                      private middleMongo: MiddleMongoService,) { }
 
   filtersLoaded: Promise<boolean>;
   errorMensaje: string;
   id: string;
+  rfcModel: string;
   
   async ngOnInit() {
       // patron del RFC, persona moral
@@ -37,18 +42,10 @@ export class PersonComponent implements OnInit {
       
       var tipoPersona: String;
       var validateRFC: boolean;
+      this.actRoute.params.subscribe(params => {
+        this.id = params['id'];
+      });
       
-      
-      var _rfc_pattern_pm = "^(([A-ZÑ&]{3})([0-9]{2})([0][13578]|[1][02])(([0][1-9]|[12][\\d])|[3][01])([A-Z0-9]{3}))|" +
-      "(([A-ZÑ&]{3})([0-9]{2})([0][13456789]|[1][012])(([0][1-9]|[12][\\d])|[3][0])([A-Z0-9]{3}))|" +
-      "(([A-ZÑ&]{3})([02468][048]|[13579][26])[0][2]([0][1-9]|[12][\\d])([A-Z0-9]{3}))|" +
-      "(([A-ZÑ&]{3})([0-9]{2})[0][2]([0][1-9]|[1][0-9]|[2][0-8])([A-Z0-9]{3}))$";
-
-      // patron del RFC, persona fisica
-      var _rfc_pattern_pf = "^(([A-ZÑ&]{4})([0-9]{2})([0][13578]|[1][02])(([0][1-9]|[12][\\d])|[3][01])([A-Z0-9]{3}))|" +
-                      "(([A-ZÑ&]{4})([0-9]{2})([0][13456789]|[1][012])(([0][1-9]|[12][\\d])|[3][0])([A-Z0-9]{3}))|" +
-                      "(([A-ZÑ&]{4})([02468][048]|[13579][26])[0][2]([0][1-9]|[12][\\d])([A-Z0-9]{3}))|" +
-                      "(([A-ZÑ&]{4})([0-9]{2})[0][2]([0][1-9]|[1][0-9]|[2][0-8])([A-Z0-9]{3}))$";
 
     $('.eligePersona').on('click',function(event){
         //evitamos el comportamiento para los href
@@ -84,51 +81,26 @@ export class PersonComponent implements OnInit {
            
         
     });
-
-    $('#btnContinuarPerson').click(function(){
-      var inputRFC = String($('#rfc').val())
-
-      
-      if(tipoPersona == "fisica"){
-        console.log(tipoPersona);
-        if (inputRFC.match(_rfc_pattern_pf)){
-          console.log("La estructura de la clave de RFC es valida");
-          
-          validateRFC = true;
-          return true;
-        }else {
-          document.getElementById("errorMessageRFC").style.display = "block";
-          validateRFC = false;
-            return false;
-        }
-      }
-      else if(tipoPersona == "moral"){
-        console.log(tipoPersona);
-        if (inputRFC.match(_rfc_pattern_pm)){
-          console.log("La estructura de la clave de RFC es valida");
-          
-          
-          validateRFC = true
-          return true;
-      }else {
-        document.getElementById("errorMessageRFC").style.display = "block";
-          
-          validateRFC = false;
-          return false;
-      }
-      }else{
-        console.log("debes seleccionar");
-      }
-
-     });
-
     
 
   }
 
-    validaRFC(patter:string, inputRFC:string){
+    validaRFC(inputRFC:string){
+       // patron del RFC, persona moral
+      var _rfc_pattern_pm = "^(([A-ZÑ&]{3})([0-9]{2})([0][13578]|[1][02])(([0][1-9]|[12][\\d])|[3][01])([A-Z0-9]{3}))|" +
+      "(([A-ZÑ&]{3})([0-9]{2})([0][13456789]|[1][012])(([0][1-9]|[12][\\d])|[3][0])([A-Z0-9]{3}))|" +
+      "(([A-ZÑ&]{3})([02468][048]|[13579][26])[0][2]([0][1-9]|[12][\\d])([A-Z0-9]{3}))|" +
+      "(([A-ZÑ&]{3})([0-9]{2})[0][2]([0][1-9]|[1][0-9]|[2][0-8])([A-Z0-9]{3}))$";
+
+      // patron del RFC, persona fisica
+      var _rfc_pattern_pf = "^(([A-ZÑ&]{4})([0-9]{2})([0][13578]|[1][02])(([0][1-9]|[12][\\d])|[3][01])([A-Z0-9]{3}))|" +
+                      "(([A-ZÑ&]{4})([0-9]{2})([0][13456789]|[1][012])(([0][1-9]|[12][\\d])|[3][0])([A-Z0-9]{3}))|" +
+                      "(([A-ZÑ&]{4})([02468][048]|[13579][26])[0][2]([0][1-9]|[12][\\d])([A-Z0-9]{3}))|" +
+                      "(([A-ZÑ&]{4})([0-9]{2})[0][2]([0][1-9]|[1][0-9]|[2][0-8])([A-Z0-9]{3}))$";
+        
         var rfc = inputRFC
-        if (rfc.match(patter)){
+
+        if (rfc.match(_rfc_pattern_pm)){
                 alert("La estructura de la clave de RFC es valida");
                 return true;
             }else {
@@ -139,8 +111,54 @@ export class PersonComponent implements OnInit {
 
   
 
-  enter() {
-    this.router.navigate([Rutas.correo + `${this.id}`]);
+    async enter() {
+      var _rfc_pattern_pm = "^(([A-ZÑ&]{3})([0-9]{2})([0][13578]|[1][02])(([0][1-9]|[12][\\d])|[3][01])([A-Z0-9]{3}))|" +
+      "(([A-ZÑ&]{3})([0-9]{2})([0][13456789]|[1][012])(([0][1-9]|[12][\\d])|[3][0])([A-Z0-9]{3}))|" +
+      "(([A-ZÑ&]{3})([02468][048]|[13579][26])[0][2]([0][1-9]|[12][\\d])([A-Z0-9]{3}))|" +
+      "(([A-ZÑ&]{3})([0-9]{2})[0][2]([0][1-9]|[1][0-9]|[2][0-8])([A-Z0-9]{3}))$";
+
+      // patron del RFC, persona fisica
+      var _rfc_pattern_pf = "^(([A-ZÑ&]{4})([0-9]{2})([0][13578]|[1][02])(([0][1-9]|[12][\\d])|[3][01])([A-Z0-9]{3}))|" +
+                      "(([A-ZÑ&]{4})([0-9]{2})([0][13456789]|[1][012])(([0][1-9]|[12][\\d])|[3][0])([A-Z0-9]{3}))|" +
+                      "(([A-ZÑ&]{4})([02468][048]|[13579][26])[0][2]([0][1-9]|[12][\\d])([A-Z0-9]{3}))|" +
+                      "(([A-ZÑ&]{4})([0-9]{2})[0][2]([0][1-9]|[1][0-9]|[2][0-8])([A-Z0-9]{3}))$";
+      
+      var inputRFC = this.rfcModel
+      var tipoPersona = $('.eligePersona').attr("data-persona");
+
+      console.log(inputRFC);
+      console.log(tipoPersona);
+
+      if(tipoPersona == "fisica"){
+        console.log(tipoPersona);
+        if (inputRFC.match(_rfc_pattern_pf)){
+          console.log("La estructura de la clave de RFC es valida");
+          document.getElementById("errorMessageRFC").style.display = "none";
+          this.router.navigate([Rutas.correo + `${this.id}`]);
+          return true;
+        }else {
+          console.log("La estructura de la clave de RFC fisica es INVALIDA");
+          document.getElementById("errorMessageRFC").style.display = "block";
+            return false;
+        }
+      }
+      else if(tipoPersona == "moral"){
+        console.log(tipoPersona);
+        if (inputRFC.match(_rfc_pattern_pm)){
+          console.log("La estructura de la clave de RFC moral es valida");
+          document.getElementById("errorMessageRFC").style.display = "none";
+          this.router.navigate([Rutas.correo + `${this.id}`]);
+      }else {
+        console.log("La estructura de la clave de RFC moral es INVALIDA");
+        document.getElementById("errorMessageRFC").style.display = "block";
+          return false;
+      }
+      }else{
+        console.log("debes seleccionar un tipo de persona");
+      }
+
+   // await this.middleDaon.updateDataUser(datos, this.id);
+    //this.router.navigate([Rutas.correo + `${this.id}`]);
   }
   
 

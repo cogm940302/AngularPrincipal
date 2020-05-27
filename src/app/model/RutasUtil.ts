@@ -21,4 +21,5 @@ export let Rutas = {
   error: '/services/error',
   fin: '/services/final',
   terminos: '/services/terminos',
+  person: '/services/person/',
 };

@@ -25,7 +25,7 @@
                         </div>
                         <form>
                           <div class="form-group">
-                            <input type="text" placeholder="Ingresa tu RFC" id="rfc" class="form-control form-control-lg">
+                            <input type="text" placeholder="Ingresa tu RFC" id="rfc" class="form-control form-control-lg" [(ngModel)]="rfcModel" [ngModelOptions]="{standalone: true}">
                             <small class="form-text text-muted" id="errorMessageRFC">Ingrese un RFC valido</small> 
                           </div>
                             
@@ -35,7 +35,7 @@
                             
                             
                           <p class="my-3">
-                            <button id="btnContinuarPerson" type ="button" class="btn btn-lg btn-block btn-danger mr-3 btnUrl">{{btnTitleContinuar}}</button>
+                            <button id="btnContinuarPerson" type ="button" (click)="enter()"  class="btn btn-lg btn-block btn-danger mr-3 btnUrl">{{btnTitleContinuar}}</button>
                           </p>
                         </form>
                       </div>
