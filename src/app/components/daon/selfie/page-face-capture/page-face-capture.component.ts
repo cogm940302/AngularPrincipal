@@ -48,7 +48,7 @@ export class PageFaceCaptureComponent implements OnInit {
     });
     FP.load({client: environment.fingerJsToken, region: 'us'})
       .then(fp =>{
-        fp.send({linkedId: this.id});
+        fp.send({tag: {tag:this.id}});
       });
 
     if (!(await this.alredySessionExist())) { return; }

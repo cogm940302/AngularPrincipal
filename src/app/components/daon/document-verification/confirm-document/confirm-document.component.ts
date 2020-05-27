@@ -31,13 +31,13 @@ export class ConfirmDocumentComponent implements OnInit {
   checkIdsGetSend: any;
   id: string;
   img: any;
-  titulo='';
+  titulo = '';
   async ngOnInit() {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
     const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
-    fp.send({linkedId: this.id});
+    fp.send({tag: {tag:this.id}});
     if (!(await this.alredySessionExist())) { return; }
     this.documentoSend = new DocumentoSend();
     this.clientCapture = new ClientCapture();
