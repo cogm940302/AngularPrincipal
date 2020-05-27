@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Rutas } from 'src/app/model/RutasUtil.js';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd, RouterModule } from '@angular/router';
 import { SessionService } from 'src/app/services/session/session.service';
 import { environment } from '../../../environments/environment';
 import { FP } from '@fp-pro/client';
+import { ɵAnimationGroupPlayer } from '@angular/animations';
 
 @Component({
   selector: 'app-person',
@@ -21,7 +22,7 @@ export class PersonComponent implements OnInit {
   btnTitlePersonaFisica = "Solicitaremos tu información personal";
   btnTitlePersonaMoral = "Solicitaremos la información del representante legal";
   btnTitleContinuar = "Continuar";
-
+  
 
   constructor(public router: Router, private session: SessionService, private actRoute: ActivatedRoute) { }
 
@@ -31,7 +32,13 @@ export class PersonComponent implements OnInit {
   
   async ngOnInit() {
       // patron del RFC, persona moral
+      document.getElementById("errorMessageRFC").style.display = "none";
+      document.getElementById("razonSocial").style.display = "none";
+      
       var tipoPersona: String;
+      var validateRFC: boolean;
+      
+      
       var _rfc_pattern_pm = "^(([A-ZÑ&]{3})([0-9]{2})([0][13578]|[1][02])(([0][1-9]|[12][\\d])|[3][01])([A-Z0-9]{3}))|" +
       "(([A-ZÑ&]{3})([0-9]{2})([0][13456789]|[1][012])(([0][1-9]|[12][\\d])|[3][0])([A-Z0-9]{3}))|" +
       "(([A-ZÑ&]{3})([02468][048]|[13579][26])[0][2]([0][1-9]|[12][\\d])([A-Z0-9]{3}))|" +
@@ -58,7 +65,7 @@ export class PersonComponent implements OnInit {
             
             $('#titleFisica').addClass('text-danger');
             $('#borderFisica').removeClass('border-secondary bg-white').addClass('border-danger bg-light');
-            
+            document.getElementById("razonSocial").style.display = "none";
             //Mostramos los campos
             
            } 
@@ -69,7 +76,7 @@ export class PersonComponent implements OnInit {
             
             $('#titleMoral').addClass('text-danger');
             $('#borderMoral').removeClass('border-secondary bg-white').addClass('border-danger bg-light');
-            
+            document.getElementById("razonSocial").style.display = "block";
             //Mostramos los campos
 
            };
@@ -83,20 +90,30 @@ export class PersonComponent implements OnInit {
 
       
       if(tipoPersona == "fisica"){
+        console.log(tipoPersona);
         if (inputRFC.match(_rfc_pattern_pf)){
           console.log("La estructura de la clave de RFC es valida");
+          
+          validateRFC = true;
           return true;
         }else {
-            console.log("error")
+          document.getElementById("errorMessageRFC").style.display = "block";
+          validateRFC = false;
             return false;
         }
       }
       else if(tipoPersona == "moral"){
+        console.log(tipoPersona);
         if (inputRFC.match(_rfc_pattern_pm)){
           console.log("La estructura de la clave de RFC es valida");
+          
+          
+          validateRFC = true
           return true;
       }else {
-          console.log("error")
+        document.getElementById("errorMessageRFC").style.display = "block";
+          
+          validateRFC = false;
           return false;
       }
       }else{
@@ -105,8 +122,7 @@ export class PersonComponent implements OnInit {
 
      });
 
-    //var inputRFC = $("#rfc").val();
-    //this.getValues(inputRFC);
+    
 
   }
 
@@ -124,7 +140,8 @@ export class PersonComponent implements OnInit {
   
 
   enter() {
-    //this.router.navigate([Rutas.livenessCapture + `${this.id}`]);
+    this.router.navigate([Rutas.correo + `${this.id}`]);
   }
+  
 
 }
