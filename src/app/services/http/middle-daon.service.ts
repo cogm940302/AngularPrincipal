@@ -15,7 +15,16 @@ export class MiddleDaonService {
 
   headers = new HttpHeaders({ 'Content-Type': 'application/json', Accept: 'q=0.8;application/json;q=0.9' });
 
-
+  async updateDataUser(datos: sesionModel, id: string) {
+    console.log('lo que voy actulizar es: ');
+    console.log(datos);
+    let mongoUpdate;
+    mongoUpdate = this.http.put(LigaUtil.urlMiddleMongo() + `/${id}`, datos, { headers: this.headers });
+    await mongoUpdate.toPromise().then(data => {
+      console.log(data);
+      mongoUpdate = data;
+    });
+  }
   async updateDaonDataUser(datos: sesionModel, id: string) {
     console.log('lo que voy actulizar es: ');
     console.log(datos.daon);

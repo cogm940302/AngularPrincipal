@@ -65,11 +65,23 @@ export class CuentaClabeComponent implements OnInit {
 
   continuar(){
     console.log(">>> : " + this.f.cuentaClabe.value);    
+    const object = this.session.getObjectSession();
+    object.daon.pruebaVida = true;
+    //object.estatus = 'Terminado';
+    /*this.session.updateModel(object);
+    await this.middleDaon.updateDaonDataUser(object, this.id);
+    await this.middleDaon.getResults(this.id);
+    this.fc.stopCamera();
+    this.f3d.terminate();
+    console.log('ya termine' + JSON.stringify(object, null, 2));
+    this.router.navigate([Rutas.cuentaClabe+ `/${this.id}`]);
+*/
   }
+
+
 
   CLABE_LENGTH = 18;
   CLABE_WEIGHTS = [3, 7, 1, 3, 7, 1, 3, 7, 1, 3, 7, 1, 3, 7, 1, 3, 7];
-
   getDc(clabe){
     const clabeList = clabe.split("");
     const clabeInt = clabeList.map((i) => Number(i));
@@ -105,6 +117,4 @@ export class CuentaClabeComponent implements OnInit {
     }
     };
   }
-
-
 }
