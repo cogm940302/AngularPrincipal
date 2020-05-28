@@ -3,6 +3,7 @@ import { SessionService } from 'src/app/services/session/session.service.js';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Rutas } from 'src/app/model/RutasUtil.js';
 import { FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms';
+import { MiddleMongoService } from '../../../services/http/middle-mongo.service';
 @Component({
   selector: 'app-cuenta-clabe',
   templateUrl: './cuenta-clabe.component.html',
@@ -13,7 +14,7 @@ export class CuentaClabeComponent implements OnInit {
 
   id: string;
   constructor(private session: SessionService, public router: Router,
-    private actRoute: ActivatedRoute) {}
+    private actRoute: ActivatedRoute, private middle: MiddleMongoService) {}
     
     myForm:any;
     isOK=false;
@@ -34,7 +35,7 @@ export class CuentaClabeComponent implements OnInit {
 
   async alredySessionExist() {
     const object = this.session.getObjectSession();
-    console.log(object);
+    console.log("sessionCC= " ,object);
     if (object === null || object === undefined) {
       this.router.navigate([Rutas.terminos + `/${this.id}`]);
       return false;
@@ -42,7 +43,7 @@ export class CuentaClabeComponent implements OnInit {
       if (object._id !== this.id) {
         this.router.navigate([Rutas.error]);
         return false;
-      } else if (object.daon.cuentaClabe) {
+      } else if (object.cuentaClabe) {
         this.router.navigate([Rutas.fin]);
         return false;
       } else {
@@ -53,7 +54,7 @@ export class CuentaClabeComponent implements OnInit {
  
   onSubmit() {
     this.submitted = true;
-    if (this.myForm.invalid) {
+    if (this.myForm.invalid) { 
         return;
     }
   }
@@ -63,23 +64,26 @@ export class CuentaClabeComponent implements OnInit {
       this.myForm.reset();
   }
 
-  continuar(){
-    console.log(">>> : " + this.f.cuentaClabe.value);    
-    const object = this.session.getObjectSession();
-    object.daon.pruebaVida = true;
-    //object.estatus = 'Terminado';
-    /*this.session.updateModel(object);
-    await this.middleDaon.updateDaonDataUser(object, this.id);
-    await this.middleDaon.getResults(this.id);
-    this.fc.stopCamera();
-    this.f3d.terminate();
-    console.log('ya termine' + JSON.stringify(object, null, 2));
-    this.router.navigate([Rutas.cuentaClabe+ `/${this.id}`]);
-*/
+  async continuar(){
+    if(this.myForm.valid){
+      console.log(">>> : " + this.f.cuentaClabe.value); 
+      const object = this.session.getObjectSession();
+      object.cuentaClabe = this.f.cuentaClabe.value;
+      object.estatus = 'Terminado';
+      this.session.updateModel(object);
+      await this.middle.updateDataUser({cuentaClabe:this.f.cuentaClabe.value}, this.id);
+      console.log('ya termine con la CC' + JSON.stringify(object, null, 2));
+      this.router.navigate([Rutas.fin]);   
+    }else{
+      console.log("no");
+    }
+   
+   /* const datosDelCliente = await this.middle.getDataUser(this.id);
+    console.log("datos actuales del usuario" + JSON.stringify(datosDelCliente));
+  */
+ 
   }
-
-
-
+  
   CLABE_LENGTH = 18;
   CLABE_WEIGHTS = [3, 7, 1, 3, 7, 1, 3, 7, 1, 3, 7, 1, 3, 7, 1, 3, 7];
   getDc(clabe){

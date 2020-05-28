@@ -83,6 +83,7 @@ export class ValidaOcrComponent implements OnInit {
     const object = this.session.getObjectSession();
     object.daon.identity = true;
     this.session.updateModel(object);
+    console.log("Antes== " , object);
     await this.middleDaon.updateDaonDataUser(object, this.id);
     this.router.navigate([Rutas.livenessInstruction + `/${this.id}`]);
     await this.spinner.hide();
