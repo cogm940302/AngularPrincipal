@@ -15,4 +15,5 @@ export class sesionModel {
   terminos: boolean;
   score: any = null;
   cuentaClabe: boolean;
+  telefono: boolean;
 }

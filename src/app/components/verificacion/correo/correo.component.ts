@@ -60,7 +60,7 @@ export class CorreoComponent implements OnInit {
         return false;
       } else if (this.object.correo !== null && this.object.correo !== undefined && this.object.correo) {
         console.log('voy a instrucciones');
-        this.router.navigate([Rutas.instrucciones + `${this.id}`]);
+        this.router.navigate([Rutas.telefono + `${this.id}`]);
         return false;
       } else {
         return true;
@@ -102,7 +102,7 @@ export class CorreoComponent implements OnInit {
       this.object.correo = true;
       this.session.updateModel(this.object);
       await this.middleDaon.updateDaonDataUser(this.object, this.id);
-      this.router.navigate([Rutas.instrucciones + `${this.id}`]);
+      this.router.navigate([Rutas.telefono + `${this.id}`]);
     } else {
       this.router.navigate([Rutas.error]);
     }

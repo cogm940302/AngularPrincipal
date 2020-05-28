@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col col-md-4">
+            <main role="main" id="adentro" class="flex-shrink-0">
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col py-4 text-center">
+                            <h2>Teléfono móvil</h2>
+                            <p class="px-5">
+                                <img alt="" class="img-fluid" src="../../../../../assets/img/Daon/3.1.Requerimos_correo.png">
+                            </p>
+                            <p class="text-2 tex-muted">
+                                ingresa tu celular
+                            </p>
+                            <form>
+                                <div class="form-group">
+                                    <input type="tel" placeholder="Número de teléfono" class="form-control form-control-lg"  type="text" id="telefonoInput" [(ngModel)]="telefonoModel" [ngModelOptions]="{standalone: true}">
+                                    <small class="form-text text-muted" id="errorMessageTel">Ingrese un telefono valido</small> 
+                                </div>
+                                <p class="my-3">
+                                    <button type="button"  class="btn btn-lg btn-block btn-danger rounded-lg mr-3 btnUrl" (click)="aceptar()" id="validarBoton">Enviar teléfono</button>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </main>      
+        </div>
+    </div>
+</div>

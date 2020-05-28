@@ -87,7 +87,7 @@ export class TermsComponent implements OnInit {
     }
     if (this.datosDelCliente.terminos) {
       this.session.updateModel(this.datosDelCliente);
-      this.router.navigate([Rutas.correo + `${this.id}`]);
+      this.router.navigate([Rutas.person + `${this.id}`]);
       return true;
     }
     return false;

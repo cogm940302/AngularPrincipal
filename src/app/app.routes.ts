@@ -6,6 +6,7 @@ import { CorreoVerificacionComponent } from './components/correo-verificacion/co
 import { CorreoComponent } from './components/verificacion/correo/correo.component';
 import { FinalComponent } from './components/final/final.component';
 import { CuentaClabeComponent } from './components/verificacion/cuenta-clabe/cuenta-clabe.component';
+import { CellPhoneComponent } from './components/cell-phone/cell-phone.component';
 import { PersonComponent } from './components/person/person.component';
 import { VerifyIdentityComponent } from './components/daon/document-verification/verify-identity/verify-identity.component';
 import { CaptureInstructionComponent } from './components/daon/document-verification/capture-instruction/capture-instruction.component';
@@ -47,9 +48,9 @@ const APP_ROUTES: Routes = [
           {path: 'daon/document/confirm/:id', component: ConfirmDocumentComponent},
           {path: 'daon/liveness/instruction/:id', component: LivenessInstructionComponent},
           {path: 'daon/document/ocr/:id', component: ValidaOcrComponent},
-          
           {path: 'daon/liveness/result/:id', component: LivenessResultComponent},
           {path: 'cuenta-clabe/:id', component: CuentaClabeComponent},
+          {path: 'cell-phone/:id', component: CellPhoneComponent},
           {path: 'correo/:id', component: CorreoVerificacionComponent},
           {path: 'correo/code/:id', component: CorreoComponent},
           {path: 'terminos/:id', component: TermsComponent},
