@@ -9,3 +9,7 @@
 .border {
     border-width: 3px !important;
 }
+
+#errorMessageRFC{
+    color:red !important;
+}
