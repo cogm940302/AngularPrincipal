@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Rutas } from 'src/app/model/RutasUtil.js';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Router, ActivatedRoute, NavigationEnd, RouterModule } from '@angular/router';
 import { SessionService } from '../../services/session/session.service';
 import { MiddleDaonService } from 'src/app/services/http/middle-daon.service';
@@ -29,7 +30,7 @@ export class PersonComponent implements OnInit {
   btnTitleContinuar = "Continuar";
   
 
-  constructor(public router: Router, private session: SessionService, private actRoute: ActivatedRoute, private middleDaon: MiddleDaonService,
+  constructor(private spinner: NgxSpinnerService, public router: Router, private session: SessionService, private actRoute: ActivatedRoute, private middleDaon: MiddleDaonService,
                       private middleMongo: MiddleMongoService,) { }
 
   filtersLoaded: Promise<boolean>;
@@ -40,7 +41,7 @@ export class PersonComponent implements OnInit {
   valorPersonaModel: string;
   
   async ngOnInit() {
-      
+      await this.spinner.show();
       document.getElementById("errorMessageRFC").style.display = "none";
       document.getElementById("razonSocial").style.display = "none";
       
@@ -51,7 +52,7 @@ export class PersonComponent implements OnInit {
       });
 
       if (!(await this.alredySessionExist())) { return; }
-      
+      await this.spinner.hide();
 
     $('.eligePersona').on('click',function(event){
         //evitamos el comportamiento para los href
@@ -69,6 +70,7 @@ export class PersonComponent implements OnInit {
             $('#titleFisica').addClass('text-danger');
             $('#borderFisica').removeClass('border-secondary bg-white').addClass('border-danger bg-light');
             document.getElementById("razonSocial").style.display = "none";
+            document.getElementById("errorMessageTipoPersona").style.display = "none";
             //Mostramos los campos
             $("#valorTipoPersona").val("fisica");
            } 
@@ -80,6 +82,7 @@ export class PersonComponent implements OnInit {
             $('#titleMoral').addClass('text-danger');
             $('#borderMoral').removeClass('border-secondary bg-white').addClass('border-danger bg-light');
             document.getElementById("razonSocial").style.display = "block";
+            document.getElementById("errorMessageTipoPersona").style.display = "none";
             //Mostramos los campos
             $("#valorTipoPersona").val("moral");
            };
@@ -132,12 +135,14 @@ export class PersonComponent implements OnInit {
         if (inputRFC.match(_rfc_pattern_pf)){
           console.log("La estructura de la clave de RFC es valida");
           document.getElementById("errorMessageRFC").style.display = "none";
+          document.getElementById("errorMessageTipoPersona").style.display = "none";
           this.saveDataPerson(person);
 
           return true;
         }else {
           console.log("La estructura de la clave de RFC fisica es INVALIDA");
           document.getElementById("errorMessageRFC").style.display = "block";
+
             return false;
         }
       }
@@ -147,6 +152,7 @@ export class PersonComponent implements OnInit {
           
           console.log("La estructura de la clave de RFC moral es valida");
           document.getElementById("errorMessageRFC").style.display = "none";
+          document.getElementById("errorMessageTipoPersona").style.display = "none";
           this.saveDataPerson(person);
 
       }else {
@@ -155,15 +161,18 @@ export class PersonComponent implements OnInit {
           return false;
       }
       }else{
+        document.getElementById("errorMessageTipoPersona").style.display = "block";
         console.log("debes seleccionar un tipo de persona");
       }
   }
 
   async saveDataPerson(typePerson:string){
     if (typePerson == "fisica"){
+      await this.spinner.show();
       const objectPer = {datosFiscales: {rfc: this.rfcModel, tipoPersona: typePerson}};
       await this.middleMongo.updateDataUser(objectPer, this.id);
       console.log('ya termine con los datos fiscales' + JSON.stringify(objectPer, null, 2));
+      await this.spinner.hide();
       this.router.navigate([Rutas.telefono + `${this.id}`]);
 
     }else if(typePerson == "moral"){
@@ -178,7 +187,9 @@ export class PersonComponent implements OnInit {
   }
 
   async aceptar(){
+    await this.spinner.show();
     this.router.navigate([Rutas.telefono + `${this.id}`]);
+    await this.spinner.hide();
   }
 
   async cerrarModal(){

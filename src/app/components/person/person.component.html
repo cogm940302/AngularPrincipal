@@ -14,6 +14,9 @@
                             <p class="texto-3 my-3">{{btnTitlePersonaMoral}}</p>
                             <a href="#" data-persona ="moral" class="stretched-link eligePersona"></a> </div>
                             <input  type="hidden" id="valorTipoPersona" [(ngModel)]="valorPersonaModel" [ngModelOptions]="{standalone: true}">
+                            <div class="row text-center">
+                            <small class="form-text text-muted" id="errorMessageTipoPersona">Debe seleccionar un tipo de persona</small>
+                          </div>
                         </div>
                         <form>
                           <div class="form-group">
@@ -23,7 +26,7 @@
                             
                             <div class="form-group" id="controlMoral">
                             <input type="text" placeholder="Razón Social" id="razonSocial" class="form-control form-control-lg" [(ngModel)]="razonSocialModel" [ngModelOptions]="{standalone: true}">
-                            <small iclass="form-text text-muted">(Ej. Mi Negocio, S.A. de C.V.</small> </div>
+                            <small class="form-text text-muted">(Ej. Mi Negocio, S.A. de C.V.</small> </div>
                             
                             
                           <p class="my-3">
