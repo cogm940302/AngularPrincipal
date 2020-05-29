@@ -9,7 +9,7 @@
         <div class="input-group-prepend">
           <div class="input-group-text"><i class="fas fa-mobile-alt"></i></div>
         </div>
-            <input formControlName="celular" type="text" class="form-control" placeholder="1234567890" [ngClass]="{ 'is-invalid': submitted && f.celular.errors }" >
+            <input autocomplete="off" formControlName="celular" type="text" class="form-control" placeholder="1234567890" [ngClass]="{ 'is-invalid': submitted && f.celular.errors }" >
             <div *ngIf="submitted && f.celular.errors" class="invalid-feedback">
                 <div *ngIf="f.celular.errors.required">Número celular requerido</div>
                 <div *ngIf="f.celular.errors.pattern">Número de celular requerido</div>
