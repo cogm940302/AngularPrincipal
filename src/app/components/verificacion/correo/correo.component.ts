@@ -27,15 +27,31 @@ export class CorreoComponent implements OnInit {
   id: any;
   object: sesionModel;
   a = ''; b = ''; c = ''; d = '';
+  correo='';
   @ViewChild('box2', { read: false, static: false }) box2: ElementRef;
   @ViewChild('box3', { read: false, static: false }) box3: ElementRef;
   @ViewChild('box4', { read: false, static: false }) box4: ElementRef;
   @ViewChild('validarBoton', { read: false, static: false }) validarBoton: ElementRef;
 
+  hideEmail(textCorreo: string){
+    if(textCorreo){ 
+    let textCorreoList =textCorreo.split('@');
+    var text=textCorreoList[0].split('')[0]+'***'+'@'+textCorreoList[1].split('.')[0].split('')[0]+"***";
+    for(var i = 1; i < textCorreoList[1].split('.').length; i++) {
+      text=text+"."+textCorreoList[1].split('.')[i];
+    }
+    return text;
+    }
+    return'';
+  }
+
   async ngOnInit() {
     //var correoText = $('#emailText').text();
     //var res = correoText.replace(/mail|ook/gi, "****");
     //$('#emailText').text(res);
+    console.log("-"+this.serviciogeneralService.getCorreo()+"-");
+    this.correo = this.hideEmail(this.serviciogeneralService.getCorreo());
+
     await this.spinner.show();
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
