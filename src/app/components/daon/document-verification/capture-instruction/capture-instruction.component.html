@@ -1,16 +1,14 @@
 <div class="container">
-    <div class="row justify-content-center">
-      <div class="col col-md-4">
-        <main role="main" id="adentro" class="flex-shrink-0"> <!-- Esta es la parte que se debe cambiar-->
-          <div class="container-fluid">
-            <div class="row justify-content-center">
-              <div class="col py-4">
-                <h2 class="text-center">{{titulo}}</h2>
+  <div id="contenido" class="container text-center">
+                <h3 class="my-3 ">{{titulo}}</h3>
 
                 <div *ngIf="(this.mensaje=='' || this.mensaje==undefined) ;
                  then thenOK else elseErr"></div>
                 <ng-template #thenOK>
-                  <p class="px-5"> <img alt="" class="img-fluid" src="../../../../../assets/img/daon/11.id de frente.png"> </p>
+                 
+                  <div class="row">
+                    <div class="col-6 mx-auto my-3"> <img alt="" class="img-fluid" src="../../../../../assets/img/Daon/11.id_de_frente.png"> </div>
+                  </div>
                 </ng-template>
                 <ng-template #elseErr>
                     <!--<div>
@@ -27,11 +25,7 @@
                     </div>-->
                   <p class="px-5"> <img alt="" class="img-fluid" src="../../../../../assets/img/daon/14.Error credencial frente@1x.png"> </p>                    
                 </ng-template>
-                  <p class="text-2 text-center">
-                      Tómale foto o sube tu
-  idenfiticación de frente.
-                  </p>    
-                  <p class="text-center">Credencial de elector</p>
+                <p class="text-2">{{description}}</p> 
                   <p class="my-3">
                     <button (click)="captueWCamera()" type ="button" class="btn btn-lg btn-block btn-danger mr-3 btnUrl" data-url="errorIdentificacion.html"><i class="fas fa-camera"></i> Tomar foto</button>
                   </p>
@@ -41,10 +35,6 @@
                         <button (click)="imgInput.click()" type ="button" class="btn btn-lg btn-block btn-outline-danger mr-3 btnUrl" data-url="errorIdentificacion.html"><i class="far fa-image"></i> Galería</button>
                     </span>            
                   </p>
-              </div>
-            </div>
-          </div>
-        </main>
-      </div>
+              
     </div>
   </div>

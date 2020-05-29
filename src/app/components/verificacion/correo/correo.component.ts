@@ -33,6 +33,9 @@ export class CorreoComponent implements OnInit {
   @ViewChild('validarBoton', { read: false, static: false }) validarBoton: ElementRef;
 
   async ngOnInit() {
+    //var correoText = $('#emailText').text();
+    //var res = correoText.replace(/mail|ook/gi, "****");
+    //$('#emailText').text(res);
     await this.spinner.show();
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];

@@ -1,11 +1,6 @@
 <div class="container">
-    <div class="row justify-content-center">
-      <div class="col col-md-4">
-        <main role="main" id="adentro" class="flex-shrink-0"> <!-- Esta es la parte que se debe cambiar-->
-          <div class="container-fluid">
-            <div class="row justify-content-center">
-              <div class="col py-4">
-                <h2 class="text-center">Verifica tu identificación</h2>
+  <div id="contenido" class="container text-center">
+    <h3>Verifica tu identificación</h3>
                   <p class="p-2 border border-danger text-center"> 
                       <img alt="" class="img-fluid" src="{{img}}">
                     </p>
@@ -13,17 +8,15 @@
                       {{titulo}}
                   </p>    
                   <p class="my-3">
-                    <button (click)="back()" type ="button" class="btn btn-lg btn-block btn-outline-danger mr-3 btnUrl"><i class="fas fa-camera"></i> Intentar de nuevo</button>
+                    <button (click)="back()" type ="button" class="btn btn-lg btn-block btn-outline-danger mr-3 btnUrl"><i class="fas fa-times"></i> Tomar de nuevo</button>
                   </p>
                   <p class="my-3">
-                    <button (click)="continue()" type ="button" class="btn btn-lg btn-block btn-danger mr-3 btnUrl">Usar ésta foto</button>
+                    <button (click)="continue()" type ="button" class="btn btn-lg btn-block btn-danger mr-3 btnUrl"><i class="fas fa-check"></i> Si, está bien</button>
                   </p>
-              </div>
-            </div>
-          </div>
-        </main>
-        <!-- Esta es la parte que se debe cambiar--> 
-      </div>
+
+                  
+                 
+             
     </div>
   </div>
   

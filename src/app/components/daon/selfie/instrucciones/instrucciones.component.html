@@ -3,32 +3,25 @@
         <div class="errorMensaje" *ngIf="errorMensaje && errorMensaje.length > 0">
             {{errorMensaje}}
         </div>
-        <div class="col col-md-4">
-            <main role="main" id="adentro" class="flex-shrink-0">
-                <!-- Esta es la parte que se debe cambiar-->
-                <div class="container-fluid">
-                    <div class="row justify-content-center">
-                        <div class="col py-4">
-                            <h2 class="text-center">Tomate una selfie</h2>
-                            <p class="px-5"> <img alt="" class="img-fluid" src="../../../../../assets/img/Daon/5.Toma de selfie.png"> </p>
-
-                            <ul class="fa-ul text-2">
-                                <li class="mb-4"><span class="fa-li"><i class="far fa-check-circle text-success fa-lg"></i></span> Asegúrate de estar en un área bien iluminada.</li>
-                                <li class="mb-4"><span class="fa-li"><i class="far fa-check-circle text-success fa-lg"></i></span> Estár en un fondo liso.</li>
-                                <li class="mb-4"><span class="fa-li"><i class="far fa-check-circle text-success fa-lg"></i></span> No tener gorras, lentes o algo que pueda ocultar tu rostro.</li>
-                                <li class="mb-4"><span class="fa-li"><i class="far fa-check-circle text-success fa-lg"></i></span> Manten una expresión seria.</li>
+        <div id="contenido" class="container">
+            <h3 class="my-3 text-center">Tomate una selfie</h3>
+                            
+                            <div class="row">
+                                <div class="col-6 col-md-4 mx-auto my-3">
+                                    <img alt="" class="img-fluid" src="../../../../../assets/img/Daon/5.Toma de selfie.png">
+                                </div>
+                            </div>
+                            <ul class="fa-ul">
+                                <li class="mb-1"><span class="fa-li"><i class="far fa-check-circle text-success fa-lg"></i></span> Asegúrate de estar en un área bien iluminada.</li>
+                                <li class="mb-1"><span class="fa-li"><i class="far fa-check-circle text-success fa-lg"></i></span> Estár en un fondo liso.</li>
+                                <li class="mb-1"><span class="fa-li"><i class="far fa-check-circle text-success fa-lg"></i></span> No tener gorras, lentes o algo que pueda ocultar tu rostro.</li>
+                                <li class="mb-1"><span class="fa-li"><i class="far fa-check-circle text-success fa-lg"></i></span> Manten una expresión seria.</li>
                             </ul>
 
-                            <form class="form-control-lg">
-                                <p class="my-3">
-                                    <button type="button" class="btn btn-lg btn-block btn-danger rounded-lg mr-3 btnUrl" (click)="continuar()" id="validarBoton">Continuar</button>
-                                </p>
+                            <form>
+                                <button type="button" class="btn btn-danger btn-lg btn-block btnUrl" (click)="continuar()" id="validarBoton">Tomar selfie</button>
                             </form>
-                        </div>
-                    </div>
-                </div>
-            </main>
-            <!-- Esta es la parte que se debe cambiar-->
+                        
         </div>
     </div>
 </div>
