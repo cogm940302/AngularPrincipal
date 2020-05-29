@@ -37,13 +37,14 @@ export class PersonComponent implements OnInit {
   id: string;
   rfcModel: string;
   razonSocialModel: string;
+  valorPersonaModel: string;
   
   async ngOnInit() {
       
       document.getElementById("errorMessageRFC").style.display = "none";
       document.getElementById("razonSocial").style.display = "none";
       
-      var tipoPersona: String;
+      var tipoPersona: string;
       var validateRFC: boolean;
       this.actRoute.params.subscribe(params => {
         this.id = params['id'];
@@ -58,7 +59,7 @@ export class PersonComponent implements OnInit {
 
         //Sacamos el data-url para usarlo luego
 		tipoPersona = $(this).attr("data-persona");
-        
+      
         if(tipoPersona == "fisica"){
             
             //Pones el color adecuado a los elementos
@@ -69,7 +70,7 @@ export class PersonComponent implements OnInit {
             $('#borderFisica').removeClass('border-secondary bg-white').addClass('border-danger bg-light');
             document.getElementById("razonSocial").style.display = "none";
             //Mostramos los campos
-            
+            $("#valorTipoPersona").val("fisica");
            } 
         else if(tipoPersona == "moral"){
            //Pones el color adecuado a los elementos
@@ -80,13 +81,13 @@ export class PersonComponent implements OnInit {
             $('#borderMoral').removeClass('border-secondary bg-white').addClass('border-danger bg-light');
             document.getElementById("razonSocial").style.display = "block";
             //Mostramos los campos
-
+            $("#valorTipoPersona").val("moral");
            };
      
         
     });
     
-
+    console.log("valor de variable" + tipoPersona);
   }
 
   async alredySessionExist() {
@@ -123,13 +124,15 @@ export class PersonComponent implements OnInit {
                       "(([A-ZÑ&]{4})([0-9]{2})[0][2]([0][1-9]|[1][0-9]|[2][0-8])([A-Z0-9]{3}))$";
       
       var inputRFC = this.rfcModel
-      var tipoPersona = $('.eligePersona').attr("data-persona");
+      //var tipoPersona = $('.eligePersona').attr("data-persona");
+      var person = $('#valorTipoPersona').val();;
+      console.log(person);
+      if(person == "fisica"){
 
-      if(tipoPersona == "fisica"){
         if (inputRFC.match(_rfc_pattern_pf)){
           console.log("La estructura de la clave de RFC es valida");
           document.getElementById("errorMessageRFC").style.display = "none";
-          this.saveDataPerson(tipoPersona);
+          this.saveDataPerson(person);
 
           return true;
         }else {
@@ -138,12 +141,13 @@ export class PersonComponent implements OnInit {
             return false;
         }
       }
-      else if(tipoPersona == "moral"){
+      else if(person == "moral"){
+        
         if (inputRFC.match(_rfc_pattern_pm)){
           
           console.log("La estructura de la clave de RFC moral es valida");
           document.getElementById("errorMessageRFC").style.display = "none";
-          this.saveDataPerson(tipoPersona);
+          this.saveDataPerson(person);
 
       }else {
         console.log("La estructura de la clave de RFC moral es INVALIDA");
@@ -160,20 +164,26 @@ export class PersonComponent implements OnInit {
       const objectPer = {datosFiscales: {rfc: this.rfcModel, tipoPersona: typePerson}};
       await this.middleMongo.updateDataUser(objectPer, this.id);
       console.log('ya termine con los datos fiscales' + JSON.stringify(objectPer, null, 2));
-
       this.router.navigate([Rutas.telefono + `${this.id}`]);
 
     }else if(typePerson == "moral"){
       const objectPer = {datosFiscales: {rfc: this.rfcModel, nombre: this.razonSocialModel, tipoPersona: typePerson}};
       await this.middleMongo.updateDataUser(objectPer, this.id);
       console.log('ya termine con los datos fiscales' + JSON.stringify(objectPer, null, 2));
-      //var modal = document.getElementById("myModal");
-      //    var span = document.getElementsByClassName("close")[0];
-      //    modal.style.display = "block";
-      this.router.navigate([Rutas.telefono + `${this.id}`]);
+      var modal = document.getElementById("modalPersonaMoral");
+      modal.style.display = "block";
     }
 
     
+  }
+
+  async aceptar(){
+    this.router.navigate([Rutas.telefono + `${this.id}`]);
+  }
+
+  async cerrarModal(){
+    var modal = document.getElementById("modalPersonaMoral");
+    modal.style.display = "none";
   }
 
   

@@ -13,6 +13,7 @@
                             <div class="border border-secondary rounded bg-white shadow p-4" id="borderMoral"> <img alt="" class="img-fluid" [src]="imgUrlPersonaMoral" id="imgMoral"> </div>
                             <p class="texto-3 my-3">{{btnTitlePersonaMoral}}</p>
                             <a href="#" data-persona ="moral" class="stretched-link eligePersona"></a> </div>
+                            <input  type="hidden" id="valorTipoPersona" [(ngModel)]="valorPersonaModel" [ngModelOptions]="{standalone: true}">
                         </div>
                         <form>
                           <div class="form-group">
@@ -30,19 +31,23 @@
                           </p>
                         </form>
 
-                        <div id="myModal" class="modal my-auto">
-
-                          <!-- Modal content -->
-                          <div class="modal-content">
-                            <span class="close">&times;</span>
-                            <h3>Aviso importante</h3>
-                            <p>Apartir de este momento debe identificarse el <strong>representante legal.</strong></p>
-                          </div>
                         
-                        </div>
   </div>
 
   <!-- The Modal -->
 
                    
+</div>
+
+<div id="modalPersonaMoral" class="modal my-auto">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <!--<button id="btnAceptarModal" type ="button" (click)="cerrarModal()"  class="btn btn-lg btn-block mr-3 btnUrl">&times;</button>-->
+    <h3>Aviso importante</h3>
+    <p>Apartir de este momento debe identificarse el <strong>representante legal.</strong></p>
+    <button id="btnAceptarModal" type ="button" (click)="aceptar()"  class="btn btn-lg btn-block mr-3 btnUrl colorTextBtn">Ok</button>
+  </div>
+  
+
 </div>
