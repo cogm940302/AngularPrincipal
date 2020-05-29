@@ -140,6 +140,7 @@ export class PersonComponent implements OnInit {
       }
       else if(tipoPersona == "moral"){
         if (inputRFC.match(_rfc_pattern_pm)){
+          
           console.log("La estructura de la clave de RFC moral es valida");
           document.getElementById("errorMessageRFC").style.display = "none";
           this.saveDataPerson(tipoPersona);
@@ -156,16 +157,20 @@ export class PersonComponent implements OnInit {
 
   async saveDataPerson(typePerson:string){
     if (typePerson == "fisica"){
-      const objectPer = {datosFiscales: {rfc: this.rfcModel, nombre:"", tipoPersona: typePerson}};
+      const objectPer = {datosFiscales: {rfc: this.rfcModel, tipoPersona: typePerson}};
       await this.middleMongo.updateDataUser(objectPer, this.id);
       console.log('ya termine con los datos fiscales' + JSON.stringify(objectPer, null, 2));
-      this.router.navigate([Rutas.correo + `${this.id}`]);
+
+      this.router.navigate([Rutas.telefono + `${this.id}`]);
 
     }else if(typePerson == "moral"){
       const objectPer = {datosFiscales: {rfc: this.rfcModel, nombre: this.razonSocialModel, tipoPersona: typePerson}};
       await this.middleMongo.updateDataUser(objectPer, this.id);
       console.log('ya termine con los datos fiscales' + JSON.stringify(objectPer, null, 2));
-      this.router.navigate([Rutas.correo + `${this.id}`]);
+      //var modal = document.getElementById("myModal");
+      //    var span = document.getElementsByClassName("close")[0];
+      //    modal.style.display = "block";
+      this.router.navigate([Rutas.telefono + `${this.id}`]);
     }
 
     
