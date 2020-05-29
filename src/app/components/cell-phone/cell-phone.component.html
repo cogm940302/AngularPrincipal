@@ -12,7 +12,7 @@
             <input autocomplete="off" formControlName="celular" type="text" class="form-control" placeholder="1234567890" [ngClass]="{ 'is-invalid': submitted && f.celular.errors }" >
             <div *ngIf="submitted && f.celular.errors" class="invalid-feedback">
                 <div *ngIf="f.celular.errors.required">Número celular requerido</div>
-                <div *ngIf="f.celular.errors.pattern">Número de celular requerido</div>
+                <div *ngIf="f.celular.errors.pattern">No es un número de celular correcto</div>
             </div>
       </div>
       <button (click)="aceptar()" type="submit" class="btn btn-danger btn-lg btn-block btnUrl">Continuar</button>

@@ -19,7 +19,7 @@
                                         <input autocomplete="off" (input)="onSearchChange1($event.target.value,4)" id="box4" #box4 type="text" class="form-control input-correo" style="text-align:center;" id="verifica.4" maxlength="1">
                                     </div>
                                 </div>
-                                <div>{{error}}</div>
+                                <div id="errorMessagePin">{{error}}</div>
                                 <p class="my-3">
                                     <button type="button" class="btn btn-lg btn-block btn-danger rounded-lg mr-3 btnUrl" (click)="validaCodigo()" id="validarBoton" #validarBoton>Validar</button>
                                 </p>
