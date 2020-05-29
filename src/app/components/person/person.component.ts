@@ -63,7 +63,8 @@ export class PersonComponent implements OnInit {
 		tipoPersona = $(this).attr("data-persona");
       
         if(tipoPersona == "fisica"){
-            
+          $('#rfc').val("");
+          $('#rfc').attr('maxlength', 13);
             //Pones el color adecuado a los elementos
             $('#titleMoral').removeClass('text-danger');
             $('#borderMoral').removeClass('border-danger bg-light').addClass('border-secondary bg-white');
@@ -76,6 +77,9 @@ export class PersonComponent implements OnInit {
             $("#valorTipoPersona").val("fisica");
            } 
         else if(tipoPersona == "moral"){
+          $('#rfc').val("");
+          $('#rfc').attr('maxlength', 12);
+          
            //Pones el color adecuado a los elementos
             $('#titleFisica').removeClass('text-danger');
             $('#borderFisica').removeClass('border-danger bg-light').addClass('border-secondary bg-white');
@@ -116,16 +120,15 @@ export class PersonComponent implements OnInit {
 
     async enter() {
       // patron del RFC, persona moral
-      var _rfc_pattern_pm = "^(([A-ZÑ&]{3})([0-9]{2})([0][13578]|[1][02])(([0][1-9]|[12][\\d])|[3][01])([A-Z0-9]{3}))|" +
-      "(([A-ZÑ&]{3})([0-9]{2})([0][13456789]|[1][012])(([0][1-9]|[12][\\d])|[3][0])([A-Z0-9]{3}))|" +
-      "(([A-ZÑ&]{3})([02468][048]|[13579][26])[0][2]([0][1-9]|[12][\\d])([A-Z0-9]{3}))|" +
-      "(([A-ZÑ&]{3})([0-9]{2})[0][2]([0][1-9]|[1][0-9]|[2][0-8])([A-Z0-9]{3}))$";
+      var _rfc_pattern_pm = "^(([A-Z�&]{3})([0-9]{2})([0][13578]|[1][02])(([0][1-9]|[12][\\d])|[3][01])([A-Z0-9]{3}))|" +
+                                             "(([A-Z�&]{3})([0-9]{2})([0][13456789]|[1][012])(([0][1-9]|[12][\\d])|[3][0])([A-Z0-9]{3}))|" +
+                                             "(([A-Z�&]{3})([02468][048]|[13579][26])[0][2]([0][1-9]|[12][\\d])([A-Z0-9]{3}))|" +
+                                             "(([A-Z�&]{3})([0-9]{2})[0][2]([0][1-9]|[1][0-9]|[2][0-8])([A-Z0-9]{3}))$";
+		var _rfc_pattern_pf = "^(([A-Z�&]{4})([0-9]{2})([0][13578]|[1][02])(([0][1-9]|[12][\\d])|[3][01])([A-Z0-9]{3}))|" +
+	  		                                 "(([A-Z�&]{4})([0-9]{2})([0][13456789]|[1][012])(([0][1-9]|[12][\\d])|[3][0])([A-Z0-9]{3}))|" +
+	  		                                 "(([A-Z�&]{4})([02468][048]|[13579][26])[0][2]([0][1-9]|[12][\\d])([A-Z0-9]{3}))|" +
+	  		                                 "(([A-Z�&]{4})([0-9]{2})[0][2]([0][1-9]|[1][0-9]|[2][0-8])([A-Z0-9]{3}))$";
 
-      // patron del RFC, persona fisica
-      var _rfc_pattern_pf = "^(([A-ZÑ&]{4})([0-9]{2})([0][13578]|[1][02])(([0][1-9]|[12][\\d])|[3][01])([A-Z0-9]{3}))|" +
-                      "(([A-ZÑ&]{4})([0-9]{2})([0][13456789]|[1][012])(([0][1-9]|[12][\\d])|[3][0])([A-Z0-9]{3}))|" +
-                      "(([A-ZÑ&]{4})([02468][048]|[13579][26])[0][2]([0][1-9]|[12][\\d])([A-Z0-9]{3}))|" +
-                      "(([A-ZÑ&]{4})([0-9]{2})[0][2]([0][1-9]|[1][0-9]|[2][0-8])([A-Z0-9]{3}))$";
       
       var inputRFC = this.rfcModel
       //var tipoPersona = $('.eligePersona').attr("data-persona");
