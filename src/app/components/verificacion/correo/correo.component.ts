@@ -63,7 +63,7 @@ export class CorreoComponent implements OnInit {
         return false;
       } else if (this.object.correo !== null && this.object.correo !== undefined && this.object.correo) {
         console.log('voy a instrucciones');
-        this.router.navigate([Rutas.telefono + `${this.id}`]);
+        this.router.navigate([Rutas.person + `${this.id}`]);
         return false;
       } else {
         return true;
@@ -105,10 +105,25 @@ export class CorreoComponent implements OnInit {
       this.object.emailVerified = true;
       this.session.updateModel(this.object);
       await this.middleDaon.updateDaonDataUser(this.object, this.id);
-      this.router.navigate([Rutas.telefono + `${this.id}`]);
+      this.router.navigate([Rutas.person + `${this.id}`]);
     } else {
       this.router.navigate([Rutas.error]);
     }
     await this.spinner.hide();
+  }
+
+  async reescribirCorreo(){
+    this.router.navigate([Rutas.correo+ `${this.id}`]);
+  }
+
+  async aceptar() {
+    await this.spinner.show();
+    var correoText = $('#emailText').text();
+    console.log(correoText);
+      console.log("id >>>" + this.id + " - correoText >>> " + correoText + " - " + this.object['emailVerified'])
+      await this.middleVerifica.generaCodigoEmail(this.id, correoText);
+      this.serviciogeneralService.setCorreo(correoText);
+      //this.router.navigate([Rutas.correoCode + `${this.id}`]);
+      await this.spinner.hide();
   }
 }
