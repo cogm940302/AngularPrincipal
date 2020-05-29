@@ -19,6 +19,10 @@
     margin-left: 25%;;
 }
 
+#rfc{
+  text-transform:uppercase;
+}
+
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
