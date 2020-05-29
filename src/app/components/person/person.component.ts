@@ -44,6 +44,7 @@ export class PersonComponent implements OnInit {
       await this.spinner.show();
       document.getElementById("errorMessageRFC").style.display = "none";
       document.getElementById("razonSocial").style.display = "none";
+      document.getElementById("errorMessageTipoPersona").style.display = "none";
       
       var tipoPersona: string;
       var validateRFC: boolean;
