@@ -105,12 +105,13 @@ export class CorreoComponent implements OnInit {
     await this.spinner.show();
     const result = await this.middleVerifica.validaCodigoEmail(this.id, this.codigoText);
     if (result === 200) {
-    await this.spinner.hide();
+      this.verificaCorreo();
     } else {
       this.error = 'El codigo es incorrecto';
     }
-    this.verificaCorreo();
+    await this.spinner.hide();
   }
+
   async verificaCorreo() {
 
     const objetoDaon = await this.middleDaon.createDaonRegister(this.serviciogeneralService.getCorreo(), this.id);

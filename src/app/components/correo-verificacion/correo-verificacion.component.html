@@ -9,7 +9,7 @@
         </p>
         <div class="form-group">
             <input autocomplete="off" placeholder="Ingresa tu correo electrónico" class="form-control"  type="text" id="correoInput" (input)="onSearchChange($event.target.value)">
-            <small class="form-text text-muted" id="errorMessageCorreo">Ingrese un correo valido</small> 
+            <small class="form-text text-muted" id="errorMessageCorreo">El e-mail no es válido, intenta de nuevo</small> 
         </div>
         <p class="my-3">
             <button type="button"  class="btn btn-lg btn-block btn-danger rounded-lg mr-3 btnUrl" (click)="aceptar()" id="validarBoton">Enviar correo</button>
