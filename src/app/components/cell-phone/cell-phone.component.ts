@@ -61,9 +61,10 @@ export class CellPhoneComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.submitted = true;
     if (this.myForm.invalid) { 
+      await this.spinner.hide();
         return;
     }
   }
@@ -78,6 +79,7 @@ export class CellPhoneComponent implements OnInit {
   }
 
   async aceptar(){
+    await this.spinner.show();
     if(this.myForm.valid){
       console.log(">>> : " + this.f.celular.value); 
       const object = this.session.getObjectSession();
@@ -87,5 +89,7 @@ export class CellPhoneComponent implements OnInit {
       console.log('ya termine con la telefono' + JSON.stringify(object, null, 2));
       this.router.navigate([Rutas.instrucciones + `${this.id}`]);   
     }
+    await this.spinner.show();
   }
+  
 }

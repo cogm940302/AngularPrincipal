@@ -106,19 +106,22 @@ export class CorreoComponent implements OnInit {
   }
 
   async validaCodigo() {
+    await this.spinner.show();
     const result = await this.middleVerifica.validaCodigoEmail(this.id, this.codigoText);
     console.log('result= ' + result + ' - ' + this.id + ' - ' + this.codigoText);
     if (result === 200) {
-    this.verificaCorreo();
+    await this.spinner.hide();
     } else {
       this.error = 'El codigo es incorrecto';
     }
+    this.verificaCorreo();
   }
   async verificaCorreo() {
     console.log('cr = ' + this.serviciogeneralService.getCorreo());
     const objetoDaon = await this.middleDaon.createDaonRegister(this.serviciogeneralService.getCorreo(), this.id);
     if (objetoDaon === true) {
       this.object.emailVerified = true;
+      this.object.correo = true;
       this.session.updateModel(this.object);
       await this.middleDaon.updateDaonDataUser(this.object, this.id);
       this.router.navigate([Rutas.person + `${this.id}`]);
