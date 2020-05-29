@@ -14,7 +14,7 @@ import { ServicesGeneralService } from '../../services/general/services-general.
 @Component({
   selector: 'app-correo-verificacion',
   templateUrl: './correo-verificacion.component.html',
-/*  styleUrls: ['./correo-verificacion.component.css']*/
+  styleUrls: ['./correo-verificacion.component.css']
 })
 export class CorreoVerificacionComponent implements OnInit {
 
@@ -31,6 +31,7 @@ export class CorreoVerificacionComponent implements OnInit {
 
   async ngOnInit() {
     await this.spinner.show();
+    document.getElementById("errorMessageCorreo").style.display = "none";
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
@@ -68,10 +69,20 @@ export class CorreoVerificacionComponent implements OnInit {
 
   async aceptar() {
     await this.spinner.show();
-      console.log("id >>>" + this.id + " - correoText >>> " + this.correoText + " - " + this.object['emailVerified'])
+
+    if (this.correoText.match('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')){
+      document.getElementById("errorMessageCorreo").style.display = "none";
       await this.middleVerifica.generaCodigoEmail(this.id, this.correoText);
       this.serviciogeneralService.setCorreo(this.correoText);
       this.router.navigate([Rutas.correoCode + `${this.id}`]);
       await this.spinner.hide();
+      return true;
+    }else {
+      document.getElementById("errorMessageCorreo").style.display = "block";
+      await this.spinner.hide();
+        return false;
+    }
+
+     
   }
 }
