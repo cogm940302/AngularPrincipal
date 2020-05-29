@@ -70,11 +70,10 @@ export class PageFaceCaptureComponent implements OnInit {
       this.tomarSelfie();
     }, 5000);
     
-    navigator.mediaDevices.getUserMedia().then(function(mediaStream) {
-      /* usar el flujo de datos */
+    /*navigator.mediaDevices.getUserMedia().then(function(mediaStream) {
     }).catch(function(err) {
       alert("Debes permitir el acceso a tu cámara");
-    });
+    });*/
 
   }
 

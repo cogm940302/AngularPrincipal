@@ -1,9 +1,9 @@
 <div class="container">
-    <div class="row justify-content-center">
+    <div id="contenido" class="container">
         <div class="errorMensaje" *ngIf="errorMensaje && errorMensaje.length > 0">
             {{errorMensaje}}
         </div>
-        <div id="contenido" class="container"></div>
+        
         <h3 class="my-3 text-center">{{title}}</h3>
                       <p class="px-5"><img alt="" class="img-fluid" [src]="imgUrl"> </p>
                         <p class="text-2 text-center">{{instruction}}</p>

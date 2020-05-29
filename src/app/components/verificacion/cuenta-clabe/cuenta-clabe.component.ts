@@ -21,7 +21,7 @@ export class CuentaClabeComponent implements OnInit {
     submitted = false;
     async ngOnInit() {
       this.myForm = new FormGroup({
-        cuentaClabe: new FormControl('', [this.IsValidated(), Validators.minLength(18),Validators.maxLength(18), Validators.required, Validators.pattern("[0-9]*")])
+        cuentaClabe: new FormControl('', [Validators.minLength(18),Validators.maxLength(18), Validators.required, Validators.pattern("[0-9]*"), this.IsValidated()])
       });    
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
@@ -65,6 +65,7 @@ export class CuentaClabeComponent implements OnInit {
   }
 
   async continuar(){
+    console.log(">>> : " + this.f.cuentaClabe.value); 
     if(this.myForm.valid){
       console.log(">>> : " + this.f.cuentaClabe.value); 
       const object = this.session.getObjectSession();

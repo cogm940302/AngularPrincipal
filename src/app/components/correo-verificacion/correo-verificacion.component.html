@@ -1,18 +1,18 @@
 <div class="container">
     <div id="contenido" class="container text-center">
-                            <h3 class="my-3">Correo electrónico</h3>
-                            <p class="px-5">
-                                <img alt="" class="img-fluid" src="../../../../../assets/img/Daon/3.1.Requerimos_correo.png">
-                            </p>
-                            <p class="text-2 tex-muted">
-                                Ingresa tu e-mail. te enviaremos un correo de confirmación.
-                            </p>
-                            <div class="form-group">
-                                <input placeholder="Ingresa tu correo electrónico" class="form-control"  type="text" id="correoInput" (input)="onSearchChange($event.target.value)">
-                            </div>
-                            <p class="my-3">
-                                <button type="button"  class="btn btn-lg btn-block btn-danger rounded-lg mr-3 btnUrl" (click)="aceptar()" id="validarBoton">Enviar correo</button>
-                            </p>
-                       
+        <h3 class="my-3">Correo electrónico</h3>
+        <p class="px-5">
+            <img alt="" class="img-fluid" src="../../../../../assets/img/daon/3.1.Requerimos_correo.png">
+        </p>
+        <p class="text-2 tex-muted">
+            Ingresa tu e-mail. te enviaremos un correo de confirmación.
+        </p>
+        <div class="form-group">
+            <input autocomplete="off" placeholder="Ingresa tu correo electrónico" class="form-control"  type="text" id="correoInput" (input)="onSearchChange($event.target.value)">
+            <small class="form-text text-muted" id="errorMessageCorreo">El e-mail no es válido, intenta de nuevo</small> 
+        </div>
+        <p class="my-3">
+            <button type="button"  class="btn btn-lg btn-block btn-danger rounded-lg mr-3 btnUrl" (click)="aceptar()" id="validarBoton">Enviar correo</button>
+        </p>                       
     </div>
 </div>

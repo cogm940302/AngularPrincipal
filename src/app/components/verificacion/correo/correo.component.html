@@ -1,25 +1,22 @@
 <div class="container">
     <div id="contenido" class="container text-center">
                             <h3 class="my-3">Verifica tu correo</h3>
-                            <p> <img alt="" class="img-fluid" src="../../../../../../assets/img/Daon/4.Verificacion de correo.png" /> </p>
-                            <p class="text-1 overflow-visible"> Ingresa la clave de verificación que te hemos enviado a <strong id="emailText">{{serviciogeneralService.getCorreo()}}</strong> </p>
+                            <p> <img alt="" class="img-fluid" src="../../../../../../assets/img/daon/4.Verificacion de correo.png" /> </p>
+                            <p class="text-1 overflow-visible"> Ingresa la clave de verificación que te hemos enviado a <strong id="emailText">{{correo}}</strong> </p>
                             <form>
-                                <div class="form-group">
-                                    <input type="text" class="form-control form-control-lg" id="validation" value="1234">
-                                  </div>
-
-                                <div class="form-row py-3">
+                            
+                                <div class="form-row py-3 form-correo">
                                     <div class="col">
-                                        <input (input)="onSearchChange1($event.target.value,1)" id="box1" #box1 type="text" class="form-control  border shadow" style="text-align:center;" id="verifica.1" maxlength="1">
+                                        <input autocomplete="off" (input)="onSearchChange1($event.target.value,1)" id="box1" #box1 type="text" class="form-control input-correo" style="text-align:center;" id="verifica.1" maxlength="1">
                                     </div>
                                     <div class="col">
-                                        <input (input)="onSearchChange1($event.target.value,2)" id="box2" #box2 type="text" class="form-control  border shadow" style="text-align:center;" id="verifica.2" maxlength="1">
+                                        <input autocomplete="off" (input)="onSearchChange1($event.target.value,2)" id="box2" #box2 type="text" class="form-control input-correo" style="text-align:center;" id="verifica.2" maxlength="1">
                                     </div>
                                     <div class="col">
-                                        <input (input)="onSearchChange1($event.target.value,3)" id="box3" #box3 type="text" class="form-control  border shadow" style="text-align:center;" id="verifica.3" maxlength="1">
+                                        <input autocomplete="off" (input)="onSearchChange1($event.target.value,3)" id="box3" #box3 type="text" class="form-control input-correo" style="text-align:center;" id="verifica.3" maxlength="1">
                                     </div>
                                     <div class="col">
-                                        <input (input)="onSearchChange1($event.target.value,4)" id="box4" #box4 type="text" class="form-control  border shadow" style="text-align:center;" id="verifica.4" maxlength="1">
+                                        <input autocomplete="off" (input)="onSearchChange1($event.target.value,4)" id="box4" #box4 type="text" class="form-control input-correo" style="text-align:center;" id="verifica.4" maxlength="1">
                                     </div>
                                 </div>
                                 <div>{{error}}</div>
@@ -27,8 +24,8 @@
                                     <button type="button" class="btn btn-lg btn-block btn-danger rounded-lg mr-3 btnUrl" (click)="validaCodigo()" id="validarBoton" #validarBoton>Validar</button>
                                 </p>
                                 <p>
-                                    <button class="btn btn-sm btn-outline-secondary btn-block">Reenviar el correo</button>
-                                    <button class="btn btn-sm btn-outline-secondary btn-block btnUrl" data-url="correo.html">Cambiar mi correo</button>
+                                    <button class="btn btn-sm btn-outline-secondary btn-block" (click)="aceptar()" >Reenviar el correo</button>
+                                    <button class="btn btn-sm btn-outline-secondary btn-block btnUrl" (click)="reescribirCorreo()">Cambiar mi correo</button>
                                 </p>
                             </form>
                        
