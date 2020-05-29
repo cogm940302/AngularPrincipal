@@ -232,4 +232,56 @@ input[type=file] {
 /*sdk-daon*/
 
 
-
+html,body {
+    height: 100%;
+  }
+  
+  /* Cambio algunos colores*/
+  .header, .footer {
+    background-color: #f5f5f5;
+  }
+  
+  #limitador {
+      max-width: 400px;
+      min-height: 530px;
+  }
+  
+  #contenido {
+      min-height: 450px;
+  }
+  
+  /* Fuentes*/
+  body {
+      font-family: 'Raleway', sans-serif;
+  }
+  
+  /**/
+  .h1,.h2,.h3,.h4,.h5,.h6,h1,h2,h3,h4,h5,h6 {
+      margin-bottom: .5rem;
+      font-weight: 700;
+      line-height: 1.2
+  }
+  
+  /* Pinche David*/
+  .text-2{
+      font-size: 1.25em;
+      font-weight: 700;
+      color:#6c757d !important;
+      line-height: 1
+  }
+  
+  
+  
+  .border {
+      border-width: 3px !important;
+  }
+  
+  .shadow {    
+      box-shadow: 0 .5rem 1rem rgba(0,0,0,.5)!important;
+  }
+  
+  
+  .bg-light {
+      background-color: #D0D0D0 !important;
+  }
+  

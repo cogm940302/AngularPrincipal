@@ -1,30 +1,18 @@
 
 <div class="container">
-    <div class="row justify-content-center">
-      <div class="col col-md-4">
-        <main role="main" id="adentro" class="flex-shrink-0"> 
-          <div class="container-fluid">
-            <div class="row justify-content-center">
-              <div class="col py-4">
-                <h2 class="text-center">Identificación oficial</h2>
-                  <p class="text-2 text-center">
-                      Elige que identificación nos proporcionaras
-                  </p>    
+  <div id="contenido" class="container text-center">
+    <h3 class="my-3 ">Identificación oficial</h3>
+    <p class="text-2">Indica un documento con el que validaremos tu identidad</p>   
                   <div class="error">{{error}}</div>
                   <p class="my-3">
-                    <button (click)="sentTi('ID_CARD')" type ="button"  class="text-left btn btn-lg btn-block btn-outline-secondary mr-3" ><i class="fas fa-address-card"></i> Credencial de elector</button>
+                    <button (click)="sentTi('ID_CARD')" type ="button"  class="text-left btn btn-lg btn-block btn-outline-secondary mr-3" ><i class="fas fa-address-card fa-fw"></i> Credencial de elector</button>
                   </p>
+                  
                   <!--<p class="my-3">
                     <button (click)="sentTi('PASSPORT')" type ="button" class="text-left btn btn-lg btn-block btn-outline-secondary mr-3" ><i class="fas fa-passport"></i> Pasaporte</button>
                   </p>-->
                   <p class="my-3">
-                    <button (click)="sendDoc()" type ="button" class="btn btn-lg btn-block btn-danger mr-3 btnUrl" data-url="identificacionFrente.html">Continuar</button>
+                    <button (click)="sendDoc()" type ="button" class="btn btn-lg btn-block btn-danger mr-3 btnUrl btnIndicaId" data-url="identificacionFrente.html">Continuar</button>
                   </p>
-                
-              </div>
-            </div>
-          </div>
-        </main>
-      </div>
     </div>
   </div>

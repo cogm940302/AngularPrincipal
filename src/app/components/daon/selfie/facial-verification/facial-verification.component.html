@@ -1,11 +1,6 @@
 <div class="container">
-    <div class="row justify-content-center">
-      <div class="col col-md-4">
-        <main role="main" id="adentro" class="flex-shrink-0"> <!-- Esta es la parte que se debe cambiar-->
-          <div class="container-fluid">
-            <div class="row justify-content-center">
-              <div class="col py-4">
-                <h2 class="text-center">Verifica tu selfie</h2>
+  <div id="contenido" class="container">
+    <h3 class="my-3 text-center">¿Está bien tu selfie?</h3>
                  <p class="px-5"> <img src="{{'data:image/jpg;base64,' + foto}}" class="{{(isAndroid && isNative) ? 'img-preview rotate-mobile-native':'img-preview flip-x'}}" /></p>
                 <form class="form-control-lg">
                   <p class="my-3">
@@ -14,13 +9,9 @@
                   </p>
                   <p class="my-3">
                     <button type="button" class="btn btn-lg btn-block btn-danger rounded-lg mr-3 btnUrl"
-                    (click)="guardar()">Usar foto</button>
+                    (click)="guardar()">Sí, está bien</button>
                   </p>
                 </form>
-              </div>
-            </div>
-          </div>
-        </main>
-      </div>
+             
     </div>
   </div>

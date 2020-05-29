@@ -1,11 +1,5 @@
 <div *ngIf="filtersLoaded | async" class="container">
-    <div class="row justify-content-center">
-        <div class="col col-md-4">
-            <main role="main" id="adentro" class="flex-shrink-0">
-                <!-- Esta es la parte que se debe cambiar-->
-                <div class="container-fluid">
-                    <div class="row justify-content-center">
-                        <div class="col py-4 text-center">
+    <div id="contenido" class="container text-center">
                             <h2>Identifícate</h2>
                             <p class="px-5">
                                 <img alt="" class="img-fluid" src="../../../assets/img/Daon/1.Identificate.png">
@@ -21,13 +15,7 @@
                                 <!-- <button class="btn btn-lg btn-block btn-danger mr-3 btnUrl" data-url="persona.html">Iniciar</button> -->
                                 <button class="btn btn-lg btn-block btn-danger mr-3 btnUrl" id="aceptarBoton" (click)="siguiente()">Iniciar</button>
                             </p>
-                        </div>
-                    </div>
-                </div>
-            </main>
-            <!-- Esta es la parte que se debe cambiar-->
-        </div>
-    </div>
+    </div>                
 </div>
 
 

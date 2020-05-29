@@ -10,6 +10,12 @@ export class PlantillaComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log("inicio");
+    $("app-plantilla").attr("class","my-auto");
+    //$("body").attr("class","mx-auto bg-white rounded-lg");
+    $("body").attr("class","d-flex flex-column h-100 bg-secondary");
+    
+    
   }
 
 }
