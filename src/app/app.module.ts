@@ -32,6 +32,7 @@ import { HeaderComponent } from './components/compartidos/header/header.componen
 import { PlantillaSdkDaonComponent } from './components/plantillas/plantilla-sdk-daon/plantilla-sdk-daon.component';
 import { CuentaClabeComponent } from './components/verificacion/cuenta-clabe/cuenta-clabe.component';
 import { PersonComponent } from './components/person/person.component';
+import { CellPhoneComponent } from './components/cell-phone/cell-phone.component';
 // import {  NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // import {  NgbModal } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
 
@@ -60,6 +61,7 @@ import { PersonComponent } from './components/person/person.component';
     PlantillaSdkDaonComponent,
     CuentaClabeComponent,
     PersonComponent,
+    CellPhoneComponent,
   ],
   imports: [
     BrowserModule,

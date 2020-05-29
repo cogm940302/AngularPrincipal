@@ -4,7 +4,6 @@
     color: gray
   }
 
-  .btn:focus, .btn:active:focus {
-    outline: 0 none;
-    border-color: red;
+  .btn-outline-secondary {
+    border-color: #6c757d;
 }

@@ -10,12 +10,10 @@ export let Rutas = {
   documentConfirm: '/services/daon/document/confirm/',
   livenessInstruction: '/services/daon/liveness/instruction/',
   ocrValidation: '/services/daon/document/ocr/',
-
   livenessCapture: '/services/daon/liveness/capture/',
   livenessResult: '/services/daon/liveness/result/',
-
   cuentaClabe: '/services/cuenta-clabe/',
-
+  telefono: '/services/cell-phone/',
   correo: '/services/correo/',
   correoCode: '/services/correo/code/',
   error: '/services/error',

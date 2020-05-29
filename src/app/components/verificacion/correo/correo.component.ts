@@ -33,6 +33,9 @@ export class CorreoComponent implements OnInit {
   @ViewChild('validarBoton', { read: false, static: false }) validarBoton: ElementRef;
 
   async ngOnInit() {
+    //var correoText = $('#emailText').text();
+    //var res = correoText.replace(/mail|ook/gi, "****");
+    //$('#emailText').text(res);
     await this.spinner.show();
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
@@ -60,7 +63,7 @@ export class CorreoComponent implements OnInit {
         return false;
       } else if (this.object.correo !== null && this.object.correo !== undefined && this.object.correo) {
         console.log('voy a instrucciones');
-        this.router.navigate([Rutas.instrucciones + `${this.id}`]);
+        this.router.navigate([Rutas.telefono + `${this.id}`]);
         return false;
       } else {
         return true;
@@ -99,10 +102,10 @@ export class CorreoComponent implements OnInit {
     console.log('cr = ' + this.serviciogeneralService.getCorreo());
     const objetoDaon = await this.middleDaon.createDaonRegister(this.serviciogeneralService.getCorreo(), this.id);
     if (objetoDaon === true) {
-      this.object.correo = true;
+      this.object.emailVerified = true;
       this.session.updateModel(this.object);
       await this.middleDaon.updateDaonDataUser(this.object, this.id);
-      this.router.navigate([Rutas.instrucciones + `${this.id}`]);
+      this.router.navigate([Rutas.telefono + `${this.id}`]);
     } else {
       this.router.navigate([Rutas.error]);
     }

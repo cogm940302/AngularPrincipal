@@ -26,14 +26,16 @@ export class CaptureInstructionComponent implements OnInit {
       sessionStorage.setItem('fb', serviciogeneralService.getFrontAndBack());
       
       if (serviciogeneralService.getFrontAndBack() === 'front') { 
-        this.titulo = 'Identificación de frente';
+        this.titulo = 'INE';
+        this.description = 'Tómale foto o sube tu INE de frente en PNG, JPG o PDF.';
         if (serviciogeneralService.gettI() === 'ID_CARD') {
         this.idcard = 'id-card-front sv';
         } else {
         this.idcard = 'passport';
         } 
       } else {
-        this.titulo = 'Identificación de posterior';
+        this.titulo = 'INE';
+        this.description = 'Tómale foto o sube tu INE por la parte trasera en PNG, JPG o PDF.';
         this.idcard = 'id-card-back';
       }
     } else if (sessionStorage.getItem('ti') === undefined ||
@@ -42,15 +44,17 @@ export class CaptureInstructionComponent implements OnInit {
     } else {
       
       if (sessionStorage.getItem('fb') === 'front') {
-        this.titulo = 'Identificación de frente';
+        this.titulo = 'INE';
+        this.description = 'Tómale foto o sube tu INE de frente en PNG, JPG o PDF.';
         if (sessionStorage.getItem('ti') === 'ID_CARD') {
         this.idcard = 'id-card-front ss';
         } else {
          this.idcard = 'passport';
         }
       } else {
-        this.titulo = 'Identificación de posterior';
+        this.titulo = 'INE';
         this.idcard = 'id-card-back';
+        this.description = 'Tómale foto o sube tu INE por la parte trasera en PNG, JPG o PDF.';
       }
     }
 
@@ -63,6 +67,7 @@ export class CaptureInstructionComponent implements OnInit {
 
   errorMensaje: string;
   titulo: string;
+  description: string;
   id: string;
   dc: any;
   mensaje: string;

@@ -1,19 +1,10 @@
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="errorMensaje" *ngIf="errorMensaje && errorMensaje.length > 0">
-            {{errorMensaje}}
-        </div>
-        <div class="col col-md-4">
-            <main role="main" id="adentro" class="flex-shrink-0">
-                <!-- Esta es la parte que se debe cambiar-->
-                <div class="container-fluid">
-                    <div class="row justify-content-center">
-                      <div class="col py-4 text-center">
-                        <h2>{{title}}</h2>
+  <div id="contenido" class="container text-center">
+                        <h3 class="my-3">{{title}}</h3>
                         <!--poner dos columnas -->
                         <div class="row">
                           <div class="col-6">
-                            <p class="text-2" id="titleFisica">Persona <br> fisica</p>
+                            <p class="text-2" id="titleFisica">Persona fisica</p>
                             <div class="border border-secondary rounded bg-white shadow p-4" id="borderFisica"> <img alt="" class="img-fluid" [src]="imgUrlPersonaFisica" id="imgFisica"> </div>
                             <p class="texto-3 my-3">{{btnTitlePersonaFisica}}</p>
                             <a href="#" data-persona ="fisica" class="eligePersona stretched-link"></a> </div>
@@ -30,7 +21,7 @@
                           </div>
                             
                             <div class="form-group" id="controlMoral">
-                            <input type="text" placeholder="Razón Social" id="razonSocial" class="form-control form-control-lg">
+                            <input type="text" placeholder="Razón Social" id="razonSocial" class="form-control form-control-lg" [(ngModel)]="razonSocialModel" [ngModelOptions]="{standalone: true}">
                             <small iclass="form-text text-muted">(Ej. Mi Negocio, S.A. de C.V.</small> </div>
                             
                             
@@ -38,11 +29,6 @@
                             <button id="btnContinuarPerson" type ="button" (click)="enter()"  class="btn btn-lg btn-block btn-danger mr-3 btnUrl">{{btnTitleContinuar}}</button>
                           </p>
                         </form>
-                      </div>
-                    </div>
-                  </div>
-            </main>
-            <!-- Esta es la parte que se debe cambiar-->
-        </div>
-    </div>
+  </div>
+                   
 </div>

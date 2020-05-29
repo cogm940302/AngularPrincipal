@@ -1,14 +1,13 @@
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col col-md-4">
-            <main role="main" id="adentro" class="flex-shrink-0">
-                <div class="container-fluid">
-                    <div class="row justify-content-center">
-                        <div class="col  text-center">
-                            <h3>Verifica tu correo</h3>
-                            <p> <img alt="" class="img-fluid" src="../../../../../../assets/img/daon/4.Verificacion de correo.png" /> </p>
-                            <p class="text-1 overflow-visible"> Ingresa la clave de verificación que te hemos enviado a <strong>{{serviciogeneralService.getCorreo()}}</strong> </p>
+    <div id="contenido" class="container text-center">
+                            <h3 class="my-3">Verifica tu correo</h3>
+                            <p> <img alt="" class="img-fluid" src="../../../../../../assets/img/Daon/4.Verificacion de correo.png" /> </p>
+                            <p class="text-1 overflow-visible"> Ingresa la clave de verificación que te hemos enviado a <strong id="emailText">{{serviciogeneralService.getCorreo()}}</strong> </p>
                             <form>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-lg" id="validation" value="1234">
+                                  </div>
+
                                 <div class="form-row py-3">
                                     <div class="col">
                                         <input (input)="onSearchChange1($event.target.value,1)" id="box1" #box1 type="text" class="form-control  border shadow" style="text-align:center;" id="verifica.1" maxlength="1">
@@ -27,11 +26,11 @@
                                 <p class="my-3">
                                     <button type="button" class="btn btn-lg btn-block btn-danger rounded-lg mr-3 btnUrl" (click)="validaCodigo()" id="validarBoton" #validarBoton>Validar</button>
                                 </p>
+                                <p>
+                                    <button class="btn btn-sm btn-outline-secondary btn-block">Reenviar el correo</button>
+                                    <button class="btn btn-sm btn-outline-secondary btn-block btnUrl" data-url="correo.html">Cambiar mi correo</button>
+                                </p>
                             </form>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </div>
+                       
     </div>
 </div>

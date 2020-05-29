@@ -74,14 +74,12 @@ export class CuentaClabeComponent implements OnInit {
       await this.middle.updateDataUser({cuentaClabe:this.f.cuentaClabe.value}, this.id);
       console.log('ya termine con la CC' + JSON.stringify(object, null, 2));
       this.router.navigate([Rutas.fin]);   
-    }else{
-      console.log("no");
     }
    
    /* const datosDelCliente = await this.middle.getDataUser(this.id);
     console.log("datos actuales del usuario" + JSON.stringify(datosDelCliente));
   */
- 
+
   }
   
   CLABE_LENGTH = 18;
