@@ -43,7 +43,6 @@ export class CorreoVerificacionComponent implements OnInit {
 
   async alredySessionExist() {
     this.object = this.session.getObjectSession();
-    console.log("***object***")
     console.log(this.object);
     if (this.object === null || this.object === undefined) {
       this.router.navigate([Rutas.terminos + `/${this.id}`]);
@@ -61,7 +60,7 @@ export class CorreoVerificacionComponent implements OnInit {
       }
     }
   }
- 
+
   onSearchChange(searchValue: string): void {
     this.correoText = searchValue;
   }
