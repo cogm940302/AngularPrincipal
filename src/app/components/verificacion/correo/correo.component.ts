@@ -68,8 +68,6 @@ export class CorreoComponent implements OnInit {
 
   async alredySessionExist() {
     this.object = this.session.getObjectSession();
-    console.log('***object***');
-    console.log(this.object);
     if (this.object === null || this.object === undefined) {
       this.router.navigate([Rutas.terminos + `/${this.id}`]);
       return false;
@@ -78,7 +76,6 @@ export class CorreoComponent implements OnInit {
         this.router.navigate([Rutas.error]);
         return false;
       } else if (this.object.correo !== null && this.object.correo !== undefined && this.object.correo) {
-        console.log('voy a instrucciones');
         this.router.navigate([Rutas.person + `${this.id}`]);
         return false;
       } else {
@@ -102,13 +99,11 @@ export class CorreoComponent implements OnInit {
       // document.getElementById('validarBoton').focus();
     }
     this.codigoText = this.a + this.b + this.c + this.d;
-    console.log('codigo= ' + this.codigoText);
   }
 
   async validaCodigo() {
     await this.spinner.show();
     const result = await this.middleVerifica.validaCodigoEmail(this.id, this.codigoText);
-    console.log('result= ' + result + ' - ' + this.id + ' - ' + this.codigoText);
     if (result === 200) {
       this.verificaCorreo();
     } else {
@@ -118,7 +113,7 @@ export class CorreoComponent implements OnInit {
   }
 
   async verificaCorreo() {
-    console.log('cr = ' + this.serviciogeneralService.getCorreo());
+
     const objetoDaon = await this.middleDaon.createDaonRegister(this.serviciogeneralService.getCorreo(), this.id);
     if (objetoDaon === true) {
       this.object.emailVerified = true;

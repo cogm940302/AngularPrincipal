@@ -7,7 +7,7 @@
                 </p>
                   <form [formGroup]="myForm" (ngSubmit)="onSubmit()" >
                   <div class="form-group">
-                    <input type="text" formControlName="cuentaClabe" class=" form-control form-control-lg" [ngClass]="{ 'is-invalid': submitted && f.cuentaClabe.errors }">
+                    <input autocomplete="off" type="text" formControlName="cuentaClabe" class=" form-control form-control-lg" [ngClass]="{ 'is-invalid': submitted && f.cuentaClabe.errors }">
                     <div *ngIf="submitted && f.cuentaClabe.errors" class="invalid-feedback">
                       <div *ngIf="f.cuentaClabe.errors.required">Cuenta clabe requerida</div>
                       <div *ngIf="f.cuentaClabe.errors.maxlength">La cuenta clabe debe contener 18 dígitos</div>
