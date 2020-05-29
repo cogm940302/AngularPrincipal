@@ -6,7 +6,8 @@ import { SessionService } from '../../services/session/session.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { sesionModel } from '../../model/sesion/SessionPojo';
-
+import { FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms';
+import { MiddleMongoService } from '../../services/http/middle-mongo.service';
 @Component({
   selector: 'app-cell-phone',
   templateUrl: './cell-phone.component.html',
@@ -15,14 +16,18 @@ import { sesionModel } from '../../model/sesion/SessionPojo';
 export class CellPhoneComponent implements OnInit {
 
   constructor(private spinner: NgxSpinnerService, private actRoute: ActivatedRoute,
-    private session: SessionService, private router: Router ) { }
+    private middle: MiddleMongoService, private session: SessionService, private router: Router ) { }
 
   object: sesionModel;
   filtersLoaded: Promise<boolean>;
   id: any;
-  telefonoModel: string;
-
+  myForm:any;
+  submitted = false;
   async ngOnInit() {
+    this.myForm = new FormGroup({
+      celular: new FormControl('',[Validators.required, Validators.pattern("[0-9]{10}")])
+    });
+
     await this.spinner.show();
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
@@ -56,15 +61,31 @@ export class CellPhoneComponent implements OnInit {
     }
   }
 
-  aceptar(){
-    
-    if(this.telefonoModel.match("([0-9]{10})")){
-      console.log(">> S = " + this.telefonoModel);
-      //document.getElementById("errorMessageTEL").style.display = "none";
-    }else{
-      console.log(">> N = " + this.telefonoModel);
-      //document.getElementById("errorMessageTEL").style.display = "block";
+  onSubmit() {
+    this.submitted = true;
+    if (this.myForm.invalid) { 
+        return;
     }
   }
 
+  onReset() {
+      this.submitted = false;
+      this.myForm.reset();
+  }
+
+  get f(){
+    return this.myForm.controls;
+  }
+
+  async aceptar(){
+    if(this.myForm.valid){
+      console.log(">>> : " + this.f.celular.value); 
+      const object = this.session.getObjectSession();
+      object.telefono = true;
+      this.session.updateModel(object);
+      await this.middle.updateDataUser({telefono:this.f.celular.value}, this.id);
+      console.log('ya termine con la telefono' + JSON.stringify(object, null, 2));
+      this.router.navigate([Rutas.instrucciones + `${this.id}`]);   
+    }
+  }
 }

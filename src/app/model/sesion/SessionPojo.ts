@@ -17,4 +17,5 @@ export class sesionModel {
   cuentaClabe: boolean;
   telefono: boolean;
   datosFiscales: boolean;
+  emailVerified: boolean;
 }

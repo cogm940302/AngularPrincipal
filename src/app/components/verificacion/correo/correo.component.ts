@@ -99,7 +99,7 @@ export class CorreoComponent implements OnInit {
     console.log('cr = ' + this.serviciogeneralService.getCorreo());
     const objetoDaon = await this.middleDaon.createDaonRegister(this.serviciogeneralService.getCorreo(), this.id);
     if (objetoDaon === true) {
-      this.object.correo = true;
+      this.object.emailVerified = true;
       this.session.updateModel(this.object);
       await this.middleDaon.updateDaonDataUser(this.object, this.id);
       this.router.navigate([Rutas.telefono + `${this.id}`]);
