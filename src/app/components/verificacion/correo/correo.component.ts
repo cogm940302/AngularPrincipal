@@ -19,7 +19,7 @@ export class CorreoComponent implements OnInit {
               private actRoute: ActivatedRoute, private spinner: NgxSpinnerService,
               private router: Router, private middleVerifica: MiddleVerificacionService, private middleDaon: MiddleDaonService,
               private session: SessionService) {
-     }
+  }
 
   filtersLoaded: Promise<boolean>;
   codigoText = '';
@@ -27,29 +27,29 @@ export class CorreoComponent implements OnInit {
   id: any;
   object: sesionModel;
   a = ''; b = ''; c = ''; d = '';
-  correo='';
+  correo = '';
   @ViewChild('box2', { read: false, static: false }) box2: ElementRef;
   @ViewChild('box3', { read: false, static: false }) box3: ElementRef;
   @ViewChild('box4', { read: false, static: false }) box4: ElementRef;
   @ViewChild('validarBoton', { read: false, static: false }) validarBoton: ElementRef;
 
-  hideEmail(textCorreo: string){
-    if(textCorreo){ 
-    let textCorreoList =textCorreo.split('@');
-    var text=textCorreoList[0].split('')[0]+'***'+'@'+textCorreoList[1].split('.')[0].split('')[0]+"***";
-    for(var i = 1; i < textCorreoList[1].split('.').length; i++) {
-      text=text+"."+textCorreoList[1].split('.')[i];
+  hideEmail(textCorreo: string) {
+    if (textCorreo) {
+      const textCorreoList = textCorreo.split('@');
+      let text = textCorreoList[0].split('')[0] + '***' + '@' + textCorreoList[1].split('.')[0].split('')[0] + '***';
+      for (let i = 1; i < textCorreoList[1].split('.').length; i++) {
+        text = text + '.' + textCorreoList[1].split('.')[i];
+      }
+      return text;
     }
-    return text;
-    }
-    return'';
+    return '';
   }
 
   async ngOnInit() {
-    //var correoText = $('#emailText').text();
-    //var res = correoText.replace(/mail|ook/gi, "****");
-    //$('#emailText').text(res);
-    console.log("-"+this.serviciogeneralService.getCorreo()+"-");
+    // var correoText = $('#emailText').text();
+    // var res = correoText.replace(/mail|ook/gi, '****');
+    // $('#emailText').text(res);
+    console.log('-' + this.serviciogeneralService.getCorreo() + '-');
     this.correo = this.hideEmail(this.serviciogeneralService.getCorreo());
 
     await this.spinner.show();
@@ -57,7 +57,7 @@ export class CorreoComponent implements OnInit {
       this.id = params['id'];
     });
 
-    if(this.serviciogeneralService.getCorreo() === undefined || this.serviciogeneralService.getCorreo() === ''){
+    if (this.serviciogeneralService.getCorreo() === undefined || this.serviciogeneralService.getCorreo() === '') {
       this.router.navigate([Rutas.correo + `${this.id}`]);
     }
 
@@ -105,8 +105,8 @@ export class CorreoComponent implements OnInit {
     await this.spinner.show();
     const result = await this.middleVerifica.validaCodigoEmail(this.id, this.codigoText);
     if (result === 200) {
-      this.error='';
-      this.verificaCorreo();
+      this.error = '';
+      await this.verificaCorreo();
     } else {
       this.error = 'Clave invalida, intente de nuevo';
     }
@@ -127,18 +127,18 @@ export class CorreoComponent implements OnInit {
     await this.spinner.hide();
   }
 
-  async reescribirCorreo(){
-    this.router.navigate([Rutas.correo+ `${this.id}`]);
+  async reescribirCorreo() {
+    this.router.navigate([Rutas.correo + `${this.id}`]);
   }
 
   async aceptar() {
     await this.spinner.show();
-    var correoText = this.serviciogeneralService.getCorreo();
+    const correoText = this.serviciogeneralService.getCorreo();
     console.log(correoText);
-      console.log("id >>>" + this.id + " - correoText >>> " + correoText + " - " + this.object['emailVerified'])
-      await this.middleVerifica.generaCodigoEmail(this.id, correoText);
-      this.serviciogeneralService.setCorreo(correoText);
-      //this.router.navigate([Rutas.correoCode + `${this.id}`]);
-      await this.spinner.hide();
+    console.log('id >>>' + this.id + ' - correoText >>> ' + correoText + ' - ' + this.object['emailVerified'])
+    await this.middleVerifica.generaCodigoEmail(this.id, correoText);
+    this.serviciogeneralService.setCorreo(correoText);
+    // this.router.navigate([Rutas.correoCode + `${this.id}`]);
+    await this.spinner.hide();
   }
 }

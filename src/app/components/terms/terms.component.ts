@@ -79,7 +79,7 @@ export class TermsComponent implements OnInit {
     await this.middle.updateTermsDataUser({ terminos: true }, this.id);
     await this.session.updateModel(this.datosDelCliente);
     await this.spinner.hide();
-    this.router.navigate([Rutas.person + `${this.id}`]);
+    this.router.navigate([Rutas.correo + `${this.id}`]);
   }
 
 
