@@ -5,6 +5,8 @@ import { ServicesGeneralService, isMobile } from '../../../../services/general/s
 import { Rutas } from 'src/app/model/RutasUtil.js';
 import { SessionService } from 'src/app/services/session/session.service.js';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from '../../../../../environments/environment';
+import { FP } from '@fp-pro/client';
 
 @Component({
   selector: 'app-capture-document',
@@ -49,7 +51,9 @@ export class CaptureDocumentComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!await this.alredySessionExist()) { return; }
+    const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
+    fp.send({tag:{tag:this.id}});
+    if (!(await this.alredySessionExist())) { return; }
     await this.spinner.hide();
     this.filtersLoaded = Promise.resolve(true);
 
@@ -130,6 +134,13 @@ export class CaptureDocumentComponent implements OnInit {
     console.log("<<>> " + JSON.stringify(rectCoords) +
     this.serviciogeneralService.getFrontAndBack());
   
+    const queryParams = {
+      upperLeftX: 25,
+      upperLeftY: 100,
+      width: 754,
+      height: 475
+    };
+
     this.dc.captureFrame()
       .then(blob => this.dc.assessQuality(blob, rectCoords,
          (this.serviciogeneralService.getFrontAndBack() === 'front')))

@@ -9,6 +9,8 @@ import { SessionService } from 'src/app/services/session/session.service.js';
 import { MiddleDaonService } from '../../../../services/http/middle-daon.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ErrorVidaService } from 'src/app/services/errores/error-vida.service.js';
+import { environment } from '../../../../../environments/environment';
+import { FP } from '@fp-pro/client';
 
 @Component({
   selector: 'app-liveness-capture',
@@ -40,12 +42,14 @@ export class LivenessCaptureComponent implements OnInit {
   }
 
   instructions = document.querySelector('#instructions');
-  ngOnInit() {
+  async ngOnInit() {
     this.ctx = this.canvas.nativeElement.getContext('2d');
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!this.alredySessionExist()) { return; }
+    const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
+    fp.send({tag: {tag:this.id}});
+    if (!(await this.alredySessionExist())) { return; }
     this.isMobileBool = isMobile(navigator.userAgent);
     this.isEdge = window.navigator.userAgent.indexOf('Edge') > -1;
     this.blnStart = true;
@@ -54,6 +58,13 @@ export class LivenessCaptureComponent implements OnInit {
     this.checkIdsGetSend = new CheckID();
     this.checkIdsGetSend.url = 'https://dobsdemo-idx-first.identityx-cloud.com/mitsoluciones3/DigitalOnBoardingServices/rest/v1/users/QTAzh6_OChWzVmPL_Oc2BKgSsw/idchecks';
     this.checkIdsGetSend.metodo = 'GET';
+
+    setTimeout(() => {
+      console.log('sleep');
+      this.startButton();
+    }, 5000);
+    
+    
   }
 
   async alredySessionExist() {
@@ -67,7 +78,7 @@ export class LivenessCaptureComponent implements OnInit {
         this.router.navigate([Rutas.error]);
         return false;
       } else if (object.daon.pruebaVida) {
-        this.router.navigate([Rutas.fin]);
+        this.router.navigate([Rutas.cuentaClabe+ `/${this.id}`]);
         return false;
       } else {
         return true;
@@ -80,14 +91,14 @@ export class LivenessCaptureComponent implements OnInit {
     if (await this.sendLivenessDaon('', value)) {
       const object = this.session.getObjectSession();
       object.daon.pruebaVida = true;
-      object.estatus = 'Terminado';
       this.session.updateModel(object);
       await this.middleDaon.updateDaonDataUser(object, this.id);
       await this.middleDaon.getResults(this.id);
       this.fc.stopCamera();
       this.f3d.terminate();
-      console.log('ya termine' + JSON.stringify(object, null, 2));
-      this.router.navigate([Rutas.fin]);
+      console.log('fin de la PV' + JSON.stringify(object, null, 2));
+      await this.spinner.hide();
+      this.router.navigate([Rutas.cuentaClabe+ `/${this.id}`]);
     }
 
     await this.spinner.hide();

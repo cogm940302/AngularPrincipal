@@ -1,51 +1,40 @@
-<div class="page-content">
-    <div class="errorMensaje" *ngIf="errorMensaje && errorMensaje.length > 0">
-        {{errorMensaje}}
+<div class="container">
+  <div id="contenido" class="container text-center">
+                <h3 class="my-3 ">{{titulo}}</h3>
+
+                <div *ngIf="(this.mensaje=='' || this.mensaje==undefined) ;
+                 then thenOK else elseErr"></div>
+                <ng-template #thenOK>
+                 
+                  <div class="row">
+                    <div class="col-6 mx-auto my-3"> <img alt="" class="img-fluid" src="../../../../../assets/img/daon/11.id_de_frente.png"> </div>
+                  </div>
+                </ng-template>
+                <ng-template #elseErr>
+                    <!--<div>
+                        <div class="panel bg-red flex-row">
+                            <div class="round-icon round-icon-red">
+                                <svg class="icon  icon-Rejected icon-white">
+                                <use xlink:href="this.icon.icon-Rejected"></use>
+                            </svg>
+                            </div>
+                            <div class="panel-content">
+                                <p>{{mensaje}}</p>
+                            </div>
+                        </div>
+                    </div>-->
+                  <p class="px-5"> <img alt="" class="img-fluid" src="../../../../../assets/img/daon/14.Error credencial frente@1x.png"> </p>                    
+                </ng-template>
+                <p class="text-2">{{description}}</p> 
+                  <p class="my-3">
+                    <button (click)="captueWCamera()" type ="button" class="btn btn-lg btn-block btn-danger mr-3 btnUrl" data-url="errorIdentificacion.html"><i class="fas fa-camera"></i> Tomar foto</button>
+                  </p>
+                  <p class="my-3">
+                    <span>
+                        <input #imgInput type="file" accept="image/*" (change)="processFile(imgInput)">
+                        <button (click)="imgInput.click()" type ="button" class="btn btn-lg btn-block btn-outline-danger mr-3 btnUrl" data-url="errorIdentificacion.html"><i class="far fa-image"></i> Galería</button>
+                    </span>            
+                  </p>
+              
     </div>
-    <div class="m-20">
-        <header>
-            <!-- <div class="button-back-container">
-                <button class="btn rounded" (click)="back()"><img src="../../../../../assets/icons/left-curve-arrow.png" alt=""> Atras</button>
-            </div> -->
-        </header>
-        <!-- <h1>{{titulo}}</h1> -->
-
-        <img class="icon-passport-example" src="../../../../../assets/icons/icoscan.png" alt="doc capture icon" />
-        <p class="center">Sube o toma foto de tu documento</p>
-        <div class="panel border-gray bg-row">
-            <div class="margin-h-auto">
-                <img class="img-document-example" src="../../../../../assets/icons/{{this.idcard}}.png" alt="document example" />
-                <p class="center">Así es como deberá de mostrarse</p>
-            </div>
-        </div>
-
-        <div *ngIf="(this.mensaje=='' || this.mensaje==undefined) ; then thenOK else elseErr"></div>
-
-        <ng-template #thenOK></ng-template>
-        <ng-template #elseErr>
-            <div>
-                <div class="panel bg-red flex-row">
-                    <div class="round-icon round-icon-red">
-                        <svg class="icon  icon-Rejected icon-white">
-                        <use xlink:href="this.icon.icon-Rejected"></use>
-                    </svg>
-                    </div>
-                    <div class="panel-content">
-                        <p>{{mensaje}}</p>
-                    </div>
-                </div>
-            </div>
-        </ng-template>
-
-
-        <div>
-            <span>
-                <input #imgInput type="file" accept="image/*" (change)="processFile(imgInput)">
-                <button (click)="imgInput.click()" class="btn blue">Subir documento</button>
-            </span>
-            <button type="button" (click)="captueWCamera()" class="btn btn-light btn-lg btn-block">Tomar foto con la camara</button>
-        </div>
-
-    </div>
-
-</div>
+  </div>

@@ -3,10 +3,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ServicesGeneralService } from '../../../../services/general/services-general.service';
 import { SessionService } from 'src/app/services/session/session.service';
 import { Rutas } from 'src/app/model/RutasUtil';
+import { environment } from '../../../../../environments/environment';
+import { FP } from '@fp-pro/client';
 
 @Component({
   selector: 'app-verify-identity',
   templateUrl: './verify-identity.component.html',
+  styleUrls: ['./verify-identity.component.css']
 })
 export class VerifyIdentityComponent implements OnInit {
 
@@ -18,11 +21,13 @@ export class VerifyIdentityComponent implements OnInit {
   error: string;
   id: string;
 
-  ngOnInit() {
+  async ngOnInit() {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!this.alredySessionExist()) { return; }
+    const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
+    fp.send({tag: {tag:this.id}});
+    if (!(await this.alredySessionExist())) { return; }
     this.error = sessionStorage.getItem('errorDocument');
     this.filtersLoaded = Promise.resolve(true);
   }
@@ -45,14 +50,20 @@ export class VerifyIdentityComponent implements OnInit {
       }
     }
   }
-
-  agregarOferta(ti) {
-    this.typeIdentity = ti;
-    console.log('ti= ' + this.typeIdentity );
-    this.servicesGeneralService.settI(this.typeIdentity);
-    this.servicesGeneralService.setFrontAndBack('front');
-    sessionStorage.removeItem('errorDocument');
-    this.router.navigate([Rutas.documentInstruction + `${this.id}`]);
+    ti="";
+    sentTi(ti_){
+      this.ti=ti_;
+    }
+    sendDoc() {
+    if(this.ti!==""){
+      this.typeIdentity = this.ti;
+      console.log('ti= ' + this.typeIdentity );
+      this.servicesGeneralService.settI(this.typeIdentity);
+      this.servicesGeneralService.setFrontAndBack('front');
+      sessionStorage.removeItem('errorDocument');
+      this.router.navigate([Rutas.documentInstruction + `${this.id}`]);
+    }else{this.error='Seleccione un tipo de documento'}
+    
   }
 
 }

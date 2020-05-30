@@ -11,6 +11,8 @@ import { ServicesGeneralService, isMobile, isAndroid } from 'src/app/services/ge
 import { MiddleMongoService } from 'src/app/services/http/middle-mongo.service';
 import { MiddleDaonService } from 'src/app/services/http/middle-daon.service';
 import { Rutas } from 'src/app/model/RutasUtil';
+import { environment } from '../../../../../environments/environment';
+import { FP } from '@fp-pro/client';
 
 @Component({
   selector: 'app-facial-verification',
@@ -40,6 +42,8 @@ export class FacialVerificationComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
+    const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
+    fp.send({tag: {tag:this.id}});
     this.img = this.serviciogeneralService.getImg64();
     console.log('img = ' + this.img);
     this.foto = await this.blobToBase64(this.img);

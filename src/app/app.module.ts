@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ModalModule} from 'ng2-modal';
 import { HttpClientModule } from '@angular/common/http';
-
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { PlantillaComponent } from './components/plantilla.component';
 import { APP_ROUTING } from './app.routes';
@@ -26,6 +26,13 @@ import { InstruccionesComponent } from './components/daon/selfie/instrucciones/i
 import { PageFaceCaptureComponent } from './components/daon/selfie/page-face-capture/page-face-capture.component';
 import { FacialVerificationComponent } from './components/daon/selfie/facial-verification/facial-verification.component';
 import { ValidaOcrComponent } from './components/daon/document-verification/valida-ocr/valida-ocr.component';
+import { CorreoComponent } from './components/verificacion/correo/correo.component';
+import { FooterComponent } from './components/compartidos/footer/footer.component';
+import { HeaderComponent } from './components/compartidos/header/header.component';
+import { PlantillaSdkDaonComponent } from './components/plantillas/plantilla-sdk-daon/plantilla-sdk-daon.component';
+import { CuentaClabeComponent } from './components/verificacion/cuenta-clabe/cuenta-clabe.component';
+import { PersonComponent } from './components/person/person.component';
+import { CellPhoneComponent } from './components/cell-phone/cell-phone.component';
 // import {  NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // import {  NgbModal } from '../../node_modules/@ng-bootstrap/ng-bootstrap';
 
@@ -48,13 +55,21 @@ import { ValidaOcrComponent } from './components/daon/document-verification/vali
     LivenessCaptureComponent,
     LivenessResultComponent,
     ValidaOcrComponent,
-
+    CorreoComponent,
+    FooterComponent,
+    HeaderComponent,
+    PlantillaSdkDaonComponent,
+    CuentaClabeComponent,
+    PersonComponent,
+    CellPhoneComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule,
     APP_ROUTING,
     ModalModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgbModule,
     HttpClientModule,
     NgxSpinnerModule,

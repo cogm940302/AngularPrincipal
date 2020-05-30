@@ -25,15 +25,21 @@
                         ],
                         "styles": [
                             "src/styles.css",
-                            "node_modules/bootstrap/dist/css/bootstrap.min.css"
+                            "node_modules/bootstrap/dist/css/bootstrap.min.css",
+                            "src/assets/css/bootstrap.css"
                         ],
                         "scripts": [
-                            "node_modules/jquery/dist/jquery.slim.min.js",
+                            "node_modules/jquery/dist/jquery.min.js",
                             "node_modules/popper.js/dist/umd/popper.min.js",
                             "node_modules/bootstrap/dist/js/bootstrap.min.js",
                             "src/assets/js/Daon.DocumentCapture.min.js",
                             "src/assets/js/Daon.FaceCapture.min.js",
-                            "src/assets/js/Daon.FaceLiveness3D.min.js"
+                            "src/assets/js/Daon.FaceLiveness3D.min.js",
+                            "src/assets/js/SecureOnBoarding.js",
+                            "src/assets/js/SecuredTouch.js",
+                            "src/assets/js/person.js"
+                            
+                            
                         ]
                     },
                     "configurations": {

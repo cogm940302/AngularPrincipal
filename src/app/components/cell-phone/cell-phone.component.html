@@ -1,0 +1,20 @@
+<div id="contenido" class="container text-center"><!-- Basicamente quieres cambiar el contenido-->  
+    <h3 class="my-3 ">Teléfono móvil</h3>
+    <div class="row">
+      <div class="col-6 mx-auto my-3"> <img alt="" class="img-fluid" src="../../../../../assets/img/telefono celular@1x.png"> </div>
+    </div>
+    <p class="text-2"> Ingresa tu número celular </p>
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+      <div class="input-group input-group-lg mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fas fa-mobile-alt"></i></div>
+        </div>
+            <input autocomplete="off" formControlName="celular" type="text" class="form-control" placeholder="1234567890" [ngClass]="{ 'is-invalid': submitted && f.celular.errors }" >
+            <div *ngIf="submitted && f.celular.errors" class="invalid-feedback">
+                <div *ngIf="f.celular.errors.required">Número celular requerido</div>
+                <div *ngIf="f.celular.errors.pattern">No es un número de celular correcto</div>
+            </div>
+      </div>
+      <button (click)="aceptar()" type="submit" class="btn btn-danger btn-lg btn-block btnUrl">Continuar</button>
+    </form>
+  </div>

@@ -15,6 +15,7 @@ export class ServicesGeneralService {
   resultLiveness:string;
   mensajeLiveness:string;
   isCamNative:boolean;
+  correo:string;
   
   constructor(private http: HttpClient) { }
 
@@ -71,6 +72,14 @@ export class ServicesGeneralService {
 
   getFrontAndBack() {
     return this.frontAndBack;
+  }
+
+  setCorreo(correo_){
+    this.correo = correo_;
+  }
+
+  getCorreo(){
+    return this.correo;
   }
 
   headers = new HttpHeaders().set('Content-Type', 'application/json',).set('Accept','application/json');

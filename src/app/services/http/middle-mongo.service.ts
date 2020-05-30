@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { LigaUtil } from 'src/app/model/LigasUtil';
+import { sesionModel } from 'src/app/model/sesion/SessionPojo';
 
 @Injectable({
   providedIn: 'root'
@@ -57,7 +58,22 @@ export class MiddleMongoService {
       mongoUpdate = data;
     });
   }
-
+  
+  async updateDataUser(datos, id: string) {
+    console.log('lo que voy actulizar es: ');
+    console.log(datos);
+    let mongoUpdate;
+    mongoUpdate = this.http.put(LigaUtil.urlMiddleMongo() + `/${id}`, datos, { headers: this.headers }).pipe(
+      map((res: Response) => {
+        return res || {};
+      }),
+      catchError(this.errorMgmt)
+    );
+    await mongoUpdate.toPromise().then(data => {
+      console.log(data);
+      mongoUpdate = data;
+    });
+  }
   // Error handling
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = '';

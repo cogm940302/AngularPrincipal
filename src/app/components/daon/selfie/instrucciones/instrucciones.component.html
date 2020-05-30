@@ -1,5 +1,37 @@
 <div *ngIf="filtersLoaded | async" class="container">
     <div class="row justify-content-center">
+        <div class="errorMensaje" *ngIf="errorMensaje && errorMensaje.length > 0">
+            {{errorMensaje}}
+        </div>
+        <div id="contenido" class="container">
+            <h3 class="my-3 text-center">Tomate una selfie</h3>
+                            
+                            <div class="row">
+                                <div class="col-6 col-md-4 mx-auto my-3">
+                                    <img alt="" class="img-fluid" src="../../../../../assets/img/daon/5.Toma de selfie.png">
+                                </div>
+                            </div>
+                            <ul class="fa-ul">
+                                <li class="mb-1"><span class="fa-li"><i class="far fa-check-circle text-success fa-lg"></i></span> Asegúrate de estar en un área bien iluminada.</li>
+                                <li class="mb-1"><span class="fa-li"><i class="far fa-check-circle text-success fa-lg"></i></span> Estár en un fondo liso.</li>
+                                <li class="mb-1"><span class="fa-li"><i class="far fa-check-circle text-success fa-lg"></i></span> No tener gorras, lentes o algo que pueda ocultar tu rostro.</li>
+                                <li class="mb-1"><span class="fa-li"><i class="far fa-check-circle text-success fa-lg"></i></span> Manten una expresión seria.</li>
+                            </ul>
+
+                            <form>
+                                <button type="button" class="btn btn-danger btn-lg btn-block btnUrl" (click)="continuar()" id="validarBoton">Tomar selfie</button>
+                            </form>
+                        
+        </div>
+    </div>
+</div>
+
+
+
+
+<!--
+<div *ngIf="filtersLoaded | async" class="container">
+    <div class="row justify-content-center">
         <header class="header mt-2">
             <img alt="daon_image" class="daon-image" src="../../../../../assets/daon/mitLogo.png" />
         </header>
@@ -40,4 +72,4 @@
             <button class="btn btn-primary" (click)="continuar()" id="validarBoton">Continuar</button>
         </div>
     </div>
-</div>
+</div> -->

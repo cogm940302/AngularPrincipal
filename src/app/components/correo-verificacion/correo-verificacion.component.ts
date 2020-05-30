@@ -6,6 +6,10 @@ import { MiddleDaonService } from 'src/app/services/http/middle-daon.service';
 import { sesionModel } from '../../model/sesion/SessionPojo';
 import { MiddleMongoService } from '../../services/http/middle-mongo.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from '../../../environments/environment';
+import { FP } from '@fp-pro/client';
+import { MiddleVerificacionService } from '../../services/http/middle-verificacion.service';
+import { ServicesGeneralService } from '../../services/general/services-general.service';
 
 @Component({
   selector: 'app-correo-verificacion',
@@ -14,27 +18,33 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class CorreoVerificacionComponent implements OnInit {
 
-  constructor(private router: Router, private session: SessionService,
+  constructor(public serviciogeneralService: ServicesGeneralService, private router: Router, private session: SessionService,
               private actRoute: ActivatedRoute, private middleDaon: MiddleDaonService,
-              private middleMongo: MiddleMongoService, private spinner: NgxSpinnerService) { }
+              private middleMongo: MiddleMongoService, private spinner: NgxSpinnerService,
+              private middleVerifica: MiddleVerificacionService) { }
 
   filtersLoaded: Promise<boolean>;
-  correoText = '';
-  id: any;
   object: sesionModel;
+  correoText = '';
+  error = '';
+  id: any;
 
   async ngOnInit() {
     await this.spinner.show();
+    document.getElementById("errorMessageCorreo").style.display = "none";
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!await this.alredySessionExist()) { return; }
+    const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
+    fp.send({tag: {tag:this.id}});
+    if (!(await this.alredySessionExist())) { return; }
     this.filtersLoaded = Promise.resolve(true);
     await this.spinner.hide();
   }
 
   async alredySessionExist() {
     this.object = this.session.getObjectSession();
+    console.log("***object***")
     console.log(this.object);
     if (this.object === null || this.object === undefined) {
       this.router.navigate([Rutas.terminos + `/${this.id}`]);
@@ -52,22 +62,27 @@ export class CorreoVerificacionComponent implements OnInit {
       }
     }
   }
-
+ 
   onSearchChange(searchValue: string): void {
     this.correoText = searchValue;
   }
 
-  async validaCorreo() {
+  async aceptar() {
     await this.spinner.show();
-    const objetoDaon = await this.middleDaon.createDaonRegister(this.correoText, this.id);
-    if (objetoDaon === true) {
-      this.object.correo = true;
-      this.session.updateModel(this.object);
-      await this.middleDaon.updateDaonDataUser(this.object, this.id);
-      this.router.navigate([Rutas.instrucciones + `${this.id}`]);
-    } else {
-      this.router.navigate([Rutas.error]);
+
+    if (this.correoText.match('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')){
+      document.getElementById("errorMessageCorreo").style.display = "none";
+      await this.middleVerifica.generaCodigoEmail(this.id, this.correoText);
+      this.serviciogeneralService.setCorreo(this.correoText);
+      this.router.navigate([Rutas.correoCode + `${this.id}`]);
+      await this.spinner.hide();
+      return true;
+    }else {
+      document.getElementById("errorMessageCorreo").style.display = "block";
+      await this.spinner.hide();
+        return false;
     }
-    await this.spinner.hide();
+
+     
   }
 }

@@ -15,7 +15,6 @@ export class MiddleDaonService {
 
   headers = new HttpHeaders({ 'Content-Type': 'application/json', Accept: 'q=0.8;application/json;q=0.9' });
 
-
   async updateDaonDataUser(datos: sesionModel, id: string) {
     console.log('lo que voy actulizar es: ');
     console.log(datos.daon);

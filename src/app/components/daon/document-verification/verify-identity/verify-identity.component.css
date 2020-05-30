@@ -1,0 +1,12 @@
+/* Red */
+.danger {
+    border-color: gray;
+    color: gray
+  }
+
+  .btn-outline-secondary {
+    border-color: #6c757d;
+}
+#error{
+  color:red !important;
+}

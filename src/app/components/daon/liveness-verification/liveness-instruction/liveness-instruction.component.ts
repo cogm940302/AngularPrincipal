@@ -3,6 +3,8 @@ import { Rutas } from 'src/app/model/RutasUtil.js';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from 'src/app/services/session/session.service';
 import { ErrorVidaService } from 'src/app/services/errores/error-vida.service';
+import { environment } from '../../../../../environments/environment';
+import { FP } from '@fp-pro/client';
 
 @Component({
   selector: 'app-liveness-instruction',
@@ -11,6 +13,13 @@ import { ErrorVidaService } from 'src/app/services/errores/error-vida.service';
 })
 export class LivenessInstructionComponent implements OnInit {
 
+  title = "Prueba de vida";      
+  imgUrl="../../../../../assets/img/daon/19.Prueba_de_vida.png";
+  instruction="A continuación se te tomará un video.";
+  stepOne="Aségurate de estar en un área bien iluminada."; 
+  stepTwo="Sigue las instrucciones de la pantalla.";  
+  btnTitle = "Iniciar grabación";
+
   constructor(public router: Router, private session: SessionService, private actRoute: ActivatedRoute,
               private errorVidaService: ErrorVidaService) { }
 
@@ -18,14 +27,16 @@ export class LivenessInstructionComponent implements OnInit {
   errorMensaje: string;
   id: string;
 
-  ngOnInit() {
+  async ngOnInit() {
     console.log('mensaje: ' + this.errorVidaService.mensaje);
     console.log('mensaje: ' + this.errorVidaService.returnMensaje());
     this.errorMensaje = this.errorVidaService.returnMensaje();
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!this.alredySessionExist()) { return; }
+    const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
+    fp.send({tag: {tag:this.id}});
+    if (!(await this.alredySessionExist())) { return; }
     this.filtersLoaded = Promise.resolve(true);
   }
 
@@ -40,7 +51,7 @@ export class LivenessInstructionComponent implements OnInit {
         this.router.navigate([Rutas.error]);
         return false;
       } else if (object.daon.pruebaVida) {
-        this.router.navigate([Rutas.fin]);
+        this.router.navigate([Rutas.cuentaClabe + `/${this.id}`]);
         return false;
       } else {
         return true;

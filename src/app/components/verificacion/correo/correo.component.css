@@ -1,0 +1,62 @@
+.columna {
+    width: 100%;
+}
+
+h3 {
+    font-size: 35px;
+}
+
+.container-fluid {
+    /* margin-top: 60px;
+    border-style: solid;
+    border-color: green; */
+}
+
+.row {
+    /* background: #e8e8e8; */
+    margin-top: 5px;
+    height: 70px;
+}
+
+.rowNew {
+    margin-top: 10px;
+    height: 70px;
+}
+
+.col {
+    /* background: #f2f2f2;
+    border: 1px solid #4d5061; */
+}
+
+#validacionInput {
+    height: 45px;
+    text-align: center;
+    width: 100%;
+}
+
+#tituloDiv {
+    text-align: center;
+}
+
+#validarBoton {
+    margin-bottom: 28px;
+    width: 100%;
+}
+
+.form-correo{
+    border: solid;
+    border-color: red;
+    border-radius: 7px;
+}
+
+.input-correo{
+    border-top: none !important;
+    border-right: none !important;
+    border-left: none !important;
+    border-bottom: solid;
+    text-align: center;
+}
+
+#errorMessagePin{
+    color:red !important;
+}

@@ -8,6 +8,8 @@ import { Rutas } from 'src/app/model/RutasUtil';
 import { MiddleDaonService } from 'src/app/services/http/middle-daon.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ErrorSelfieService } from 'src/app/services/errores/error-selfie.service';
+import { environment } from '../../../../../environments/environment';
+import { FP } from '@fp-pro/client';
 
 
 @Component({
@@ -29,12 +31,14 @@ export class ConfirmDocumentComponent implements OnInit {
   checkIdsGetSend: any;
   id: string;
   img: any;
-
-  ngOnInit() {
+  titulo = '';
+  async ngOnInit() {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!this.alredySessionExist()) { return; }
+    const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
+    fp.send({tag: {tag:this.id}});
+    if (!(await this.alredySessionExist())) { return; }
     this.documentoSend = new DocumentoSend();
     this.clientCapture = new ClientCapture();
     this.processedImage = new ProcessedImage();
@@ -45,6 +49,14 @@ export class ConfirmDocumentComponent implements OnInit {
     console.log('>>>>>>>>>>>>>>>>> ' + this.serviciogeneralService.getImg64());
     this.img = this.serviciogeneralService.getImg64();
     this.filtersLoaded = Promise.resolve(true);
+    
+    if ( (this.serviciogeneralService.getFrontAndBack() === 'back' || sessionStorage.getItem('fb') === 'back') )
+    {
+      this.titulo="Idenfiticación posterior";
+    } else{
+      this.titulo="Idenfiticación de frente";
+    }
+
   }
 
   async alredySessionExist() {
@@ -93,16 +105,16 @@ export class ConfirmDocumentComponent implements OnInit {
     await this.spinner.show();
     console.log('voy a enviar');
     if (await this.sendDocumentDaon()) {
-      if ( (sessionStorage.getItem('ti') && sessionStorage.getItem('ti') !== 'ID_CARD')
-      || (this.serviciogeneralService.getFrontAndBack() === 'back' || sessionStorage.getItem('fb') === 'back')) {
-        // const object = this.session.getObjectSession();
-        // object.daon.identity = true;
-        // this.session.updateModel(object);
-        // await this.middleDaon.updateDaonDataUser(object, this.id);
-        // console.log('ya termine' + JSON.stringify(object, null, 2));
+
+      if ( (sessionStorage.getItem('ti') &&
+       sessionStorage.getItem('ti') !== 'ID_CARD')
+      || (this.serviciogeneralService.getFrontAndBack() === 'back' ||
+       sessionStorage.getItem('fb') === 'back')) {
         this.router.navigate([Rutas.ocrValidation + `${this.id}`]);
-      } else if (this.serviciogeneralService.getFrontAndBack() === 'front' || sessionStorage.getItem('fb') === 'front') {
+      } else if (this.serviciogeneralService.getFrontAndBack() === 'front' ||
+       sessionStorage.getItem('fb') === 'front') {
         this.serviciogeneralService.setFrontAndBack('back');
+        this.serviciogeneralService.settI(sessionStorage.getItem('ti'));
         this.router.navigate([Rutas.documentInstruction + `${this.id}`]);
         await this.spinner.hide();
       }

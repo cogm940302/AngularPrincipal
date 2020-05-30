@@ -5,6 +5,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SessionService } from 'src/app/services/session/session.service.js';
 import { ServicesGeneralService, isMobile, isIphone } from '../../../../services/general/services-general.service';
 import { Rutas } from 'src/app/model/RutasUtil.js';
+import { environment } from '../../../../../environments/environment';
+import { FP } from '@fp-pro/client';
 
 
 // TODO verificar las rutas de los archivos
@@ -44,7 +46,12 @@ export class PageFaceCaptureComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!this.alredySessionExist()) { return; }
+    FP.load({client: environment.fingerJsToken, region: 'us'})
+      .then(fp =>{
+        fp.send({tag: {tag:this.id}});
+      });
+
+    if (!(await this.alredySessionExist())) { return; }
     this.isMobileBool = isMobile(navigator.userAgent);
     this.isIphone = isIphone(navigator.userAgent);
     this.isEdge = window.navigator.userAgent.indexOf('Edge') > -1;
@@ -58,6 +65,16 @@ export class PageFaceCaptureComponent implements OnInit {
     this.fc.startCamera(this.videoEl).then((response) => {
       this.onCameraStarted(this.fc, this.videoEl);
     });
+    setTimeout(() => {
+      console.log('sleep');
+      this.tomarSelfie();
+    }, 5000);
+    
+    /*navigator.mediaDevices.getUserMedia().then(function(mediaStream) {
+    }).catch(function(err) {
+      alert("Debes permitir el acceso a tu cámara");
+    });*/
+
   }
 
   async alredySessionExist() {
@@ -103,9 +120,11 @@ export class PageFaceCaptureComponent implements OnInit {
       });
     };
   }
+
   returnId() {
     return this.id;
-  } 
+  }
+
   tomarSelfie() {
     this.btnB = false;
     this.fc.startAutoCapture(response => {
@@ -183,6 +202,7 @@ export class PageFaceCaptureComponent implements OnInit {
             console.log('si pasa' + JSON.stringify(response, null, 2));
             this.mensaje = response.feedback;
             this.fc.stopAutoCapture();
+            this.fc.stopCamera();
             this.imageData = response.sentBlobImage;
             this.serviciogeneralService.setImg64(this.imageData);
             this.router.navigate([Rutas.selfieVerification + `${this.id}`]);

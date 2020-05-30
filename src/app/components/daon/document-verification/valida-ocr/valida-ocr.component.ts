@@ -4,6 +4,8 @@ import { SessionService } from 'src/app/services/session/session.service';
 import { Rutas } from 'src/app/model/RutasUtil';
 import { MiddleDaonService } from 'src/app/services/http/middle-daon.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from '../../../../../environments/environment';
+import { FP } from '@fp-pro/client';
 
 @Component({
   selector: 'app-valida-ocr',
@@ -26,7 +28,9 @@ export class ValidaOcrComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    if (!await this.alredySessionExist()) { return; }
+    const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
+    fp.send({tag: {tag:this.id}});
+    if (!(await this.alredySessionExist())) { return; }
     await this.getDataOcrConsume();
   }
 
@@ -79,6 +83,7 @@ export class ValidaOcrComponent implements OnInit {
     const object = this.session.getObjectSession();
     object.daon.identity = true;
     this.session.updateModel(object);
+    console.log("Antes== " , object);
     await this.middleDaon.updateDaonDataUser(object, this.id);
     this.router.navigate([Rutas.livenessInstruction + `/${this.id}`]);
     await this.spinner.hide();

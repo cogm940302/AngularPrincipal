@@ -1,0 +1,56 @@
+<div class="container">
+  <div id="contenido" class="container text-center">
+                        <h3 class="my-3">{{title}}</h3>
+                        <!--poner dos columnas -->
+                        <div class="row">
+                          <div class="col-6">
+                            <p class="text-2" id="titleFisica">Persona fisica</p>
+                            <div class="border border-secondary rounded bg-white shadow p-4" id="borderFisica"> <img alt="" class="img-fluid" [src]="imgUrlPersonaFisica" id="imgFisica"> </div>
+                            <p class="texto-3 my-3">{{btnTitlePersonaFisica}}</p>
+                            <a href="#" data-persona ="fisica" class="eligePersona stretched-link"></a> </div>
+                          <div class="col-6">
+                            <p class="text-2" id="titleMoral">{{labelPersonaMoral}}</p>
+                            <div class="border border-secondary rounded bg-white shadow p-4" id="borderMoral"> <img alt="" class="img-fluid" [src]="imgUrlPersonaMoral" id="imgMoral"> </div>
+                            <p class="texto-3 my-3">{{btnTitlePersonaMoral}}</p>
+                            <a href="#" data-persona ="moral" class="stretched-link eligePersona"></a> </div>
+                            <input  type="hidden" id="valorTipoPersona" [(ngModel)]="valorPersonaModel" [ngModelOptions]="{standalone: true}">
+                            <div class="row col-md-12 text-center">
+                            <small class="form-text text-muted" id="errorMessageTipoPersona">Debe seleccionar un tipo de persona</small>
+                          </div>
+                        </div>
+                        <form>
+                          <div class="form-group">
+                            <input autocomplete="off" type="text" placeholder="Ingresa tu RFC" id="rfc" class="form-control form-control-lg" [(ngModel)]="rfcModel" [ngModelOptions]="{standalone: true}">
+                            <small class="form-text text-muted" id="errorMessageRFC">Ingrese un RFC valido</small> 
+                          </div>
+                            
+                            <div class="form-group" id="controlMoral">
+                            <input autocomplete="off" type="text" placeholder="Razón Social (Ej. Mi Negocio, S.A. de C.V.)" id="razonSocial" class="form-control form-control-lg" [(ngModel)]="razonSocialModel" [ngModelOptions]="{standalone: true}">
+                            </div>
+                            
+                            
+                          <p class="my-3">
+                            <button id="btnContinuarPerson" type ="button" (click)="enter()"  class="btn btn-lg btn-block btn-danger mr-3 btnUrl">{{btnTitleContinuar}}</button>
+                          </p>
+                        </form>
+
+                        
+  </div>
+
+  <!-- The Modal -->
+
+                   
+</div>
+
+<div id="modalPersonaMoral" class="modal my-auto">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <!--<button id="btnAceptarModal" type ="button" (click)="cerrarModal()"  class="btn btn-lg btn-block mr-3 btnUrl">&times;</button>-->
+    <h3>Aviso importante</h3>
+    <p>Apartir de este momento debe identificarse el <strong>representante legal.</strong></p>
+    <button id="btnAceptarModal" type ="button" (click)="aceptar()"  class="btn btn-lg btn-block mr-3 btnUrl colorTextBtn">Ok</button>
+  </div>
+  
+
+</div>

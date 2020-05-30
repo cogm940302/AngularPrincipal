@@ -6,8 +6,9 @@ export const environment = {
   production: false,
   name: 'qa',
   // baseUrl: 'https://2u597e7kmf.execute-api.us-east-1.amazonaws.com/test/usuario'
-  baseUrl: 'https://qa-api.mitidentity.com/usuario'
-
+  baseUrl: 'https://qa-api.mitidentity.com/usuario',
+  fingerJsToken: 'M3ctjYXlZ7GFJRohWEjH',
+  secureTouchToken: 'cc091bb3a3e3bef61d49e360dcfdbc84'
 };
 
 /*

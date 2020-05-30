@@ -9,6 +9,8 @@ import { HttpClient } from '@angular/common/http';
 import { MiddleMongoService } from '../../services/http/middle-mongo.service';
 import { MiddleDaonService } from '../../services/http/middle-daon.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from '../../../environments/environment';
+import { FP } from '@fp-pro/client';
 
 
 @Component({
@@ -45,6 +47,8 @@ export class TermsComponent implements OnInit {
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
+    const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
+    fp.send({tag: {tag:this.id}});
     if (await this.alredySessionExist()) {
       return;
     }
@@ -99,16 +103,16 @@ export class TermsComponent implements OnInit {
     this.router.navigate([Rutas.correo + `${this.id}`]);
   }
 
-  open(content, tipo) {
-    console.log(tipo);
-    if (tipo === 'terminos') {
-      this.textoModal = terminosDeUso;
-      this.tituloModal = 'Terminos de Uso';
-    } else {
-      this.textoModal = politicaDePrivacidad;
-      this.tituloModal = 'Politica de Privacidad';
-    }
-    this.modalService.open(content);
-  }
+  // open(content, tipo) {
+  //   console.log(tipo);
+  //   if (tipo === 'terminos') {
+  //     this.textoModal = terminosDeUso;
+  //     this.tituloModal = 'Terminos de Uso';
+  //   } else {
+  //     this.textoModal = politicaDePrivacidad;
+  //     this.tituloModal = 'Politica de Privacidad';
+  //   }
+  //   this.modalService.open(content);
+  // }
 
 }

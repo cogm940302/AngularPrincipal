@@ -1,42 +1,56 @@
-<div [hidden]="!activator">
+<div class="container">    
+    <div class="col col-md-4">
+        <main role="main" id="adentro" class="flex-shrink-0">
+            <div class="container-fluid">
+                <div class="col  text-center">
+                    <!--<div [hidden]="!activator">-->
+                        <div class="page-capture">
+                        <div *ngIf="(this.isIphone) ; then thenY else elseN"></div>
+                        <ng-template #thenY></ng-template>
+                        <ng-template #elseN>
+                            <!--<div class="native-capture-box box-shadow">¿Algún problema?<span><input type="file" accept="image/*" capture="user"><button (click)="initImg()"  class="button-link">Subir Selfie</button></span></div>-->
 
-    <div class="page-capture">
-        <div *ngIf="(this.isIphone) ; then thenY else elseN"></div>
-        <ng-template #thenY></ng-template>
-        <ng-template #elseN>
-            <!--<div class="native-capture-box box-shadow">¿Algún problema?<span><input type="file" accept="image/*" capture="user"><button (click)="initImg()"  class="button-link">Subir Selfie</button></span></div>-->
-            <div style="visibility: visible;">
-                <div class="native-capture-box box-shadow">
-                    <!-- Subir foto? -->
-                    <span>
-                        <input #imgInput type="file" accept="image/*" capture="user" (change)="processFile(imgInput)" >
-                        <button (click)="imgInput.click()" class="button-link">{{this.isMobileBool ? 'Lanzar camara' :  'Subir Foto'}}</button>
-                    </span>
-                </div>
-            </div>
-        </ng-template>
+
+                                    <!-- Subir foto? -->
+                                    
+                <input #imgInput type="file" accept="image/*" capture="user" (change)="processFile(imgInput)" >
+                <button (click)="imgInput.click()" class="button-link">{{this.isMobileBool ? 'Lanzar camara' :  'Subir Foto'}}</button>
+                        </ng-template>
         <!-- <canvas #canvas borde="1" class="border border-primary">
                     <img id="scream"  src="../../../../assets/icons/frame_overlay_far_green.png" class="img-preview" alt="The Scream">
 
                 </canvas> -->
+                <div class="col py-4 text-center">   
+                    <h2 class="center">{{mensaje}}</h2>
+                </div>
+                
         <div class=" {{isEdge ? 'ui-canvas-container hiddenEdge':'ui-canvas-container'}}">
-            <video class="{{this.isMobileBool ? 'ui-canvas' : isEdge ? 'ui-canvas scale-edge' : 'ui-canvas'}}" autoplay="" playsinline="" style="transform: scaleX(-1);"> </video>
+            <video class="{{this.isMobileBool ? 'ui-canvas' : isEdge ? 
+            'ui-canvas scale-edge' : 'ui-canvas'}}" autoplay="" playsinline=""
+             style="transform: scaleX(-1);"> </video>
             <div class="{{isEdge ? '':'overlay overlay-oval'}}"></div>
         </div>
         <canvas #canvas width="480" height="640" class="ui-canvas-container ui-canvas">
                 <img #scream id="scream"  src="../../../../assets/icons/frame_overlay_far_green.png" alt="The Scream">
             </canvas>
-        <footer>
+        <!--<footer>
             <br>
-            <button class="btn blue" (click)="tomarSelfie()" [disabled]="!btnB">TOMAR FOTO</button>
-            <p class="message-box box-shadow text-center">{{mensaje}}</p>
-        </footer>
+            <button class="btn blue" (click)="tomarSelfie()" [disabled]="!btnB">TOMAR FOTO!</button>
+
+        </footer>-->
     </div>
-
-</div>
-
+<!--</div>-->
+ 
 <!-- <button (click)="captura()">capturar</button> -->
 
 <!-- <div *ngIf="!activator" class="container">
     <app-facial-verification [foto]="imprimirImagen()" [id]="id"></app-facial-verification>
 </div> -->
+
+
+
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
