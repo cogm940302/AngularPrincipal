@@ -19,13 +19,14 @@ export class CuentaClabeComponent implements OnInit {
     private actRoute: ActivatedRoute, private middle: MiddleMongoService,
     private spinner: NgxSpinnerService) {}
     
-    myForm:any;
+    //myForm:any;
     isOK=false;
     submitted = false;
+    myForm = new FormGroup({
+      cuentaClabe: new FormControl('', [Validators.minLength(18),Validators.maxLength(18), Validators.required, Validators.pattern("[0-9]*"), this.IsValidated()])
+    });   
     async ngOnInit() {
-      this.myForm = new FormGroup({
-        cuentaClabe: new FormControl('', [Validators.minLength(18),Validators.maxLength(18), Validators.required, Validators.pattern("[0-9]*"), this.IsValidated()])
-      });    
+       
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
@@ -116,14 +117,14 @@ export class CuentaClabeComponent implements OnInit {
     return () => {
       if(this.myForm!==undefined)
       {        
-      if (!this.validaClabe(this.f.cuentaClabe.value) && this.submitted) {
-        return { valid: true };
-      } else {
+        if (!this.validaClabe(this.f.cuentaClabe.value) && this.submitted) {
+          return { valid: true };
+        } else {
+          return null;
+        }
+      }else{
         return null;
       }
-    }else{
-      return null;
-    }
     };
   }
 }
