@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { politicaDePrivacidad, terminosDeUso } from '../../model/documentos/aceptacion';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Rutas } from 'src/app/model/RutasUtil';
 import { SessionService } from '../../services/session/session.service';
@@ -9,8 +8,6 @@ import { HttpClient } from '@angular/common/http';
 import { MiddleMongoService } from '../../services/http/middle-mongo.service';
 import { MiddleDaonService } from '../../services/http/middle-daon.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { environment } from '../../../environments/environment';
-import { FP } from '@fp-pro/client';
 
 
 @Component({
@@ -20,19 +17,14 @@ import { FP } from '@fp-pro/client';
 })
 export class TermsComponent implements OnInit {
 
-  state = {
-    checked: false,
-    isAccepted: 'unset',
-    termsOfUse: false,
-    privacyPolicy: false
-  };
-
   textoModal = '';
   tituloModal = '';
   datosDelCliente: sesionModel;
   modelo: sesionModel;
   id: any;
   filtersLoaded: Promise<boolean>;
+  oferta: string;
+  apiToken: string;
 
   constructor(config: NgbModalConfig, private modalService: NgbModal, public router: Router, public session: SessionService,
               private http: HttpClient, private middle: MiddleMongoService, private actRoute: ActivatedRoute,
@@ -42,77 +34,53 @@ export class TermsComponent implements OnInit {
   }
 
   async ngOnInit() {
-    console.log('0.0.2');
     await this.spinner.show();
-    this.actRoute.params.subscribe(params => {
-      this.id = params['id'];
-    });
-    const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
-    fp.send({tag: {tag:this.id}});
-    if (await this.alredySessionExist()) {
+    this.actRoute.queryParams.subscribe(params => {
+      this.oferta = params['oferta'];
+      this.apiToken = params['apiToken'];
+  });
+    if (!this.oferta || !this.apiToken) {
+      await this.goToErrorPage();
       return;
     }
+    await this.initSessionValues();
     console.log(this.datosDelCliente);
-    // this.datosDelCliente = new sesionModel()
-    // this.datosDelCliente._id = this.id;
     this.session.updateModel(this.datosDelCliente);
     this.filtersLoaded = Promise.resolve(true);
     await this.spinner.hide();
   }
 
-  toogleCheckbox() {
-    this.state.checked = !this.state.checked;
+  async initSessionValues() {
+    this.session.cleanValues();
+    this.datosDelCliente = new sesionModel();
+    this.id = await this.middle.creaTrackId(this.oferta, this.apiToken);
+    if (!this.id) {
+      await this.goToErrorPage();
+    }
+    this.datosDelCliente._id = this.id;
   }
 
-  /** function to validate if user recharge page **/
-  async alredySessionExist() {
-    this.datosDelCliente = this.session.getObjectSession();
-    console.log(this.datosDelCliente);
-    if (this.datosDelCliente === null || this.datosDelCliente === undefined) {
-      console.log('la sesion no existe');
-      this.datosDelCliente = new sesionModel();
-      this.datosDelCliente = await this.middle.getDataUser(this.id);
-      console.log(this.datosDelCliente);
-      if (this.datosDelCliente === undefined || this.datosDelCliente._id === 'Error') {
-        this.router.navigate([Rutas.error]);
-        await this.spinner.hide();
-        return true;
-      }
-      this.datosDelCliente._id = this.id;
-    }
-    if (!this.datosDelCliente || this.datosDelCliente._id !== this.id) {
-      this.router.navigate([Rutas.error]);
-      await this.spinner.hide();
-      return true;
-    }
-    if (this.datosDelCliente.terminos) {
-      this.session.updateModel(this.datosDelCliente);
-      this.router.navigate([Rutas.correo + `${this.id}`]);
-      return true;
-    }
-    return false;
+  async goToErrorPage() {
+    await this.spinner.hide();
+    this.router.navigate([Rutas.error]);
   }
 
   async siguiente() {
     await this.spinner.show();
     this.datosDelCliente.terminos = true;
+    this.datosDelCliente.daon = {
+      daonClientHref : '',
+      daonHref: '',
+      selfie: false,
+      identity: false,
+      pruebaVida: false
+    };
     console.log(this.datosDelCliente);
-    await this.middle.updateTermsDataUser({terminos: true}, this.id);
+    await this.middle.updateTermsDataUser({ terminos: true }, this.id);
     await this.session.updateModel(this.datosDelCliente);
     await this.spinner.hide();
     this.router.navigate([Rutas.correo + `${this.id}`]);
   }
 
-  // open(content, tipo) {
-  //   console.log(tipo);
-  //   if (tipo === 'terminos') {
-  //     this.textoModal = terminosDeUso;
-  //     this.tituloModal = 'Terminos de Uso';
-  //   } else {
-  //     this.textoModal = politicaDePrivacidad;
-  //     this.tituloModal = 'Politica de Privacidad';
-  //   }
-  //   this.modalService.open(content);
-  // }
 
 }

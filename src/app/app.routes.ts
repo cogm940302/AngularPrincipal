@@ -30,7 +30,7 @@ const APP_ROUTES: Routes = [
   },
   {
       path: 'services',
-    
+
     children: [
         {path: 'daon/selfie/:id', component: PageFaceCaptureComponent},
         {path: 'daon/document/capture/:id', component: CaptureDocumentComponent},
@@ -53,13 +53,13 @@ const APP_ROUTES: Routes = [
           {path: 'cell-phone/:id', component: CellPhoneComponent},
           {path: 'correo/:id', component: CorreoVerificacionComponent},
           {path: 'correo/code/:id', component: CorreoComponent},
-          {path: 'terminos/:id', component: TermsComponent},
+          {path: 'terminos', component: TermsComponent},
           {path: 'person/:id', component: PersonComponent},
           {path: 'error', component: ErrorComponent},
           {path: 'final', component: FinalComponent},
           {path: '**', component: ErrorComponent}
       ],
-      
+
   },
 ];
 
