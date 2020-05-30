@@ -21,15 +21,15 @@ export class CaptureDocumentComponent implements OnInit {
               private session: SessionService, private actRoute: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     this.htmlCanvasToBlob();
-    
+
     if (serviciogeneralService.gettI() !== undefined) {
       sessionStorage.setItem('ti', serviciogeneralService.gettI());
     } else if (sessionStorage.getItem('ti') === undefined) {
       this.router.navigate([Rutas.chooseIdentity + `${this.id}`]);
     }
-    
+
     console.log("ti= " + sessionStorage.getItem('ti'));
-    
+
     this.dc = new DocumentCapture.Daon.DocumentCapture({
       url: 'https://dobsdemo-docquality-first.identityx-cloud.com/rest/v1/quality/assessments',
       documentType: sessionStorage.getItem('ti'),
@@ -52,7 +52,7 @@ export class CaptureDocumentComponent implements OnInit {
       this.id = params['id'];
     });
     const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
-    fp.send({tag:{tag:this.id}});
+    fp.send({tag: this.id});
     if (!(await this.alredySessionExist())) { return; }
     await this.spinner.hide();
     this.filtersLoaded = Promise.resolve(true);
@@ -88,7 +88,7 @@ export class CaptureDocumentComponent implements OnInit {
 
     const { videoWidth, videoHeight } = document.querySelector('video');
     const { clientWidth, clientHeight } = document.querySelector(".ui-canvas-container");
-    
+
     /*export const ID_CARD = { aspectRatio: 1.5858 };
     export const PASSPORT = { aspectRatio: 1.4205 };
     export const A4_PORT = { aspectRatio: 0.7071 };
@@ -108,7 +108,7 @@ export class CaptureDocumentComponent implements OnInit {
       documentTypeRatio
     })
     function getContainerProjection({ ratios, container }) {
-      const ratio = Math.min(ratios.x, ratios.y);    
+      const ratio = Math.min(ratios.x, ratios.y);
       return {
         x: container.x * ratio,
         y: container.y * ratio
@@ -134,7 +134,7 @@ export class CaptureDocumentComponent implements OnInit {
     }
     console.log("<<>> " + JSON.stringify(rectCoords) +
     this.serviciogeneralService.getFrontAndBack());
-  
+
     const queryParams = {
       upperLeftX: 25,
       upperLeftY: 100,

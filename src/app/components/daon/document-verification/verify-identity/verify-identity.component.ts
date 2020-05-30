@@ -26,7 +26,7 @@ export class VerifyIdentityComponent implements OnInit {
       this.id = params['id'];
     });
     const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
-    fp.send({tag: {tag:this.id}});
+    fp.send({tag: this.id});
     if (!(await this.alredySessionExist())) { return; }
     this.error = sessionStorage.getItem('errorDocument');
     this.filtersLoaded = Promise.resolve(true);
@@ -63,7 +63,7 @@ export class VerifyIdentityComponent implements OnInit {
       sessionStorage.removeItem('errorDocument');
       this.router.navigate([Rutas.documentInstruction + `${this.id}`]);
     }
-    
+
   }
 
 }

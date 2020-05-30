@@ -13,11 +13,11 @@ import { FP } from '@fp-pro/client';
 })
 export class LivenessInstructionComponent implements OnInit {
 
-  title = "Prueba de vida";      
+  title = "Prueba de vida";
   imgUrl="../../../../../assets/img/daon/19.Prueba_de_vida.png";
   instruction="A continuación se te tomará un video.";
-  stepOne="Aségurate de estar en un área bien iluminada."; 
-  stepTwo="Sigue las instrucciones de la pantalla.";  
+  stepOne="Aségurate de estar en un área bien iluminada.";
+  stepTwo="Sigue las instrucciones de la pantalla.";
   btnTitle = "Iniciar grabación";
 
   constructor(public router: Router, private session: SessionService, private actRoute: ActivatedRoute,
@@ -35,7 +35,7 @@ export class LivenessInstructionComponent implements OnInit {
       this.id = params['id'];
     });
     const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
-    fp.send({tag: {tag:this.id}});
+    fp.send({tag: this.id});
     if (!(await this.alredySessionExist())) { return; }
     this.filtersLoaded = Promise.resolve(true);
   }
