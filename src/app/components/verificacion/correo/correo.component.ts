@@ -105,15 +105,15 @@ export class CorreoComponent implements OnInit {
     await this.spinner.show();
     const result = await this.middleVerifica.validaCodigoEmail(this.id, this.codigoText);
     if (result === 200) {
+      this.error='';
       this.verificaCorreo();
     } else {
-      this.error = 'El codigo es incorrecto';
+      this.error = 'Clave invalida, intente de nuevo';
     }
     await this.spinner.hide();
   }
 
   async verificaCorreo() {
-
     const objetoDaon = await this.middleDaon.createDaonRegister(this.serviciogeneralService.getCorreo(), this.id);
     if (objetoDaon === true) {
       this.object.emailVerified = true;
@@ -133,7 +133,7 @@ export class CorreoComponent implements OnInit {
 
   async aceptar() {
     await this.spinner.show();
-    var correoText = $('#emailText').text();
+    var correoText = this.serviciogeneralService.getCorreo();
     console.log(correoText);
       console.log("id >>>" + this.id + " - correoText >>> " + correoText + " - " + this.object['emailVerified'])
       await this.middleVerifica.generaCodigoEmail(this.id, correoText);

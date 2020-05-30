@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Rutas } from 'src/app/model/RutasUtil.js';
 import { FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 import { MiddleMongoService } from '../../../services/http/middle-mongo.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 @Component({
   selector: 'app-cuenta-clabe',
   templateUrl: './cuenta-clabe.component.html',
@@ -14,7 +16,8 @@ export class CuentaClabeComponent implements OnInit {
 
   id: string;
   constructor(private session: SessionService, public router: Router,
-    private actRoute: ActivatedRoute, private middle: MiddleMongoService) {}
+    private actRoute: ActivatedRoute, private middle: MiddleMongoService,
+    private spinner: NgxSpinnerService) {}
     
     myForm:any;
     isOK=false;
@@ -65,6 +68,7 @@ export class CuentaClabeComponent implements OnInit {
   }
 
   async continuar(){
+    await this.spinner.show();
     console.log(">>> : " + this.f.cuentaClabe.value); 
     if(this.myForm.valid){
       console.log(">>> : " + this.f.cuentaClabe.value); 
@@ -74,8 +78,10 @@ export class CuentaClabeComponent implements OnInit {
       this.session.updateModel(object);
       await this.middle.updateDataUser({cuentaClabe:this.f.cuentaClabe.value}, this.id);
       console.log('ya termine con la CC' + JSON.stringify(object, null, 2));
+      await this.spinner.hide();
       this.router.navigate([Rutas.fin]);   
     }
+    await this.spinner.hide();
    
    /* const datosDelCliente = await this.middle.getDataUser(this.id);
     console.log("datos actuales del usuario" + JSON.stringify(datosDelCliente));

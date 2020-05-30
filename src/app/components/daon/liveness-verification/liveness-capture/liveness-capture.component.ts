@@ -97,6 +97,7 @@ export class LivenessCaptureComponent implements OnInit {
       this.fc.stopCamera();
       this.f3d.terminate();
       console.log('fin de la PV' + JSON.stringify(object, null, 2));
+      await this.spinner.hide();
       this.router.navigate([Rutas.cuentaClabe+ `/${this.id}`]);
     }
 
