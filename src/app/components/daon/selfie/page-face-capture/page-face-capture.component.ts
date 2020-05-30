@@ -47,8 +47,8 @@ export class PageFaceCaptureComponent implements OnInit {
       this.id = params['id'];
     });
     FP.load({client: environment.fingerJsToken, region: 'us'})
-      .then(fp =>{
-        fp.send({tag: {tag:this.id}});
+      .then(fp => {
+        fp.send({tag: {tag: this.id}});
       });
 
     if (!(await this.alredySessionExist())) { return; }
@@ -69,7 +69,7 @@ export class PageFaceCaptureComponent implements OnInit {
       console.log('sleep');
       this.tomarSelfie();
     }, 5000);
-    
+
     /*navigator.mediaDevices.getUserMedia().then(function(mediaStream) {
     }).catch(function(err) {
       alert("Debes permitir el acceso a tu cámara");

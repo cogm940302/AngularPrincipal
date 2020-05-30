@@ -36,7 +36,7 @@ export class CorreoVerificacionComponent implements OnInit {
       this.id = params['id'];
     });
     const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
-    fp.send({tag: {tag:this.id}});
+    fp.send({tag: this.id});
     if (!(await this.alredySessionExist())) { return; }
     this.filtersLoaded = Promise.resolve(true);
     await this.spinner.hide();
@@ -44,7 +44,6 @@ export class CorreoVerificacionComponent implements OnInit {
 
   async alredySessionExist() {
     this.object = this.session.getObjectSession();
-    console.log("***object***")
     console.log(this.object);
     if (this.object === null || this.object === undefined) {
       this.router.navigate([Rutas.terminos + `/${this.id}`]);
@@ -62,7 +61,7 @@ export class CorreoVerificacionComponent implements OnInit {
       }
     }
   }
- 
+
   onSearchChange(searchValue: string): void {
     this.correoText = searchValue;
   }
@@ -83,6 +82,6 @@ export class CorreoVerificacionComponent implements OnInit {
         return false;
     }
 
-     
+
   }
 }

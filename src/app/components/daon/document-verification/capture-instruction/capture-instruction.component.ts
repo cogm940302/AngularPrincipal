@@ -24,15 +24,15 @@ export class CaptureInstructionComponent implements OnInit {
 
       sessionStorage.setItem('ti', serviciogeneralService.gettI());
       sessionStorage.setItem('fb', serviciogeneralService.getFrontAndBack());
-      
-      if (serviciogeneralService.getFrontAndBack() === 'front') { 
+
+      if (serviciogeneralService.getFrontAndBack() === 'front') {
         this.titulo = 'INE';
         this.description = 'Tómale foto o sube tu INE de frente en PNG, JPG o PDF.';
         if (serviciogeneralService.gettI() === 'ID_CARD') {
         this.idcard = 'id-card-front sv';
         } else {
         this.idcard = 'passport';
-        } 
+        }
       } else {
         this.titulo = 'INE';
         this.description = 'Tómale foto o sube tu INE por la parte trasera en PNG, JPG o PDF.';
@@ -42,7 +42,7 @@ export class CaptureInstructionComponent implements OnInit {
      sessionStorage.getItem('fb') === undefined) {
       this.router.navigate(['']);
     } else {
-      
+
       if (sessionStorage.getItem('fb') === 'front') {
         this.titulo = 'INE';
         this.description = 'Tómale foto o sube tu INE de frente en PNG, JPG o PDF.';
@@ -83,7 +83,7 @@ export class CaptureInstructionComponent implements OnInit {
       this.id = params['id'];
     });
     const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
-    fp.send({ tag: {tag:this.id}});
+    fp.send({tag: {tag: this.id}});
     if (! (await this.alredySessionExist())) { return; }
     await this.spinner.hide();
   }
@@ -134,7 +134,7 @@ export class CaptureInstructionComponent implements OnInit {
         this.img = 'data:image/jpeg;base64,' + response.responseBase64Image;
         this.serviciogeneralService.setImg64(this.img);
         this.serviciogeneralService.setIsUpload(true);
-        
+
         await this.spinner.hide();
         this.router.navigate([Rutas.documentConfirm + `${this.id}`]);
       }
