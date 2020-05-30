@@ -43,7 +43,7 @@ export class FacialVerificationComponent implements OnInit {
       this.id = params['id'];
     });
     const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
-    fp.send({tag: this.id});
+    fp.send({tag: {tag: this.id}});
     this.img = this.serviciogeneralService.getImg64();
     console.log('img = ' + this.img);
     this.foto = await this.blobToBase64(this.img);
