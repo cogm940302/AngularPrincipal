@@ -20,15 +20,15 @@ import { Session } from 'protractor';
 })
 export class PersonComponent implements OnInit {
 
-  title = "¿Éres persona fisica o moral";      
+  title = "¿Éres persona fisica o moral";
   imgUrlPersonaFisica="../../../../../assets/img/person/2.2.persona_fisica.png";
   imgUrlPersonaMoral="../../../../../assets/img/person/2.1.persona_moral.png";
-  labelPersonaFisica="Persona </br> fisica  "; 
-  labelPersonaMoral="Persona moral";  
+  labelPersonaFisica="Persona </br> fisica  ";
+  labelPersonaMoral="Persona moral";
   btnTitlePersonaFisica = "Solicitaremos tu información personal";
   btnTitlePersonaMoral = "Solicitaremos la información del representante legal";
   btnTitleContinuar = "Continuar";
-  
+
 
   constructor(private spinner: NgxSpinnerService, public router: Router, private session: SessionService, private actRoute: ActivatedRoute, private middleDaon: MiddleDaonService,
                       private middleMongo: MiddleMongoService,) { }
@@ -39,13 +39,13 @@ export class PersonComponent implements OnInit {
   rfcModel: string;
   razonSocialModel: string;
   valorPersonaModel: string;
-  
+
   async ngOnInit() {
       await this.spinner.show();
       document.getElementById("errorMessageRFC").style.display = "none";
       document.getElementById("razonSocial").style.display = "none";
       document.getElementById("errorMessageTipoPersona").style.display = "none";
-      
+
       var tipoPersona: string;
       var validateRFC: boolean;
       this.actRoute.params.subscribe(params => {
@@ -61,29 +61,29 @@ export class PersonComponent implements OnInit {
 
         //Sacamos el data-url para usarlo luego
 		tipoPersona = $(this).attr("data-persona");
-      
+
         if(tipoPersona == "fisica"){
           $('#rfc').val("");
           $('#rfc').attr('maxlength', 13);
             //Pones el color adecuado a los elementos
             $('#titleMoral').removeClass('text-danger');
             $('#borderMoral').removeClass('border-danger bg-light').addClass('border-secondary bg-white');
-            
+
             $('#titleFisica').addClass('text-danger');
             $('#borderFisica').removeClass('border-secondary bg-white').addClass('border-danger bg-light');
             document.getElementById("razonSocial").style.display = "none";
             document.getElementById("errorMessageTipoPersona").style.display = "none";
             //Mostramos los campos
             $("#valorTipoPersona").val("fisica");
-           } 
+           }
         else if(tipoPersona == "moral"){
           $('#rfc').val("");
           $('#rfc').attr('maxlength', 12);
-          
+
            //Pones el color adecuado a los elementos
             $('#titleFisica').removeClass('text-danger');
             $('#borderFisica').removeClass('border-danger bg-light').addClass('border-secondary bg-white');
-            
+
             $('#titleMoral').addClass('text-danger');
             $('#borderMoral').removeClass('border-secondary bg-white').addClass('border-danger bg-light');
             document.getElementById("razonSocial").style.display = "block";
@@ -91,10 +91,10 @@ export class PersonComponent implements OnInit {
             //Mostramos los campos
             $("#valorTipoPersona").val("moral");
            };
-     
-        
+
+
     });
-    
+
     console.log("valor de variable" + tipoPersona);
   }
 
@@ -116,7 +116,7 @@ export class PersonComponent implements OnInit {
       }
     }
   }
-  
+
 
     async enter() {
       // patron del RFC, persona moral
@@ -129,10 +129,10 @@ export class PersonComponent implements OnInit {
 	  		                                 "(([A-Z�&]{4})([02468][048]|[13579][26])[0][2]([0][1-9]|[12][\\d])([A-Z0-9]{3}))|" +
 	  		                                 "(([A-Z�&]{4})([0-9]{2})[0][2]([0][1-9]|[1][0-9]|[2][0-8])([A-Z0-9]{3}))$";
 
-      
-      var inputRFC = this.rfcModel
+
+      var inputRFC = this.rfcModel.toUpperCase();
       //var tipoPersona = $('.eligePersona').attr("data-persona");
-      var person = $('#valorTipoPersona').val();;
+      var person = $('#valorTipoPersona').val();
       console.log(person);
       if(person == "fisica"){
 
@@ -140,7 +140,7 @@ export class PersonComponent implements OnInit {
           console.log("La estructura de la clave de RFC es valida");
           document.getElementById("errorMessageRFC").style.display = "none";
           document.getElementById("errorMessageTipoPersona").style.display = "none";
-          this.saveDataPerson(person);
+          await this.saveDataPerson(person);
 
           return true;
         }else {
@@ -151,13 +151,13 @@ export class PersonComponent implements OnInit {
         }
       }
       else if(person == "moral"){
-        
+
         if (inputRFC.match(_rfc_pattern_pm)){
-          
+
           console.log("La estructura de la clave de RFC moral es valida");
           document.getElementById("errorMessageRFC").style.display = "none";
           document.getElementById("errorMessageTipoPersona").style.display = "none";
-          this.saveDataPerson(person);
+          await this.saveDataPerson(person);
 
       }else {
         console.log("La estructura de la clave de RFC moral es INVALIDA");
@@ -187,7 +187,7 @@ export class PersonComponent implements OnInit {
       modal.style.display = "block";
     }
 
-    
+
   }
 
   async aceptar(){
@@ -201,6 +201,6 @@ export class PersonComponent implements OnInit {
     modal.style.display = "none";
   }
 
-  
+
 
 }
