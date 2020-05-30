@@ -62,7 +62,7 @@ export class VerifyIdentityComponent implements OnInit {
       this.servicesGeneralService.setFrontAndBack('front');
       sessionStorage.removeItem('errorDocument');
       this.router.navigate([Rutas.documentInstruction + `${this.id}`]);
-    }
+    }else{this.error='Seleccione un tipo de documento'}
     
   }
 
