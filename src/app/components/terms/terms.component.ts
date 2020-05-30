@@ -68,6 +68,13 @@ export class TermsComponent implements OnInit {
   async siguiente() {
     await this.spinner.show();
     this.datosDelCliente.terminos = true;
+    this.datosDelCliente.daon = {
+      daonClientHref : '',
+      daonHref: '',
+      selfie: false,
+      identity: false,
+      pruebaVida: false
+    };
     console.log(this.datosDelCliente);
     await this.middle.updateTermsDataUser({ terminos: true }, this.id);
     await this.session.updateModel(this.datosDelCliente);
