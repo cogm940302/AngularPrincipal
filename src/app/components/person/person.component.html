@@ -18,9 +18,9 @@
                             <small class="form-text text-muted" id="errorMessageTipoPersona">Debe seleccionar un tipo de persona</small>
                           </div>
                         </div>
-                        <form>
+                        <form ngNativeValidate>
                           <div class="form-group">
-                            <input autocomplete="off" type="text" required placeholder="Ingresa tu RFC" id="rfc" class="form-control form-control-lg" [(ngModel)]="rfcModel" [ngModelOptions]="{standalone: true}">
+                            <input autocomplete="off" type="text" placeholder="Ingresa tu RFC" id="rfc" class="form-control form-control-lg" [(ngModel)]="rfcModel" [ngModelOptions]="{standalone: true}" required>
                             <small class="form-text text-muted" id="errorMessageRFC">Ingrese un RFC valido</small> 
                           </div>
                             

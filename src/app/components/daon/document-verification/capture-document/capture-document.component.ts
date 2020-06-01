@@ -21,15 +21,15 @@ export class CaptureDocumentComponent implements OnInit {
               private session: SessionService, private actRoute: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     this.htmlCanvasToBlob();
-    
+
     if (serviciogeneralService.gettI() !== undefined) {
       sessionStorage.setItem('ti', serviciogeneralService.gettI());
     } else if (sessionStorage.getItem('ti') === undefined) {
       this.router.navigate([Rutas.chooseIdentity + `${this.id}`]);
     }
-    
+
     console.log("ti= " + sessionStorage.getItem('ti'));
-    
+
     this.dc = new DocumentCapture.Daon.DocumentCapture({
       url: 'https://dobsdemo-docquality-first.identityx-cloud.com/rest/v1/quality/assessments',
       documentType: sessionStorage.getItem('ti'),
@@ -47,12 +47,12 @@ export class CaptureDocumentComponent implements OnInit {
   isEdge: boolean;
 
   async ngOnInit() {
-   await this.spinner.show();
+    await this.spinner.show();
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
-    const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
-    fp.send({tag:{tag:this.id}});
+    const fp = await FP.load({ client: environment.fingerJsToken, region: 'us' });
+    fp.send({tag: {tag: this.id}});
     if (!(await this.alredySessionExist())) { return; }
     await this.spinner.hide();
     this.filtersLoaded = Promise.resolve(true);
@@ -88,14 +88,13 @@ export class CaptureDocumentComponent implements OnInit {
 
     const { videoWidth, videoHeight } = document.querySelector('video');
     const { clientWidth, clientHeight } = document.querySelector(".ui-canvas-container");
-    
+
     /*export const ID_CARD = { aspectRatio: 1.5858 };
     export const PASSPORT = { aspectRatio: 1.4205 };
     export const A4_PORT = { aspectRatio: 0.7071 };
     export const A4_LAND = { aspectRatio: 1.4143 };*/
 
     const documentTypeRatio=1.5858;
-    console.log("Ratio" + videoHeight/videoWidth);
     const rectCoords = getRectCoordsFromContainer({
       video: {
         x: videoWidth,
@@ -108,7 +107,7 @@ export class CaptureDocumentComponent implements OnInit {
       documentTypeRatio
     })
     function getContainerProjection({ ratios, container }) {
-      const ratio = Math.min(ratios.x, ratios.y);    
+      const ratio = Math.min(ratios.x, ratios.y);
       return {
         x: container.x * ratio,
         y: container.y * ratio
@@ -133,8 +132,8 @@ export class CaptureDocumentComponent implements OnInit {
       }
     }
     console.log("<<>> " + JSON.stringify(rectCoords) +
-    this.serviciogeneralService.getFrontAndBack());
-  
+      this.serviciogeneralService.getFrontAndBack());
+
     const queryParams = {
       upperLeftX: 25,
       upperLeftY: 100,
@@ -144,7 +143,7 @@ export class CaptureDocumentComponent implements OnInit {
 
     this.dc.captureFrame()
       .then(blob => this.dc.assessQuality(blob, rectCoords,
-         (this.serviciogeneralService.getFrontAndBack() === 'front')))
+        (this.serviciogeneralService.getFrontAndBack() === 'front')))
       .then(response => this.onServerFeedback(response))
       .catch(async err => {
         this.mensaje = err;
@@ -152,15 +151,15 @@ export class CaptureDocumentComponent implements OnInit {
         await this.spinner.hide();
       });
 
-      /*this.dc.startAutoCapture(
-        response => this.onServerFeedback(response),
-        blob => this.dc.assessQuality(blob, rectCoords, true),
-        async err => {
-          this.mensaje = err;
-          console.log('err= ' + err);
-          await this.spinner.hide();
-        });
-        */
+    /*this.dc.startAutoCapture(
+      response => this.onServerFeedback(response),
+      blob => this.dc.assessQuality(blob, rectCoords, true),
+      async err => {
+        this.mensaje = err;
+        console.log('err= ' + err);
+        await this.spinner.hide();
+      });
+      */
   }
 
   async onServerFeedback(response) {
@@ -169,7 +168,7 @@ export class CaptureDocumentComponent implements OnInit {
       console.log('no pasa');
       await this.spinner.hide();
     } else {
-      console.log('siii pasa + '  + JSON.stringify(response));
+      console.log('siii pasa + ' + JSON.stringify(response));
       this.img = 'data:image/jpeg;base64,' + response.responseBase64Image;
       this.dc.stopCamera();
       console.log(this.img);
@@ -212,7 +211,7 @@ export class CaptureDocumentComponent implements OnInit {
     console.log('captura');
     this.videoEl = document.querySelector('video');
     this.dc.startCamera(this.videoEl).then((response) => {
-    console.log(response);
+      console.log(response);
     });
   }
 

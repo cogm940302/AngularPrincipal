@@ -48,7 +48,7 @@ export class LivenessCaptureComponent implements OnInit {
       this.id = params['id'];
     });
     const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
-    fp.send({tag: {tag:this.id}});
+    fp.send({tag: {tag: this.id}});
     if (!(await this.alredySessionExist())) { return; }
     this.isMobileBool = isMobile(navigator.userAgent);
     this.isEdge = window.navigator.userAgent.indexOf('Edge') > -1;
@@ -63,8 +63,8 @@ export class LivenessCaptureComponent implements OnInit {
       console.log('sleep');
       this.startButton();
     }, 5000);
-    
-    
+
+
   }
 
   async alredySessionExist() {

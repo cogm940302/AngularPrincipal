@@ -37,7 +37,7 @@ export class ConfirmDocumentComponent implements OnInit {
       this.id = params['id'];
     });
     const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
-    fp.send({tag: {tag:this.id}});
+    fp.send({tag: {tag: this.id}});
     if (!(await this.alredySessionExist())) { return; }
     this.documentoSend = new DocumentoSend();
     this.clientCapture = new ClientCapture();
@@ -49,7 +49,7 @@ export class ConfirmDocumentComponent implements OnInit {
     console.log('>>>>>>>>>>>>>>>>> ' + this.serviciogeneralService.getImg64());
     this.img = this.serviciogeneralService.getImg64();
     this.filtersLoaded = Promise.resolve(true);
-    
+
     if ( (this.serviciogeneralService.getFrontAndBack() === 'back' || sessionStorage.getItem('fb') === 'back') )
     {
       this.titulo="Idenfiticación posterior";

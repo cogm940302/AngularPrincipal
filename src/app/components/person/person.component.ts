@@ -10,7 +10,6 @@ import { environment } from '../../../environments/environment';
 import { FP } from '@fp-pro/client';
 import { ɵAnimationGroupPlayer } from '@angular/animations';
 import { Session } from 'protractor';
-//import { type } from 'os';
 
 @Component({
   selector: 'app-person',
@@ -20,18 +19,19 @@ import { Session } from 'protractor';
 })
 export class PersonComponent implements OnInit {
 
-  title = "¿Éres persona fisica o moral";      
-  imgUrlPersonaFisica="../../../../../assets/img/person/2.2.persona_fisica.png";
-  imgUrlPersonaMoral="../../../../../assets/img/person/2.1.persona_moral.png";
-  labelPersonaFisica="Persona </br> fisica  "; 
-  labelPersonaMoral="Persona moral";  
-  btnTitlePersonaFisica = "Solicitaremos tu información personal";
-  btnTitlePersonaMoral = "Solicitaremos la información del representante legal";
-  btnTitleContinuar = "Continuar";
-  
+  title = '¿Éres persona fisica o moral';
+  imgUrlPersonaFisica = '../../../../../assets/img/person/2.2.persona_fisica.png';
+  imgUrlPersonaMoral = '../../../../../assets/img/person/2.1.persona_moral.png';
+  labelPersonaFisica = 'Persona </br> fisica  ';
+  labelPersonaMoral = 'Persona moral';
+  btnTitlePersonaFisica = 'Solicitaremos tu información personal';
+  btnTitlePersonaMoral = 'Solicitaremos la información del representante legal';
+  btnTitleContinuar = 'Continuar';
 
-  constructor(private spinner: NgxSpinnerService, public router: Router, private session: SessionService, private actRoute: ActivatedRoute, private middleDaon: MiddleDaonService,
-                      private middleMongo: MiddleMongoService,) { }
+
+  constructor(private spinner: NgxSpinnerService, public router: Router,
+              private session: SessionService, private actRoute: ActivatedRoute, private middleDaon: MiddleDaonService,
+              private middleMongo: MiddleMongoService, ) { }
 
   filtersLoaded: Promise<boolean>;
   errorMensaje: string;
@@ -39,7 +39,7 @@ export class PersonComponent implements OnInit {
   rfcModel: string;
   razonSocialModel: string;
   valorPersonaModel: string;
-  
+
   async ngOnInit() {
       await this.spinner.show();
       document.getElementById("errorMessageRFC").style.display = "none";
@@ -97,13 +97,13 @@ export class PersonComponent implements OnInit {
      
         
     });
-    
-    console.log("valor de variable" + tipoPersona);
+
+    console.log('valor de variable' + tipoPersona);
   }
 
   async alredySessionExist() {
     const object = this.session.getObjectSession();
-    console.log("sessionDatosFiscales= " ,object);
+    console.log('sessionDatosFiscales= ', object);
     if (object === null || object === undefined) {
       this.router.navigate([Rutas.terminos + `/${this.id}`]);
       return false;
@@ -119,91 +119,93 @@ export class PersonComponent implements OnInit {
       }
     }
   }
-  
 
-    async enter() {
-      // patron del RFC, persona moral
-      var _rfc_pattern_pm = "^(([A-Z�&]{3})([0-9]{2})([0][13578]|[1][02])(([0][1-9]|[12][\\d])|[3][01])([A-Z0-9]{3}))|" +
-                                             "(([A-Z�&]{3})([0-9]{2})([0][13456789]|[1][012])(([0][1-9]|[12][\\d])|[3][0])([A-Z0-9]{3}))|" +
-                                             "(([A-Z�&]{3})([02468][048]|[13579][26])[0][2]([0][1-9]|[12][\\d])([A-Z0-9]{3}))|" +
-                                             "(([A-Z�&]{3})([0-9]{2})[0][2]([0][1-9]|[1][0-9]|[2][0-8])([A-Z0-9]{3}))$";
-		var _rfc_pattern_pf = "^(([A-Z�&]{4})([0-9]{2})([0][13578]|[1][02])(([0][1-9]|[12][\\d])|[3][01])([A-Z0-9]{3}))|" +
-	  		                                 "(([A-Z�&]{4})([0-9]{2})([0][13456789]|[1][012])(([0][1-9]|[12][\\d])|[3][0])([A-Z0-9]{3}))|" +
-	  		                                 "(([A-Z�&]{4})([02468][048]|[13579][26])[0][2]([0][1-9]|[12][\\d])([A-Z0-9]{3}))|" +
-	  		                                 "(([A-Z�&]{4})([0-9]{2})[0][2]([0][1-9]|[1][0-9]|[2][0-8])([A-Z0-9]{3}))$";
 
-      
-      var inputRFC = this.rfcModel
-      //var tipoPersona = $('.eligePersona').attr("data-persona");
-      var person = $('#valorTipoPersona').val();;
-      console.log(person);
-      if(person == "fisica"){
+  async enter() {
+    // patron del RFC, persona moral
+    const _rfc_pattern_pm = '^(([A-Z�&]{3})([0-9]{2})([0][13578]|[1][02])(([0][1-9]|[12][\\d])|[3][01])([A-Z0-9]{3}))|' +
+      '(([A-Z�&]{3})([0-9]{2})([0][13456789]|[1][012])(([0][1-9]|[12][\\d])|[3][0])([A-Z0-9]{3}))|' +
+      '(([A-Z�&]{3})([02468][048]|[13579][26])[0][2]([0][1-9]|[12][\\d])([A-Z0-9]{3}))|' +
+      '(([A-Z�&]{3})([0-9]{2})[0][2]([0][1-9]|[1][0-9]|[2][0-8])([A-Z0-9]{3}))$';
+    const _rfc_pattern_pf = '^(([A-Z�&]{4})([0-9]{2})([0][13578]|[1][02])(([0][1-9]|[12][\\d])|[3][01])([A-Z0-9]{3}))|' +
+      '(([A-Z�&]{4})([0-9]{2})([0][13456789]|[1][012])(([0][1-9]|[12][\\d])|[3][0])([A-Z0-9]{3}))|' +
+      '(([A-Z�&]{4})([02468][048]|[13579][26])[0][2]([0][1-9]|[12][\\d])([A-Z0-9]{3}))|' +
+      '(([A-Z�&]{4})([0-9]{2})[0][2]([0][1-9]|[1][0-9]|[2][0-8])([A-Z0-9]{3}))$';
 
-        if (inputRFC.match(_rfc_pattern_pf)){
-          console.log("La estructura de la clave de RFC es valida");
-          document.getElementById("errorMessageRFC").style.display = "none";
-          document.getElementById("errorMessageTipoPersona").style.display = "none";
-          this.saveDataPerson(person);
 
-          return true;
-        }else {
-          console.log("La estructura de la clave de RFC fisica es INVALIDA");
-          document.getElementById("errorMessageRFC").style.display = "block";
+    let inputRFC = this.rfcModel;
+    if (inputRFC) {
+      inputRFC = inputRFC.toUpperCase();
+    }
+    // var tipoPersona = $('.eligePersona').attr('data-persona');
+    const person = $('#valorTipoPersona').val();
+    console.log(person);
+    if (person === 'fisica') {
 
-            return false;
-        }
+      if (inputRFC.match(_rfc_pattern_pf)) {
+        console.log('La estructura de la clave de RFC es valida');
+        document.getElementById('errorMessageRFC').style.display = 'none';
+        document.getElementById('errorMessageTipoPersona').style.display = 'none';
+        await this.saveDataPerson(person);
+
+        return true;
+      } else {
+        console.log('La estructura de la clave de RFC fisica es INVALIDA');
+        document.getElementById('errorMessageRFC').style.display = 'block';
+
+        return false;
       }
-      else if(person == "moral"){
-        
-        if (inputRFC.match(_rfc_pattern_pm)){
-          
-          console.log("La estructura de la clave de RFC moral es valida");
-          document.getElementById("errorMessageRFC").style.display = "none";
-          document.getElementById("errorMessageTipoPersona").style.display = "none";
-          this.saveDataPerson(person);
+    } else if (person === 'moral') {
 
-      }else {
-        console.log("La estructura de la clave de RFC moral es INVALIDA");
-        document.getElementById("errorMessageRFC").style.display = "block";
-          return false;
+      if (inputRFC.match(_rfc_pattern_pm)) {
+
+        console.log('La estructura de la clave de RFC moral es valida');
+        document.getElementById('errorMessageRFC').style.display = 'none';
+        document.getElementById('errorMessageTipoPersona').style.display = 'none';
+        await this.saveDataPerson(person);
+
+      } else {
+        console.log('La estructura de la clave de RFC moral es INVALIDA');
+        document.getElementById('errorMessageRFC').style.display = 'block';
+        return false;
       }
-      }else{
-        document.getElementById("errorMessageTipoPersona").style.display = "block";
-        console.log("debes seleccionar un tipo de persona");
-      }
+    } else {
+      document.getElementById('errorMessageTipoPersona').style.display = 'block';
+      console.log('debes seleccionar un tipo de persona');
+    }
   }
 
-  async saveDataPerson(typePerson:string){
-    if (typePerson == "fisica"){
+  async saveDataPerson(typePerson: string) {
+    if (typePerson === 'fisica') {
       await this.spinner.show();
-      const objectPer = {datosFiscales: {rfc: this.rfcModel, tipoPersona: typePerson}};
+      const objectPer = { datosFiscales: { rfc: this.rfcModel, tipoPersona: typePerson } };
       await this.middleMongo.updateDataUser(objectPer, this.id);
       console.log('ya termine con los datos fiscales' + JSON.stringify(objectPer, null, 2));
       await this.spinner.hide();
       this.router.navigate([Rutas.telefono + `${this.id}`]);
 
-    }else if(typePerson == "moral"){
-      const objectPer = {datosFiscales: {rfc: this.rfcModel, nombre: this.razonSocialModel, tipoPersona: typePerson}};
+    } else if (typePerson === 'moral') {
+      const objectPer = { datosFiscales: { rfc: this.rfcModel, nombre: this.razonSocialModel, tipoPersona: typePerson } };
       await this.middleMongo.updateDataUser(objectPer, this.id);
       console.log('ya termine con los datos fiscales' + JSON.stringify(objectPer, null, 2));
-      var modal = document.getElementById("modalPersonaMoral");
-      modal.style.display = "block";
+      const modal = document.getElementById('modalPersonaMoral');
+      modal.style.display = 'block';
     }
 
-    
+
   }
 
-  async aceptar(){
+  async aceptar() {
     await this.spinner.show();
     this.router.navigate([Rutas.telefono + `${this.id}`]);
     await this.spinner.hide();
   }
 
-  async cerrarModal(){
-    var modal = document.getElementById("modalPersonaMoral");
-    modal.style.display = "none";
+  async cerrarModal() {
+    const modal = document.getElementById('modalPersonaMoral');
+    modal.style.display = 'none';
   }
 
-  
+
 
 }
