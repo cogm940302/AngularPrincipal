@@ -16,7 +16,7 @@ export class MiddleMongoService {
 
 
   async creaTrackId(oferta: string, apiToken: string) {
-    let id;
+    let objectResponse;
     const body = {
       merchant : apiToken,
       id : oferta
@@ -25,15 +25,17 @@ export class MiddleMongoService {
     await this.http.post(LigaUtil.urlMiddleMongo(), body, { headers: this.headers })
     .toPromise().then((data) => {
       console.log(data);
-      if ( data['trackId']) {
-        id = data['trackId'];
+      if ( data['trackId'] && data['callback']) {
+        objectResponse = {};
+        objectResponse['id'] = data['trackId'];
+        objectResponse['callback'] = data['callback'];
       }
     }).catch((err) => {
       console.log(err);
-      id = undefined;
+      objectResponse = undefined;
     });
-    console.log('regresare:  ' + id);
-    return id;
+    console.log('regresare:  ' + objectResponse);
+    return objectResponse;
   }
   // async getDataUser(id: string) {
   //   console.log('El id que recibo es: ' + id);

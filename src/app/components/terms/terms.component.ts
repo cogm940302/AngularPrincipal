@@ -53,11 +53,13 @@ export class TermsComponent implements OnInit {
   async initSessionValues() {
     this.session.cleanValues();
     this.datosDelCliente = new sesionModel();
-    this.id = await this.middle.creaTrackId(this.oferta, this.apiToken);
-    if (!this.id) {
+    const objectResponse = await this.middle.creaTrackId(this.oferta, this.apiToken);
+    if (!objectResponse) {
       await this.goToErrorPage();
     }
+    this.id = objectResponse['id'];
     this.datosDelCliente._id = this.id;
+    this.datosDelCliente.callback = objectResponse['callback'];
   }
 
   async goToErrorPage() {
