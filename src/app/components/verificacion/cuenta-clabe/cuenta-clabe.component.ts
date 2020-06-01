@@ -54,9 +54,11 @@ export class CuentaClabeComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.submitted = true;
     if (this.myForm.invalid) {
+      await this.spinner.hide();
+      console.log("tiene errores= ");
       return;
     }
   }
