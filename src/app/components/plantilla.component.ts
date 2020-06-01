@@ -15,7 +15,11 @@ export class PlantillaComponent implements OnInit {
     //$("body").attr("class","mx-auto bg-white rounded-lg");
     $("body").attr("class","d-flex flex-column h-100 bg-secondary");
     
-    
+    var DEBUG = false;
+    // ENABLE/DISABLE Console Logs
+    if(!DEBUG){
+      console.log = function() {}
+    }
   }
 
 }

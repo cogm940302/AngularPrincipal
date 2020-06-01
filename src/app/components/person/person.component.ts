@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Rutas } from 'src/app/model/RutasUtil.js';
+import { Rutas } from 'src/app/model/RutasUtil';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router, ActivatedRoute, NavigationEnd, RouterModule } from '@angular/router';
 import { SessionService } from '../../services/session/session.service';
-import { MiddleDaonService } from 'src/app/services/http/middle-daon.service';
+import { MiddleDaonService } from '../../services/http/middle-daon.service';
 import { sesionModel } from '../../model/sesion/SessionPojo';
 import { MiddleMongoService } from '../../services/http/middle-mongo.service';
 import { environment } from '../../../environments/environment';
@@ -41,57 +41,61 @@ export class PersonComponent implements OnInit {
   valorPersonaModel: string;
 
   async ngOnInit() {
-    await this.spinner.show();
-    document.getElementById('errorMessageRFC').style.display = 'none';
-    document.getElementById('razonSocial').style.display = 'none';
-    document.getElementById('errorMessageTipoPersona').style.display = 'none';
+      await this.spinner.show();
+      document.getElementById("errorMessageRFC").style.display = "none";
+      document.getElementById("razonSocial").style.display = "none";
+      document.getElementById("rfc").style.display = "none";
+      document.getElementById("errorMessageTipoPersona").style.display = "none";
+      
+      var tipoPersona: string;
+      var validateRFC: boolean;
+      this.actRoute.params.subscribe(params => {
+        this.id = params['id'];
+      });
 
-    let tipoPersona: string;
-    let validateRFC: boolean;
-    this.actRoute.params.subscribe(params => {
-      this.id = params['id'];
-    });
+      if (!(await this.alredySessionExist())) { return; }
+      await this.spinner.hide();
 
-    if (!(await this.alredySessionExist())) { return; }
-    await this.spinner.hide();
+    $('.eligePersona').on('click',function(event){
+        //evitamos el comportamiento para los href
+		event.preventDefault();
 
-    $('.eligePersona').on('click', function (event) {
-      // evitamos el comportamiento para los href
-      event.preventDefault();
-
-      // Sacamos el data-url para usarlo luego
-      tipoPersona = $(this).attr('data-persona');
-
-      if (tipoPersona === 'fisica') {
-        $('#rfc').val('');
-        $('#rfc').attr('maxlength', 13);
-        // Pones el color adecuado a los elementos
-        $('#titleMoral').removeClass('text-danger');
-        $('#borderMoral').removeClass('border-danger bg-light').addClass('border-secondary bg-white');
-
-        $('#titleFisica').addClass('text-danger');
-        $('#borderFisica').removeClass('border-secondary bg-white').addClass('border-danger bg-light');
-        document.getElementById('razonSocial').style.display = 'none';
-        document.getElementById('errorMessageTipoPersona').style.display = 'none';
-        // Mostramos los campos
-        $('#valorTipoPersona').val('fisica');
-      } else if (tipoPersona === 'moral') {
-        $('#rfc').val('');
-        $('#rfc').attr('maxlength', 12);
-
-        // Pones el color adecuado a los elementos
-        $('#titleFisica').removeClass('text-danger');
-        $('#borderFisica').removeClass('border-danger bg-light').addClass('border-secondary bg-white');
-
-        $('#titleMoral').addClass('text-danger');
-        $('#borderMoral').removeClass('border-secondary bg-white').addClass('border-danger bg-light');
-        document.getElementById('razonSocial').style.display = 'block';
-        document.getElementById('errorMessageTipoPersona').style.display = 'none';
-        // Mostramos los campos
-        $('#valorTipoPersona').val('moral');
-      };
-
-
+        //Sacamos el data-url para usarlo luego
+		tipoPersona = $(this).attr("data-persona");
+      
+        if(tipoPersona == "fisica"){
+          $('#rfc').val("");
+          $('#rfc').attr('maxlength', 13);
+            //Pones el color adecuado a los elementos
+            $('#titleMoral').removeClass('text-danger');
+            $('#borderMoral').removeClass('border-danger bg-light').addClass('border-secondary bg-white');
+            
+            $('#titleFisica').addClass('text-danger');
+            $('#borderFisica').removeClass('border-secondary bg-white').addClass('border-danger bg-light');
+            document.getElementById("razonSocial").style.display = "none";
+            document.getElementById("errorMessageTipoPersona").style.display = "none";
+            document.getElementById("rfc").style.display = "block";
+            //Mostramos los campos
+            $("#valorTipoPersona").val("fisica");
+           } 
+        else if(tipoPersona == "moral"){
+          $('#rfc').val("");
+          $('#rfc').attr('maxlength', 12);
+          
+           //Pones el color adecuado a los elementos
+            $('#titleFisica').removeClass('text-danger');
+            $('#borderFisica').removeClass('border-danger bg-light').addClass('border-secondary bg-white');
+            
+            $('#titleMoral').addClass('text-danger');
+            $('#borderMoral').removeClass('border-secondary bg-white').addClass('border-danger bg-light');
+            document.getElementById("razonSocial").style.display = "block";
+            document.getElementById("rfc").style.display = "block";
+            document.getElementById("errorMessageTipoPersona").style.display = "none";
+            //Mostramos los campos
+            $("#valorTipoPersona").val("moral");
+           };
+     
+        
     });
 
     console.log('valor de variable' + tipoPersona);
@@ -201,7 +205,5 @@ export class PersonComponent implements OnInit {
     const modal = document.getElementById('modalPersonaMoral');
     modal.style.display = 'none';
   }
-
-
 
 }
