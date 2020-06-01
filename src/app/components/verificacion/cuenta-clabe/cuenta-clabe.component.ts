@@ -5,6 +5,8 @@ import { Rutas } from 'src/app/model/RutasUtil.js';
 import { FormControl, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 import { MiddleMongoService } from '../../../services/http/middle-mongo.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { FP } from '@fp-pro/client';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-cuenta-clabe',
@@ -21,13 +23,18 @@ export class CuentaClabeComponent implements OnInit {
 
   isOK = false;
   submitted = false;
-  myForm = new FormGroup({
-    cuentaClabe: new FormControl('', [Validators.minLength(18), Validators.maxLength(18), Validators.required, Validators.pattern('[0-9]*'), this.IsValidated()])
-  });
+  myForm:any;
   async ngOnInit() {
+    this.myForm = new FormGroup({
+      cuentaClabe: new FormControl('', [Validators.minLength(18), Validators.maxLength(18), Validators.required, Validators.pattern('[0-9]*'), this.IsValidated()])
+    });
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
     });
+
+    const fp = await FP.load({client: environment.fingerJsToken, region: 'us'});
+    fp.send({tag: {tag:this.id}});
+
     if (!(await this.alredySessionExist())) { return; }
   }
 
@@ -54,9 +61,11 @@ export class CuentaClabeComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.submitted = true;
     if (this.myForm.invalid) {
+      await this.spinner.hide();
+      console.log("tiene errores= ");
       return;
     }
   }

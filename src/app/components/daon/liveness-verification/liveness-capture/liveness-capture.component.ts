@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, NgZone , OnInit, ViewChild, ElementRef } from '@angular/core';
 import * as FaceLineness3D from '../../../../../assets/js/Daon.FaceLiveness3D.min.js';
 import * as Daonjs from '../../../../../assets/js/Daon.FaceCapture.min.js';
 import { CheckID } from '../../../../model/DaonPojos/CheckID';
@@ -35,7 +35,8 @@ export class LivenessCaptureComponent implements OnInit {
 
   constructor(public serviciogeneralService: ServicesGeneralService, public router: Router,
               private session: SessionService, private actRoute: ActivatedRoute, private middleDaon: MiddleDaonService,
-              private spinner: NgxSpinnerService, private errorVidaService: ErrorVidaService) {
+              private spinner: NgxSpinnerService, private errorVidaService: ErrorVidaService
+              ,public ngZone: NgZone) {
     this.fc = new Daonjs.Daon.FaceCapture({
       url: 'https://dobsdemo-facequality-first.identityx-cloud.com/rest/v1/quality/assessments'
     });
@@ -87,8 +88,9 @@ export class LivenessCaptureComponent implements OnInit {
   }
 
   async getChecksID(value) {
-    await this.spinner.show();
+    
     if (await this.sendLivenessDaon('', value)) {
+      await this.spinner.show();
       const object = this.session.getObjectSession();
       object.daon.pruebaVida = true;
       this.session.updateModel(object);
@@ -98,10 +100,10 @@ export class LivenessCaptureComponent implements OnInit {
       this.f3d.terminate();
       console.log('fin de la PV' + JSON.stringify(object, null, 2));
       await this.spinner.hide();
-      this.router.navigate([Rutas.cuentaClabe+ `/${this.id}`]);
-    }
 
-    await this.spinner.hide();
+      this.ngZone.run(() => this.router.navigate([Rutas.cuentaClabe+ `/${this.id}`])).then();
+      //this.router.navigate([Rutas.cuentaClabe+ `/${this.id}`]);
+    }
     // this.router.navigate([Rutas.livenessCapture + `${this.id}`]);
   }
 
