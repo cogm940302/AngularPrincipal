@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Rutas } from 'src/app/model/RutasUtil.js';
+import { Rutas } from 'src/app/model/RutasUtil';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router, ActivatedRoute, NavigationEnd, RouterModule } from '@angular/router';
 import { SessionService } from '../../services/session/session.service';
-import { MiddleDaonService } from 'src/app/services/http/middle-daon.service';
+import { MiddleDaonService } from '../../services/http/middle-daon.service';
 import { sesionModel } from '../../model/sesion/SessionPojo';
 import { MiddleMongoService } from '../../services/http/middle-mongo.service';
 import { environment } from '../../../environments/environment';
@@ -205,7 +205,5 @@ export class PersonComponent implements OnInit {
     const modal = document.getElementById('modalPersonaMoral');
     modal.style.display = 'none';
   }
-
-
 
 }
