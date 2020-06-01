@@ -22,7 +22,7 @@ export class MiddleMongoService {
       id : oferta
     };
     console.log(body);
-    await this.http.get(LigaUtil.urlMiddleMongo(), { headers: this.headers })
+    await this.http.post(LigaUtil.urlMiddleMongo(), body, { headers: this.headers })
     .toPromise().then((data) => {
       console.log(data);
       if ( data['trackId']) {
