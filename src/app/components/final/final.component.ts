@@ -22,12 +22,12 @@ export class FinalComponent implements OnInit {
   routeToReturn: string;
 
   ngOnInit() {
-    this.getDataToRedirect();
-    const redirectTo = this.routeToReturn;
-    $('#finalizarBtn').click(function () {
-      console.log('click on btn finalizar');
-      window.location.href = redirectTo;
-    });
+    // this.getDataToRedirect();
+    // const redirectTo = this.routeToReturn;
+    // $('#finalizarBtn').click(function () {
+    //   console.log('click on btn finalizar');
+    //   window.location.href = redirectTo;
+    // });
   }
 
   getDataToRedirect() {
@@ -35,6 +35,8 @@ export class FinalComponent implements OnInit {
     if (this.object !== undefined && this.object !== null && this.object.callback) {
       this.routeToReturn = this.object.callback;
       sessionStorage.clear();
+      console.log('click on btn finalizar');
+      window.location.href = this.routeToReturn;
     }
   }
 }

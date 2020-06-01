@@ -1,19 +1,19 @@
 <div class="container">
     <div id="contenido" class="container">
-        <div class="errorMensaje" *ngIf="errorMensaje && errorMensaje.length > 0">
+        <!-- <div class="errorMensaje" *ngIf="errorMensaje && errorMensaje.length > 0">
             {{errorMensaje}}
-        </div>
-        
+        </div> -->
+
         <h3 class="my-3 text-center">{{title}}</h3>
-                      <p class="px-5"><img alt="" class="img-fluid" [src]="imgUrl"> </p>
-                        <p class="text-2 text-center">{{instruction}}</p>
-                    
-                      <form class="form-control-lg">
-                    
-                        <p class="my-3">
-                          <button type="button" class="btn btn-lg btn-block btn-danger rounded-lg mr-3 btnUrl" (click)="getDataToRedirect()" id="finalizarBtn"><i class="far fa-thumbs-up"></i> {{btnText}}</button>
-                        </p>
-                      </form>
-                   
+        <p class="px-5"><img alt="" class="img-fluid" [src]="imgUrl"> </p>
+        <p class="text-2 text-center">{{instruction}}</p>
+
+        <form class="form-control-lg">
+
+            <p class="my-3">
+                <button type="button" class="btn btn-lg btn-block btn-danger rounded-lg mr-3 btnUrl" (click)="getDataToRedirect()" id="finalizarBtn"><i class="far fa-thumbs-up"></i> {{btnText}}</button>
+            </p>
+        </form>
+
     </div>
 </div>
