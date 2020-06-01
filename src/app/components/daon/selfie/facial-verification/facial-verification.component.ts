@@ -30,14 +30,16 @@ export class FacialVerificationComponent implements OnInit {
   private data: SelfieSend;
   filtersLoaded: Promise<boolean>;
   @Input() public id: string;
-  @Input() public foto: any;
+  //@Input() public foto: any;
   error: any;
   isMobileBool: boolean;
   isEdge: boolean;
   isAndroid: boolean;
   isNative: boolean;
   img: any;
+  public foto = ' ';
   async ngOnInit() {
+    this.foto="";
     // console.log(this.foto);
     this.actRoute.params.subscribe(params => {
       this.id = params['id'];
@@ -46,7 +48,7 @@ export class FacialVerificationComponent implements OnInit {
     fp.send({tag: {tag: this.id}});
     this.img = this.serviciogeneralService.getImg64();
     console.log('img = ' + this.img);
-    this.foto = await this.blobToBase64(this.img);
+    this.foto = 'data:image/png;base64,' + await this.blobToBase64(this.img);
     console.log('Foto= ' + this.foto);
     this.filtersLoaded = Promise.resolve(true);
     this.isMobileBool = isMobile(navigator.userAgent);
