@@ -44,6 +44,7 @@ export class PersonComponent implements OnInit {
       await this.spinner.show();
       document.getElementById("errorMessageRFC").style.display = "none";
       document.getElementById("razonSocial").style.display = "none";
+      document.getElementById("rfc").style.display = "none";
       document.getElementById("errorMessageTipoPersona").style.display = "none";
       
       var tipoPersona: string;
@@ -73,6 +74,7 @@ export class PersonComponent implements OnInit {
             $('#borderFisica').removeClass('border-secondary bg-white').addClass('border-danger bg-light');
             document.getElementById("razonSocial").style.display = "none";
             document.getElementById("errorMessageTipoPersona").style.display = "none";
+            document.getElementById("rfc").style.display = "block";
             //Mostramos los campos
             $("#valorTipoPersona").val("fisica");
            } 
@@ -87,6 +89,7 @@ export class PersonComponent implements OnInit {
             $('#titleMoral').addClass('text-danger');
             $('#borderMoral').removeClass('border-secondary bg-white').addClass('border-danger bg-light');
             document.getElementById("razonSocial").style.display = "block";
+            document.getElementById("rfc").style.display = "block";
             document.getElementById("errorMessageTipoPersona").style.display = "none";
             //Mostramos los campos
             $("#valorTipoPersona").val("moral");
