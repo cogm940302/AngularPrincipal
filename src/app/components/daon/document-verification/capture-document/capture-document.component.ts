@@ -94,8 +94,7 @@ export class CaptureDocumentComponent implements OnInit {
     export const A4_PORT = { aspectRatio: 0.7071 };
     export const A4_LAND = { aspectRatio: 1.4143 };*/
 
-    const documentTypeRatio = 1.5858;
-    console.log("Ratio" + videoHeight / videoWidth);
+    const documentTypeRatio=1.5858;
     const rectCoords = getRectCoordsFromContainer({
       video: {
         x: videoWidth,
