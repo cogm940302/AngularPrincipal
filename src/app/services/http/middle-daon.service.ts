@@ -70,7 +70,7 @@ export class MiddleDaonService {
     console.log(jsonToSend);
     // console.log(JSON.stringify(jsonToSend));
     try {
-      await this.http.post(LigaUtil.urlMiddleMongo(), jsonToSend).toPromise().then(data => {
+      await this.http.post(LigaUtil.urlMiddleRoot(id) + 'email', jsonToSend).toPromise().then(data => {
         console.log(data);
         result = data;
       });
