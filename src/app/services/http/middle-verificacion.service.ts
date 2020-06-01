@@ -14,7 +14,7 @@ export class MiddleVerificacionService {
 
   async generaCodigoEmail(id: string, correo: string) {
     let result = 200;
-    await this.http.post(LigaUtil.urlMiddleRoot(id) + `email`, { userId : correo}, { headers: this.headers, })
+    await this.http.post(LigaUtil.urlMiddleRoot(id) + `email/send`, { userId : correo}, { headers: this.headers, })
     .toPromise().then(datos => {
       console.log(datos);
       if (datos['errorType']) {

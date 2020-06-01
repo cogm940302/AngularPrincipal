@@ -22,8 +22,7 @@ export class MiddleMongoService {
       id : oferta
     };
     console.log(body);
-    // this.http.get(LigaUtil.urlMiddleMongo(), { headers: this.headers })
-    await this.http.post('https://2u597e7kmf.execute-api.us-east-1.amazonaws.com/v2/usuario', body, { headers: this.headers })
+    await this.http.post(LigaUtil.urlMiddleMongo(), body, { headers: this.headers })
     .toPromise().then((data) => {
       console.log(data);
       if ( data['trackId']) {
