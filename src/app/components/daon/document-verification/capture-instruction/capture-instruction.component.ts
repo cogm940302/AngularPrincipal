@@ -28,6 +28,7 @@ export class CaptureInstructionComponent implements OnInit {
       if (serviciogeneralService.getFrontAndBack() === 'front') {
         this.titulo = 'INE';
         this.description = 'Tómale foto o sube tu INE de frente en PNG, JPG o PDF.';
+        this.fotoFT="../../../../../assets/img/daon/11.id_de_frente.png";
         if (serviciogeneralService.gettI() === 'ID_CARD') {
         this.idcard = 'id-card-front sv';
         } else {
@@ -36,6 +37,7 @@ export class CaptureInstructionComponent implements OnInit {
       } else {
         this.titulo = 'INE';
         this.description = 'Tómale foto o sube tu INE por la parte trasera en PNG, JPG o PDF.';
+        this.fotoFT="../../../../../assets/img/daon/16.Id posterior.png";
         this.idcard = 'id-card-back';
       }
     } else if (sessionStorage.getItem('ti') === undefined ||
@@ -46,6 +48,7 @@ export class CaptureInstructionComponent implements OnInit {
       if (sessionStorage.getItem('fb') === 'front') {
         this.titulo = 'INE';
         this.description = 'Tómale foto o sube tu INE de frente en PNG, JPG o PDF.';
+        this.fotoFT="../../../../../assets/img/daon/11.id_de_frente.png";
         if (sessionStorage.getItem('ti') === 'ID_CARD') {
         this.idcard = 'id-card-front ss';
         } else {
@@ -55,6 +58,7 @@ export class CaptureInstructionComponent implements OnInit {
         this.titulo = 'INE';
         this.idcard = 'id-card-back';
         this.description = 'Tómale foto o sube tu INE por la parte trasera en PNG, JPG o PDF.';
+        this.fotoFT="../../../../../assets/img/daon/16.Id posterior.png";
       }
     }
 
@@ -72,6 +76,7 @@ export class CaptureInstructionComponent implements OnInit {
   dc: any;
   mensaje: string;
   img: any;
+  fotoFT: string;
   idcard: any;
   icon: IconDefinitions;
 
