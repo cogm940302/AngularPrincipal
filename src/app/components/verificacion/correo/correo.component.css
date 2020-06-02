@@ -60,3 +60,7 @@ h3 {
 #errorMessagePin{
     color:red !important;
 }
+
+#contenido{
+    font-family: 'Raleway', sans-serif;
+}
