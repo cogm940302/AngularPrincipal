@@ -68,7 +68,8 @@ export class CorreoVerificacionComponent implements OnInit {
 
   async aceptar() {
     await this.spinner.show();
-
+    this.correoText=this.correoText.toLowerCase();
+    console.log("correo= " + this.correoText);
     if (this.correoText.match('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')){
       document.getElementById("errorMessageCorreo").style.display = "none";
       await this.middleVerifica.generaCodigoEmail(this.id, this.correoText);

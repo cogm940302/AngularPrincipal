@@ -56,10 +56,8 @@ export class CaptureDocumentComponent implements OnInit {
     if (!(await this.alredySessionExist())) { return; }
     await this.spinner.hide();
     this.filtersLoaded = Promise.resolve(true);
-
     this.isMobileBool = isMobile(navigator.userAgent);
     this.isEdge = window.navigator.userAgent.indexOf('Edge') > -1;
-
     this.capturar();
   }
 
@@ -86,7 +84,9 @@ export class CaptureDocumentComponent implements OnInit {
     console.log(DocumentCapture);
     await this.spinner.show();
 
-    const { videoWidth, videoHeight } = document.querySelector('video');
+    
+    //const { videoWidth, videoHeight } = document.querySelector('video');
+    const { videoWidth, videoHeight } = this.dc.camera.videoEl;
     const { clientWidth, clientHeight } = document.querySelector(".ui-canvas-container");
 
     /*export const ID_CARD = { aspectRatio: 1.5858 };
@@ -106,6 +106,7 @@ export class CaptureDocumentComponent implements OnInit {
       },
       documentTypeRatio
     })
+
     function getContainerProjection({ ratios, container }) {
       const ratio = Math.min(ratios.x, ratios.y);
       return {
@@ -132,14 +133,14 @@ export class CaptureDocumentComponent implements OnInit {
       }
     }
     console.log("<<>> " + JSON.stringify(rectCoords) +
-      this.serviciogeneralService.getFrontAndBack());
+    this.serviciogeneralService.getFrontAndBack());
 
-    const queryParams = {
+    /*const queryParams = {
       upperLeftX: 25,
       upperLeftY: 100,
       width: 754,
       height: 475
-    };
+    };*/
 
     this.dc.captureFrame()
       .then(blob => this.dc.assessQuality(blob, rectCoords,
@@ -168,7 +169,7 @@ export class CaptureDocumentComponent implements OnInit {
       console.log('no pasa');
       await this.spinner.hide();
     } else {
-      console.log('siii pasa + ' + JSON.stringify(response));
+      console.log('si pasa + ' + JSON.stringify(response));
       this.img = 'data:image/jpeg;base64,' + response.responseBase64Image;
       this.dc.stopCamera();
       console.log(this.img);
