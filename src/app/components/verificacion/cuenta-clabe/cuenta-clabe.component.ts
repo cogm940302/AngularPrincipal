@@ -123,7 +123,7 @@ export class CuentaClabeComponent implements OnInit {
   IsValidated(): ValidatorFn {
     return () => {
       if (this.myForm !== undefined) {
-        if (!this.validaClabe(this.f.cuentaClabe.value) && this.submitted) {
+        if (!this.validaClabe(this.f.cuentaClabe.value)) {
           return { valid: true };
         } else {
           return null;

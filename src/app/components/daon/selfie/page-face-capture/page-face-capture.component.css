@@ -181,7 +181,7 @@ input[type=file] {
 .overlay-oval {
   mask-image: radial-gradient(70% 65% ellipse at 50% 50%,
    transparent 50%, white 53%);
-  -webkit-mask-image: radial-gradient(75% 70% ellipse at 50% 55%,
+  -webkit-mask-image: radial-gradient(50% 70% ellipse at 50% 55%,
    transparent 50%, white 53%);
   mask-size: cover;
   -webkit-mask-size: cover;

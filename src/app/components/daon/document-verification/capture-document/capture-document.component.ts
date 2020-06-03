@@ -163,9 +163,17 @@ export class CaptureDocumentComponent implements OnInit {
       */
   }
 
+  feedback:string;
   async onServerFeedback(response) {
     if (response.result === 'FAIL') {
-      this.mensaje = response.feedback;
+      this.feedback=response.feedback;
+      if(this.feedback.includes("Unable to find document,"))
+      {
+        this.mensaje = "No se encontró el documento."; 
+      }else{
+        this.mensaje = response.feedback;
+      }
+      
       console.log('no pasa');
       await this.spinner.hide();
     } else {

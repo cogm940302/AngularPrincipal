@@ -25,7 +25,7 @@ body {
 @media (min-aspect-ratio: 3/4) {
     .ui-canvas-container {
         height: 100%;
-        width: calc(100vh*3.1/4);
+        width: calc(100vh*4/4);
         margin: 0 auto;
     }
     /*footer {
