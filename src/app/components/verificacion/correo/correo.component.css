@@ -6,11 +6,11 @@ h3 {
     font-size: 35px;
 }
 
-.container-fluid {
+/**.container-fluid {*/
     /* margin-top: 60px;
     border-style: solid;
     border-color: green; */
-}
+/**}*/
 
 .row {
     /* background: #e8e8e8; */
@@ -23,10 +23,10 @@ h3 {
     height: 70px;
 }
 
-.col {
+/**.col {*/
     /* background: #f2f2f2;
     border: 1px solid #4d5061; */
-}
+/**}*/
 
 #validacionInput {
     height: 45px;

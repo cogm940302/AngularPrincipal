@@ -30,6 +30,11 @@ export class VerifyIdentityComponent implements OnInit {
     if (!(await this.alredySessionExist())) { return; }
     this.error = sessionStorage.getItem('errorDocument');
     this.filtersLoaded = Promise.resolve(true);
+
+    //$('#INEOption').click();
+
+    $( "#INEOption" ).trigger( "click" );
+
   }
 
   async alredySessionExist() {
@@ -52,7 +57,9 @@ export class VerifyIdentityComponent implements OnInit {
   }
     ti="";
     sentTi(ti_){
+      $('#INEOption').attr('style','box-shadow: 0 0 0 0.2rem rgba(108,117,125,.5)');
       this.ti=ti_;
+      console.log(this.ti);
     }
     sendDoc() {
     if(this.ti!==""){
